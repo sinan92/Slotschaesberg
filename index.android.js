@@ -18,7 +18,7 @@ export default class SlotSchaesbergApp extends Component {
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to React Native!
-        </Textt>
+        </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
         </Text>
