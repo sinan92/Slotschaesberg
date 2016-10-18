@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, Route } from 'react-native-router-flux';
 import {
   AppRegistry,
   StyleSheet,
@@ -20,9 +20,9 @@ export default class SlotSchaesbergApp extends Component {
   render() {
     return (
       <Router>
-        <Scene key="root">
-          <Scene key="home" component={Home} initial={true} />
-          <Scene key="highscores" component={Highscores} title="highscores" />
+        <Scene hideNavBar="true" key="root">
+          <Scene key="home" component={Home} initial={true} animation="fade" />
+          <Scene key="highscores" component={Highscores} title="highscores" animation="fade" />
         </Scene>
       </Router>
     )
