@@ -1,9 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import ReactNative from 'react-native'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { DummyActions } from '../actions'
-import DummyComponent from '../components/DummyComponent/DummyComponent';
 
 import { Router, Scene } from 'react-native-redux-router';
 
@@ -22,7 +18,7 @@ class AppContainer extends Component {
   render() {
     const { dummy, dummyActions } = this.props;
     return (
-      <Router dummy={dummy}>
+      <Router>
         <Scene key="root">
           <Scene key="home" component={Home} title="Home" initial={true} />
           <Scene key="highscores" component={Highscores} title="Highscores" />
