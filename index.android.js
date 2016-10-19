@@ -23,8 +23,8 @@ export default class SlotSchaesbergApp extends Component {
       <Router>
         <Scene hideNavBar="true" key="root">
           <Scene key="home" component={Home} initial={true} animation="false" duration='0' />
-          <Scene key="highscores" component={Highscores} animation="false" duration='0' />
           <Scene key="startgame" component={StartGame} animation="false" duration='0' />
+          <Scene key="highscores" component={Highscores} animation="false" duration='0' />
         </Scene>
       </Router>
     )
