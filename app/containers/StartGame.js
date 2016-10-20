@@ -48,30 +48,34 @@ export default class StartGame extends Component {
 
               <View style={styles.niewSpelBox} >  
                 <TextInput 
-                  style={styles.teamNaamInvoer} 
+                  style={[styles.inputFields, styles.teamNaamInvoer]} 
                   placeholder="Teamnaam" 
                   placeholderTextColor="#717171" 
                   underlineColorAndroid="#e5e5e5" 
                   />
 
                 <Picker
+                  style={[styles.inputFields, styles.pickerBox]}
                   selectedValue="java">
                   <Picker.Item label="React Native" value="react-native" />
                   <Picker.Item label="JavaScript" value="js" />
                 </Picker>
 
                 <Picker
+                  style={[styles.inputFields, styles.pickerBox]}
                   selectedValue="java">
                   <Picker.Item label="Java" value="java" />
                   <Picker.Item label="JavaScript" value="js" />
                 </Picker>
 
-                <View>
+                <View style={styles.fotoView} >
                   <Image 
+                    style={styles.fotoImage}
                     source={placeholderGroepsfoto}
                   />
                   <TouchableHighlight>
                     <Image 
+                      style={styles.fotoButton}
                       source={buttonMaakFoto}
                     />
                   </TouchableHighlight>
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginTop: 270,
-    marginBottom: -320,
+    marginBottom: -300,
     height: 500,
 
   },
@@ -150,15 +154,34 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
     width: 234,
-    height: 250,
+    height: 280,
   },
-  teamNaamInvoer: {
+  inputFields: {
+    marginBottom: 10,
     backgroundColor: '#e5e5e5',
-    textAlign: 'center',
     height: 35,
-    fontWeight: 'bold',
     color: '#717171',
     borderRadius: 10,
+  },
+  teamNaamInvoer: {
+    textAlign: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontWeight: 'bold',
+  },
+  pickerBox: {
+  },
+  fotoView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  fotoImage: {
+
+  },
+  fotoButton: {
+
   },
   bottomView: {
     flex: 1,
