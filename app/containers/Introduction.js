@@ -57,11 +57,9 @@ export default class Introduction extends Component {
       },
     };
 
-    changeCharacter = () => {
-          console.log(Object.keys(teksten).length-1);
-          console.log(this.state.tekstNummer);
+    nextScene = () => {
           if(this.state.tekstNummer >= Object.keys(teksten).length-1){
-
+            console.log("Naar volgende scene gaan");
           }
           else{
             this.setState({tekstNummer: this.state.tekstNummer+1})
@@ -72,7 +70,7 @@ export default class Introduction extends Component {
       <IntroWrapper>
           <View style={styles.container}>
             <Image style={styles.karakter}source={teksten[this.state.tekstNummer].naam == 'Ferdinand' ? ferdinand : elisabeth} />
-            <TouchableHighlight onPress={changeCharacter} underlayColor="transparent">
+            <TouchableHighlight onPress={nextScene} underlayColor="transparent">
               <Image style={styles.tekstBallon} source={tekstBallon}>
                 <Text style={[styles.tekstBallonTekst, styles.tekstBallonTitel]}>{teksten[this.state.tekstNummer].naam}</Text>
                 <Text style={styles.tekstBallonTekst}>
