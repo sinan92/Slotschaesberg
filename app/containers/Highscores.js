@@ -107,9 +107,8 @@ const styles = StyleSheet.create({
   },
   groepsNaam: {
     marginLeft: 20,
-    fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'GerstnerBQ-Bold',
+    fontSize: 19,
+    fontFamily: 'Gerstner BQ_bold',
   },
   punten: {
     flexDirection: 'row',
@@ -117,8 +116,8 @@ const styles = StyleSheet.create({
   },
   puntenTekst: {
     marginLeft: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: 'Chalkboard_bold',
   },
   bottomView: {
     flex: 1,

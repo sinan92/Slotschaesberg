@@ -16,6 +16,7 @@ import {
 import Home from './app/containers/Home';
 import Highscores from './app/containers/Highscores';
 import StartGame from './app/containers/StartGame';
+import Introduction from './app/containers/Introduction';
 
 export default class SlotSchaesbergApp extends Component {
   render() {
@@ -25,6 +26,7 @@ export default class SlotSchaesbergApp extends Component {
           <Scene key="home" component={Home} initial={true} animation="false" duration='0' />
           <Scene key="startgame" component={StartGame} animation="false" duration='0' />
           <Scene key="highscores" component={Highscores} animation="false" duration='0' />
+          <Scene key="introduction" component={Introduction} animation="false" duration='0' />
         </Scene>
       </Router>
     )

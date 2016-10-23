@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 
-class MenuWrapper extends Component {
+class IntroWrapper extends Component {
 
   render() {
-    let home_bg = require('../../images/homescreen/home-bg.jpg');
+    let home_bg = require('../../images/introductie/introductie-bg.jpg');
     return (
       <View>
       	<Image source={home_bg} style={styles.home_bg}>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default MenuWrapper;
+export default IntroWrapper;

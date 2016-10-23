@@ -81,7 +81,7 @@ export default class StartGame extends Component {
                   </TouchableHighlight>
                 </View>
 
-                <TouchableHighlight>
+                <TouchableHighlight onPress={Actions.introduction} underlayColor="transparent">
                   <Image source={buttonBeginHetAvontuur}
                   />
                 </TouchableHighlight>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   hoofdTekst: {
     paddingBottom: 5,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Gerstner BQ_bold',
     textAlign: 'center',
   },
   statusTekst: {
@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderTopWidth: 1,
     borderTopColor: '#e5e5e5',
-    fontWeight: 'bold',
+    fontFamily: 'Gerstner BQ_bold',
+    fontSize: 12,
     textAlign: 'center',
   },
   muntenZak: {
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   },
   muntenZakTekst: {
     paddingLeft: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Chalkboard_bold',
     fontSize: 20,
   },
   niewSpelBox: {
