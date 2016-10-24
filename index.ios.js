@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class SlotSchaesbergApp extends Component {
+export default class ReactNativeStarter extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('SlotSchaesbergApp', () => SlotSchaesbergApp);
+AppRegistry.registerComponent('ReactNativeStarter', () => ReactNativeStarter);

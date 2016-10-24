@@ -13,47 +13,106 @@ export default class Home extends Component {
     let vraag6 = require('../images/overview/cirkel-Vraag6.png');
     let vraag7 = require('../images/overview/cirkel-Vraag7.png');
     let vraag8 = require('../images/overview/cirkel-Vraag8.png');
+    let naamBg = require('../images/overview/naam-bg.png');
+    let coinBg = require('../images/overview/cointotaal-placeholder.png');
+    let profile = require('../images/overview/profile.jpg');
+    let munt = require('../images/overview/munt.png');
+
     return (
       <OverviewWrapper>
-          <Image source={vraag1} style={[styles.vraag, styles.vraag1]} />
-          <Image source={vraag2} style={[styles.vraag, styles.vraag2]} />
-          <Image source={vraag3} style={[styles.vraag, styles.vraag3]} />
-          <Image source={vraag4} style={[styles.vraag, styles.vraag4]} />
-          <Image source={vraag5} style={[styles.vraag, styles.vraag5]} />
-          <Image source={vraag6} style={[styles.vraag, styles.vraag6]} />
-          <Image source={vraag7} style={[styles.vraag, styles.vraag7]} />
-          <Image source={vraag8} style={[styles.vraag, styles.vraag8]} />
+          <View style={styles.statusBox}>
+            <Image source={profile} style={styles.profile} />
+            <Image source={naamBg} style={styles.naamBg}>
+              <Text style={styles.profileText}>De Wuppies</Text>
+            </Image>
+            <Image source={coinBg} style={styles.coinBg}>
+              <Image
+                style={styles.coinBgImage}
+                source={munt} />
+              <Text style={styles.coinBgTekst}>
+                  x 20
+              </Text>
+            </Image>
+          </View>
+          <Image source={vraag1} style={[styles.punt, styles.punt1]} />
+          <Image source={vraag2} style={[styles.punt, styles.punt2]} />
+          <Image source={vraag3} style={[styles.punt, styles.punt3]} />
+          <Image source={vraag4} style={[styles.punt, styles.punt4]} />
+          <Image source={vraag5} style={[styles.punt, styles.punt5]} />
+          <Image source={vraag6} style={[styles.punt, styles.punt6]} />
+          <Image source={vraag7} style={[styles.punt, styles.punt7]} />
+          <Image source={vraag8} style={[styles.punt, styles.punt8]} />
       </OverviewWrapper>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  vraag:{
+  profile:{
+    width: 250,
+    height: 200,
+  },
+  profileText:{
+    marginTop: 7,
+    color: 'white',
+    fontSize: 28,
+    fontFamily: 'Gerstner BQ',
+    textAlign: 'center',
+  },
+  statusBox: {
+    position: 'absolute',
+    right: 0,
+    flex: 1,
+    flexDirection: 'column',
+  },
+  naamBg:{
+    marginBottom: 20,
+  },
+  coinBg:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 50,
+  },
+  coinBgTekst:{
+    marginLeft: 5,
+    fontSize: 25,
+    fontFamily: 'Chalkboard',
+    color: 'black',
+  },
+  punt:{
     position: 'absolute',
   },
-  vraag1: {
+  punt1: {
     marginTop: 95,
     marginLeft: 390,
   },
-  vraag2: {
+  punt2: {
     marginTop: 80,
     marginLeft: 760,
   },
-  vraag3: {
-    marginTop: 200,
+  punt3: {
+    marginTop: 360,
+    marginLeft: 105,
   },
-  vraag4: {
-    marginTop: 200,
+  punt4: {
+    marginTop: 495,
+    marginLeft: 470,
   },
-  vraag5: {
-    marginTop: 200,
+  punt5: {
+    marginTop: 220,
+    marginLeft: 890,
   },
-  vraag6: {
-    marginTop: 200,
+  punt6: {
+    marginTop: 460,
+    marginLeft: 840,
   },
-  vraag7: {
+  punt7: {
+    marginTop: 650,
+    marginLeft: 780,
   },
-  vraag8: {
+  punt8: {
+    marginTop: 290,
+    marginLeft: 550,
   },
 });

@@ -1,4 +1,4 @@
-package com.slotschaesbergapp;
+package com.reactnativestarter;
 
 import android.app.Application;
 import android.util.Log;

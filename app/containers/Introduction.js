@@ -18,47 +18,39 @@ export default class Introduction extends Component {
     let ferdinand = require('../images/introductie/ferdinand.png');
     let elisabeth = require('../images/introductie/elisabeth.png');
     let tekstBallon = require('../images/introductie/tekstballon.png');
-    let teksten = {
-      0:{
+    let teksten = [
+      {
         "naam" : "Ferdinand",
         "tekst" : "Hey, ik ben Ferdinand!\nLeuk dat jullie erbij zijn!",
-      },
-      1:{
+      },{
         "naam" : "Elisabeth",
         "tekst" : "En ik ben Elisabeth!\nWelkom in Slot Schaesberg.",
-      },
-      2:{
+      },{
         "naam" : "Elisabeth",
         "tekst" : "Wij zijn jullie gidsen van vandaag!\nFerdinand zal het spel even kort uitleggen.",
-      },
-      3:{
+      },{
         "naam" : "Ferdinand",
         "tekst" : "Het zit zo.. We hebben een speurtocht uitgezet\ndoor het hele slot. Onderweg krijgen jullie op\nverschillende plaatsen een aantal vragen.",
-      },
-      4:{
+      },{
         "naam" : "Ferdinand",
         "tekst" : "Als je deze vragen goed beantwoordt, verdien\nje gouden munten. Als jullie er genoeg\nverdienen krijgen jullie straks een beloning!",
-      },
-      5:{
+      },{
         "naam" : "Elisabeth",
         "tekst" : "Zoals je ziet is dit de kaart van slot\nSchaesberg. Hierop staan de plekken die\nwe jullie gaan laten zien!",
-      },
-      6:{
+      },{
         "naam" : "Elisabeth",
         "tekst" : "Tik op een van de nummers om te zien\nwaar je naar toe moet. Ga eerst met je\ngroepje naar START.",
-      },
-      7:{
+      },{
         "naam" : "Elisabeth",
         "tekst" : "Als je bij de plek bent tik je op het\nnummer en fotografeer je de Schaesplaat.\nDan stellen wij je een vraag!",
-      },
-      8:{
+      },{
         "naam" : "Ferdinand",
         "tekst" : "Veel succes met de speurtocht en tot zo!",
       },
-    };
+    ];
 
     nextScene = () => {
-          if(this.state.tekstNummer >= Object.keys(teksten).length-1){
+          if(this.state.tekstNummer >= teksten.length-1){
             Actions.overview();
           }
           else{

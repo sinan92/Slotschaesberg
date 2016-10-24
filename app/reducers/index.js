@@ -1,6 +1,5 @@
-import { combineReducers } from 'redux'
-import * as dummy from './dummy'
+import counter from './counter';
 
-export default combineReducers(Object.assign(
-	dummy
-));
+export {
+  counter
+};
