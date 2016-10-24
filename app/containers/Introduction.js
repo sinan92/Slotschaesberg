@@ -59,7 +59,7 @@ export default class Introduction extends Component {
 
     nextScene = () => {
           if(this.state.tekstNummer >= Object.keys(teksten).length-1){
-            console.log("Naar volgende scene gaan");
+            Actions.overview();
           }
           else{
             this.setState({tekstNummer: this.state.tekstNummer+1})
