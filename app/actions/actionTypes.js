@@ -1,2 +1,6 @@
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
+
+export const CONFIG_REPLACE = 'CONFIG_REPLACE';
+
+export const FIREBASE_REF_SET = 'FIREBASE_REF_SET';
