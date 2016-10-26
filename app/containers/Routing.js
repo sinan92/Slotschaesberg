@@ -17,6 +17,18 @@ import StartGame from './StartGame';
 import Introduction from './Introduction';
 import Overview from './Overview';
 
+var config = {
+  apiKey: "AIzaSyBV9yjCDY9yP4_mtkgu0KSo_2JcQY8X7c4",
+  authDomain: "slotschaesberg-fa412.firebaseapp.com",
+  databaseURL: "https://slotschaesberg-fa412.firebaseio.com",
+  storageBucket: "slotschaesberg-fa412.appspot.com",
+  messagingSenderId: "118978765760"
+};
+var ref = new Firebase(config.firebaseRef);
+
+var actions = bindActionCreators(/* ... */);
+actions.setFirebaseRef(ref);
+
 class Routing extends Component {
   constructor(props) {
     super(props);
