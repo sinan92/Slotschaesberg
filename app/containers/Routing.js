@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import Counter from '../components/counter';
 import * as counterActions from '../actions/counterActions';
+import * as firebaseActions from '../actions/firebaseActions';
 import { connect } from 'react-redux';
 import { Router, Scene, Route, ActionConst } from 'react-native-router-flux';
 
