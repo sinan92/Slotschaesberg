@@ -4,8 +4,11 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import Counter from '../components/counter';
 import * as counterActions from '../actions/counterActions';
+import * as firebaseActions from '../actions/firebaseRef';
+import * as firebaseConf from '../actions/config';
 import { connect } from 'react-redux';
 import { Router, Scene, Route, ActionConst } from 'react-native-router-flux';
+import * as firebase from 'firebase';
 
 // @connect(state => ({
 //   state: state.counter
@@ -17,22 +20,26 @@ import StartGame from './StartGame';
 import Introduction from './Introduction';
 import Overview from './Overview';
 
-var config = {
+const firebaseConfig = {
   apiKey: "AIzaSyBV9yjCDY9yP4_mtkgu0KSo_2JcQY8X7c4",
   authDomain: "slotschaesberg-fa412.firebaseapp.com",
   databaseURL: "https://slotschaesberg-fa412.firebaseio.com",
   storageBucket: "slotschaesberg-fa412.appspot.com",
   messagingSenderId: "118978765760"
 };
-var ref = new Firebase(config.firebaseRef);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-var actions = bindActionCreators(/* ... */);
-actions.setFirebaseRef(ref);
 
 class Routing extends Component {
   constructor(props) {
     super(props);
+
+    this.itemsRef = firebaseApp.database().ref('/vragen/');
+    this.itemsRef.once('value').then(function(snapshot){ 
+      console.log(snapshot.key())
+    })
   }
+
 
   render() {
     return (
@@ -50,9 +57,9 @@ class Routing extends Component {
 }
 
 export default connect(state => ({
-    state: state.counter
+    state: [state.firebaseReducer]
   }),
   (dispatch) => ({
-    actions: bindActionCreators(counterActions, dispatch)
+    actions: bindActionCreators({...firebaseActions, ...firebaseConf}, dispatch)
   })
 )(Routing);
