@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import * as counterActions from '../actions/counterActions';
 import {bindActionCreators} from 'redux';
 
-export default class Home extends Component {
+class Home extends Component {
 	constructor(props) {
 	  super(props);
 
 	  this.state = {};
     const { state, actions } = this.props;
+    console.log(this.props);
 	}
 
   render() {
@@ -25,9 +26,6 @@ export default class Home extends Component {
                 source={speel_het_spel_knop} 
                 />
             </TouchableHighlight>
-            <Text>
-              {console.log(this.props)}
-            </Text>
             <TouchableHighlight onPress={Actions.highscores} underlayColor="transparent">
               <Image 
                 style={styles.beste_spelers_knop} 
@@ -38,6 +36,14 @@ export default class Home extends Component {
     )
   }
 }
+
+export default connect(state => ({
+    state: state.counter
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(counterActions, dispatch)
+  })
+)(Home);
 
 const styles = StyleSheet.create({
   speel_het_spel_knop: {

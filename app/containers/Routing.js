@@ -31,7 +31,7 @@ class Routing extends Component {
     return (
       <Router>
         <Scene hideNavBar="true" key="root">
-          <Scene counter={state.count} key="home" component={Home} passProps initial={true} animation="false" duration='0' />
+          <Scene key="home" component={Home} passProps initial={true} animation="false" duration='0' />
           <Scene key="startgame" component={StartGame} animation="false" duration='0' />
           <Scene key="highscores" component={Highscores} animation="false" duration='0' />
           <Scene key="introduction" component={Introduction} animation="false" duration='0' />
