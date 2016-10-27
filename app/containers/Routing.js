@@ -4,8 +4,12 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import Counter from '../components/counter';
 import * as counterActions from '../actions/counterActions';
+<<<<<<< HEAD
 import * as firebaseActions from '../actions/firebaseRef';
 import * as firebaseConf from '../actions/config';
+=======
+import * as firebaseActions from '../actions/firebaseActions';
+>>>>>>> 670fd06e3fda6a0ff6d0b119e9b2bdea44ec22d4
 import { connect } from 'react-redux';
 import { Router, Scene, Route, ActionConst } from 'react-native-router-flux';
 import * as firebase from 'firebase';
