@@ -5,17 +5,34 @@ import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
+import Camera from 'react-native-camera';
 
 class StartGame extends Component {
   constructor(props) {
     super(props);
-  
+
+    this.camera = null;
+
     this.state = {
-      name: '',
-      route: 'Kies een route',
-      grade: 'Kies een groep',
-      image: '',
+      camera: {
+        aspect: Camera.constants.Aspect.fill,
+        captureTarget: Camera.constants.CaptureTarget.cameraRoll,
+        type: Camera.constants.Type.back,
+        orientation: Camera.constants.Orientation.auto,
+        flashMode: Camera.constants.FlashMode.auto,
+      },
+      isRecording: false
     };
+
+    this.takePicture = this.takePicture.bind(this);
+  }
+
+  takePicture() {
+    if (this.camera) {
+      this.camera.capture()
+        .then((data) => console.log(data))
+        .catch(err => console.error(err));
+    }
   }
 
   render() {
@@ -33,7 +50,7 @@ class StartGame extends Component {
     toIntroduction = () => {
       console.log(this.props);
       //Actions.introduction();
-    };
+    }
 
     return (
       <MenuWrapper>
@@ -72,13 +89,13 @@ class StartGame extends Component {
                   placeholder="Teamnaam" 
                   placeholderTextColor="#717171" 
                   underlineColorAndroid="#e5e5e5" 
-                  onChangeText={(text) => this.setState({name: text})}
-                  value={this.state.name}
+                  onChangeText={(text) => actions.setName(text)}
+                  value={group.name}
                   />
 
                 <Picker
                   style={[styles.inputFields, styles.pickerBox]}
-                  selectedValue={this.state.grade} 
+                  selectedValue={group.grade} 
                   onValueChange={this.onValueChange.bind(this, 'grade')}>
                   <Picker.Item label="Kies een groep" value="kies-groep" />
                   <Picker.Item label="Groep 1" value="1" />
@@ -93,7 +110,7 @@ class StartGame extends Component {
 
                 <Picker
                   style={[styles.inputFields, styles.pickerBox]}
-                  selectedValue={this.state.route}
+                  selectedValue={group.route}
                   onValueChange={this.onValueChange.bind(this, 'route')}>
                   <Picker.Item label="Kies een route" value="kies-route" />
                   <Picker.Item label="Route 1" value="1" />
@@ -106,7 +123,18 @@ class StartGame extends Component {
                     style={styles.fotoImage}
                     source={placeholderGroepsfoto}
                   />
-                  <TouchableHighlight>
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          aspect={this.state.camera.aspect}
+          captureTarget={this.state.camera.captureTarget}
+          type={this.state.camera.type}
+          flashMode={this.state.camera.flashMode}
+          defaultTouchToFocus
+          mirrorImage={false}
+        />
+                  <TouchableHighlight onPress={this.takePicture}>
                     <Image 
                       style={styles.fotoButton}
                       source={buttonMaakFoto}
@@ -135,9 +163,17 @@ class StartGame extends Component {
 
 
   onValueChange = (key: string, value: string) => {
+    const { group, actions } = this.props;
     const newState = {};
     newState[key] = value;
-    this.setState(newState);
+    console.log(newState);
+    //this.setState(newState);
+    if(key == 'grade'){
+      actions.setGrade(value);
+    }
+    else{
+      actions.setRoute(value);
+    }
   };
 }
 
