@@ -2,19 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
-import { connect } from 'react-redux';
-import * as counterActions from '../actions/counterActions';
-import {bindActionCreators} from 'redux';
 
-class Home extends Component {
-	constructor(props) {
-	  super(props);
-
-	  this.state = {};
-    const { state, actions } = this.props;
-    console.log(this.props);
-	}
-
+export default class Home extends Component {
   render() {
     let speel_het_spel_knop = require('../images/homescreen/button-speel-het-spel.png');
     let beste_spelers_knop = require('../images/homescreen/button-beste-spelers.png');
@@ -36,14 +25,6 @@ class Home extends Component {
     )
   }
 }
-
-export default connect(state => ({
-    state: state.counter
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators(counterActions, dispatch)
-  })
-)(Home);
 
 const styles = StyleSheet.create({
   speel_het_spel_knop: {

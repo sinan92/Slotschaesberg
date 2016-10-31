@@ -1,2 +1,10 @@
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
+
+//Group
+export const SET_GROUP_NAME = 'SET_GROUP_NAME';
+export const SET_GROUP_ROUTE = 'SET_GROUP_ROUTE';
+export const ADD_GROUP_COINS = 'ADD_GROUP_COINS';
+export const REMOVE_GROUP_COINS = 'REMOVE_GROUP_COINS';
+export const SET_GROUP_PROFILE_IMAGE = 'SET_GROUP_IMAGE';
+export const SET_GROUP_CLASS = 'SET_GROUP_GRADE';

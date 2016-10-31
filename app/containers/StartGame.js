@@ -2,9 +2,24 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Picker, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as groupActions from '../actions/groupActions';
 
-export default class StartGame extends Component {
+class StartGame extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      name: '',
+      route: 'Kies een route',
+      grade: 'Kies een groep',
+      image: '',
+    };
+  }
+
   render() {
+    const { group, actions } = this.props;
     let buttonBeginHetAvontuur = require('../images/speel-het-spel/button-begin-het-avontuur.png');
     let buttonMaakFoto = require('../images/speel-het-spel/button-maak-foto.png');
     let buttonSpeelVerder = require('../images/speel-het-spel/button-speel-verder.png');
@@ -14,6 +29,11 @@ export default class StartGame extends Component {
     let placeholderGroepsfoto = require('../images/speel-het-spel/placeholder-groepsfoto.png');
     let verderSpelen = require('../images/speel-het-spel/verder-spelen.png');
     let besteSpelersKnop = require('../images/homescreen/button-beste-spelers.png');
+
+    toIntroduction = () => {
+      console.log(this.props);
+      //Actions.introduction();
+    };
 
     return (
       <MenuWrapper>
@@ -52,20 +72,33 @@ export default class StartGame extends Component {
                   placeholder="Teamnaam" 
                   placeholderTextColor="#717171" 
                   underlineColorAndroid="#e5e5e5" 
+                  onChangeText={(text) => this.setState({name: text})}
+                  value={this.state.name}
                   />
 
                 <Picker
                   style={[styles.inputFields, styles.pickerBox]}
-                  selectedValue="java">
-                  <Picker.Item label="React Native" value="react-native" />
-                  <Picker.Item label="JavaScript" value="js" />
+                  selectedValue={this.state.grade} 
+                  onValueChange={this.onValueChange.bind(this, 'grade')}>
+                  <Picker.Item label="Kies een groep" value="kies-groep" />
+                  <Picker.Item label="Groep 1" value="1" />
+                  <Picker.Item label="Groep 2" value="2" />
+                  <Picker.Item label="Groep 3" value="3" />
+                  <Picker.Item label="Groep 4" value="4" />
+                  <Picker.Item label="Groep 5" value="5" />
+                  <Picker.Item label="Groep 6" value="6" />
+                  <Picker.Item label="Groep 7" value="7" />
+                  <Picker.Item label="Groep 8" value="8" />
                 </Picker>
 
                 <Picker
                   style={[styles.inputFields, styles.pickerBox]}
-                  selectedValue="java">
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
+                  selectedValue={this.state.route}
+                  onValueChange={this.onValueChange.bind(this, 'route')}>
+                  <Picker.Item label="Kies een route" value="kies-route" />
+                  <Picker.Item label="Route 1" value="1" />
+                  <Picker.Item label="Route 2" value="2" />
+                  <Picker.Item label="Route 3" value="3" />
                 </Picker>
 
                 <View style={styles.fotoView} >
@@ -81,7 +114,7 @@ export default class StartGame extends Component {
                   </TouchableHighlight>
                 </View>
 
-                <TouchableHighlight onPress={Actions.introduction} underlayColor="transparent">
+                <TouchableHighlight onPress={toIntroduction} underlayColor="transparent">
                   <Image source={buttonBeginHetAvontuur}
                   />
                 </TouchableHighlight>
@@ -99,7 +132,22 @@ export default class StartGame extends Component {
       </MenuWrapper>
     )
   }
+
+
+  onValueChange = (key: string, value: string) => {
+    const newState = {};
+    newState[key] = value;
+    this.setState(newState);
+  };
 }
+
+export default connect(store => ({
+    group: store.group
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(groupActions, dispatch)
+  })
+)(StartGame);
 
 const styles = StyleSheet.create({
   topView: {

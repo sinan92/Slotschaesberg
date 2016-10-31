@@ -1,5 +1,9 @@
-import counter from './counter';
+import { combineReducers } from 'redux'
 
-export {
-  counter
-};
+import counter from './counter'
+import group from './groupReducer'
+
+export default combineReducers({
+  counter,
+  group,
+})
