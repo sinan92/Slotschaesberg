@@ -28,9 +28,9 @@ export function removeCoins(coins) {
   };
 }
 
-export function setProfileImage(image) {
+export function setGroupImage(image) {
   return {
-    type: types.SET_GROUP_PROFILE_IMAGE,
+    type: types.SET_GROUP_IMAGE,
     image: image
   };
 }

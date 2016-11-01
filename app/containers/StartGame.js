@@ -23,8 +23,7 @@ class StartGame extends Component {
     let besteSpelersKnop = require('../images/homescreen/button-beste-spelers.png');
 
     toIntroduction = () => {
-      console.log(this.props);
-      //Actions.introduction();
+      Actions.introduction();
     }
 
     takePicture = () => {
@@ -100,7 +99,7 @@ class StartGame extends Component {
                 <View style={styles.fotoView} >
                   <Image 
                     style={styles.fotoImage}
-                    source={placeholderGroepsfoto}
+                    source={group.image != null ? {uri: group.image} : placeholderGroepsfoto}
                   />
                   <TouchableHighlight onPress={takePicture}>
                     <Image 
@@ -224,7 +223,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   fotoImage: {
-
+    height: 79,
+    width: 79,
   },
   fotoButton: {
 

@@ -33,7 +33,7 @@ export default function reducer(state = initialState, action = {}) {
     case types.SET_GROUP_IMAGE:
       return {
         ...state,
-        image: actions.image
+        image: action.image
       };
     case types.SET_GROUP_GRADE:
       return {

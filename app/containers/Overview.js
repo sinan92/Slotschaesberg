@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import OverviewWrapper from '../components/WrapperComponents/OverviewWrapper'
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as groupActions from '../actions/groupActions';
 
-export default class Home extends Component {
+class Overview extends Component {
   render() {
     let vraag1 = require('../images/overview/cirkel-Vraag1.png');
     let vraag2 = require('../images/overview/cirkel-Vraag2.png');
@@ -17,24 +20,28 @@ export default class Home extends Component {
     let coinBg = require('../images/overview/cointotaal-placeholder.png');
     let profile = require('../images/overview/profile.jpg');
     let munt = require('../images/overview/munt.png');
+    
+    const {group, actions} = this.props;
 
     return (
       <OverviewWrapper>
           <View style={styles.statusBox}>
-            <Image source={profile} style={styles.profile} />
+            <Image source={{uri: group.image}} style={styles.profile} />
             <Image source={naamBg} style={styles.naamBg}>
-              <Text style={styles.profileText}>De Wuppies</Text>
+              <Text style={styles.profileText}>{group.name}</Text>
             </Image>
             <Image source={coinBg} style={styles.coinBg}>
               <Image
                 style={styles.coinBgImage}
                 source={munt} />
               <Text style={styles.coinBgTekst}>
-                  x 20
+                  x {group.coins}
               </Text>
             </Image>
           </View>
-          <Image source={vraag1} style={[styles.punt, styles.punt1]} />
+          <TouchableHighlight onPress={Actions.modalquestionoverview} style={[styles.punt, styles.punt1]}>
+            <Image source={vraag1} />
+          </TouchableHighlight>
           <Image source={vraag2} style={[styles.punt, styles.punt2]} />
           <Image source={vraag3} style={[styles.punt, styles.punt3]} />
           <Image source={vraag4} style={[styles.punt, styles.punt4]} />
@@ -46,6 +53,14 @@ export default class Home extends Component {
     )
   }
 }
+
+export default connect(store => ({
+    group: store.group
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(groupActions, dispatch)
+  })
+)(Overview);
 
 const styles = StyleSheet.create({
   profile:{

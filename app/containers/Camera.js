@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Image,
   StatusBar,
@@ -7,6 +7,10 @@ import {
   View,
 } from 'react-native';
 import Camera from 'react-native-camera';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as groupActions from '../actions/groupActions';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Example extends React.Component {
+class CameraPage extends Component {
   constructor(props) {
     super(props);
 
@@ -63,7 +67,7 @@ export default class Example extends React.Component {
     this.state = {
       camera: {
         aspect: Camera.constants.Aspect.fill,
-        captureTarget: Camera.constants.CaptureTarget.cameraRoll,
+        captureTarget: Camera.constants.CaptureTarget.disk,
         type: Camera.constants.Type.back,
         orientation: Camera.constants.Orientation.auto,
         flashMode: Camera.constants.FlashMode.auto,
@@ -79,9 +83,12 @@ export default class Example extends React.Component {
   }
 
   takePicture() {
+    const {group, actions} = this.props;
     if (this.camera) {
       this.camera.capture()
-        .then((data) => console.log(data))
+        .then((data) => actions.setGroupImage(data.path))
+        .then(console.log(this.props))
+        .then(Actions.startgame())
         .catch(err => console.error(err));
     }
   }
@@ -251,3 +258,13 @@ export default class Example extends React.Component {
     );
   }
 }
+
+
+
+export default connect(store => ({
+    group: store.group
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(groupActions, dispatch)
+  })
+)(CameraPage);
