@@ -8,32 +8,7 @@ import * as groupActions from '../actions/groupActions';
 import Camera from 'react-native-camera';
 
 class StartGame extends Component {
-  constructor(props) {
-    super(props);
 
-    this.camera = null;
-
-    this.state = {
-      camera: {
-        aspect: Camera.constants.Aspect.fill,
-        captureTarget: Camera.constants.CaptureTarget.cameraRoll,
-        type: Camera.constants.Type.back,
-        orientation: Camera.constants.Orientation.auto,
-        flashMode: Camera.constants.FlashMode.auto,
-      },
-      isRecording: false
-    };
-
-    this.takePicture = this.takePicture.bind(this);
-  }
-
-  takePicture() {
-    if (this.camera) {
-      this.camera.capture()
-        .then((data) => console.log(data))
-        .catch(err => console.error(err));
-    }
-  }
 
   render() {
     const { group, actions } = this.props;
@@ -52,6 +27,10 @@ class StartGame extends Component {
       //Actions.introduction();
     }
 
+    takePicture = () => {
+      Actions.camera();
+    }
+
     return (
       <MenuWrapper>
           <View style={styles.topView}>
@@ -62,13 +41,13 @@ class StartGame extends Component {
                 />
 
               <View style={styles.verderSpelenBox} > 
-                  <Text style={styles.hoofdTekst}>De Wuppies</Text>
-                  <Text style={styles.statusTekst}>Route 1 - Groep 3</Text>
+                  <Text style={styles.hoofdTekst}>{group.name}</Text>
+                  <Text style={styles.statusTekst}>Route {group.route} - Groep {group.grade}</Text>
                   <View style={styles.muntenZak}>
                     <Image
                       source={coinbag}
                     />
-                    <Text style={styles.muntenZakTekst}>x 500</Text>
+                    <Text style={styles.muntenZakTekst}>x {group.coins}</Text>
                   </View>
                   <TouchableHighlight underlayColor="transparent">
                     <Image
@@ -123,18 +102,7 @@ class StartGame extends Component {
                     style={styles.fotoImage}
                     source={placeholderGroepsfoto}
                   />
-        <Camera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          aspect={this.state.camera.aspect}
-          captureTarget={this.state.camera.captureTarget}
-          type={this.state.camera.type}
-          flashMode={this.state.camera.flashMode}
-          defaultTouchToFocus
-          mirrorImage={false}
-        />
-                  <TouchableHighlight onPress={this.takePicture}>
+                  <TouchableHighlight onPress={takePicture}>
                     <Image 
                       style={styles.fotoButton}
                       source={buttonMaakFoto}
@@ -166,14 +134,7 @@ class StartGame extends Component {
     const { group, actions } = this.props;
     const newState = {};
     newState[key] = value;
-    console.log(newState);
-    //this.setState(newState);
-    if(key == 'grade'){
-      actions.setGrade(value);
-    }
-    else{
-      actions.setRoute(value);
-    }
+    actions.setPicker(key, value);
   };
 }
 

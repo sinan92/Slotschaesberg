@@ -40,6 +40,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         grade: action.grade
       };
+    case types.SET_PICKER:
+      const {key, value} = action;
+      const nextState = {};
+      nextState[key] = value;
+      return {
+          ...state, 
+          ...nextState
+      };
     default:
       return state;
   }

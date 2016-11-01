@@ -41,3 +41,11 @@ export function setGrade(grade) {
     grade: grade
   };
 }
+
+export function setPicker(key, value) {
+  return {
+    type: types.SET_PICKER, 
+    key, 
+    value
+  };
+}

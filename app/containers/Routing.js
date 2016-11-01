@@ -8,6 +8,7 @@ import Highscores from './Highscores';
 import StartGame from './StartGame';
 import Introduction from './Introduction';
 import Overview from './Overview';
+import Camera from './Camera';
 
 export default class Routing extends Component {
   render() {
@@ -19,6 +20,7 @@ export default class Routing extends Component {
           <Scene key="highscores" component={Highscores} animation="false" duration='0' />
           <Scene key="introduction" component={Introduction} animation="false" duration='0' />
           <Scene key="overview" component={Overview} animation="false" duration='0' />
+          <Scene key="camera" component={Camera} animation="false" duration='0' />
         </Scene>
       </Router>
     )

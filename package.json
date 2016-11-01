@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "lodash": "^4.16.4",
+    "lodash": "^4.16.5",
     "react": "15.3.2",
     "react-native": "0.35.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
@@ -15,7 +15,7 @@
     "react-native-router-flux": "^3.36.0",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
-    "redux-logger": "^2.7.0",
+    "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0"
   },
   "jest": {
