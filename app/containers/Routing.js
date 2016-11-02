@@ -9,6 +9,7 @@ import StartGame from './StartGame';
 import Introduction from './Introduction';
 import Overview from './Overview';
 import Camera from './Camera';
+import QRCodeScanner from './QRCodeScanner';
 import modalQuestionOverview from './modalQuestionOverview';
 
 export default class Routing extends Component {
@@ -16,15 +17,16 @@ export default class Routing extends Component {
     return (
       <Router>
         <Scene hideNavBar="true" key="root">
-          <Scene key="home" component={Home} passProps animation="false" duration='0' />
+          <Scene key="home" initial={true} component={Home} passProps animation="false" duration='0' />
           <Scene key="startgame" component={StartGame} animation="false" duration='0' />
           <Scene key="highscores" component={Highscores} animation="false" duration='0' />
           <Scene key="introduction" component={Introduction} animation="false" duration='0' />
-          <Scene key="overview" initial={true} component={Modal} animation="false" duration='0'>
+          <Scene key="overview" component={Modal} animation="false" duration='0'>
             <Scene key="overviewPage" component={Overview} animation="false" duration='0' />
             <Scene key="modalquestionoverview" component={modalQuestionOverview} animation="false" duration='0' />
           </Scene>
           <Scene key="camera" component={Camera} animation="false" duration='0' />
+          <Scene key="qrcodescanner" component={QRCodeScanner} animation="false" duration='0' />
         </Scene>
       </Router>
     )

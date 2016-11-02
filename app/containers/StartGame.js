@@ -5,10 +5,14 @@ import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
+import * as questionsActions from '../actions/questionsActions';
 import Camera from 'react-native-camera';
 
 class StartGame extends Component {
-
+  constructor(props) {
+    super(props);
+      this.props.actions.fetchQuestions();
+  }
 
   render() {
     const { group, actions } = this.props;
@@ -24,6 +28,7 @@ class StartGame extends Component {
 
     toIntroduction = () => {
       Actions.introduction();
+      console.log(this.props.questions)
     }
 
     takePicture = () => {
@@ -138,10 +143,11 @@ class StartGame extends Component {
 }
 
 export default connect(store => ({
-    group: store.group
+    group: store.group,
+    questions: store.questions.questions
   }),
   (dispatch) => ({
-    actions: bindActionCreators(groupActions, dispatch)
+    actions: bindActionCreators({...groupActions, ...questionsActions}, dispatch)
   })
 )(StartGame);
 

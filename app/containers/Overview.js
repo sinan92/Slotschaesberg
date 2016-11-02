@@ -5,9 +5,16 @@ import OverviewWrapper from '../components/WrapperComponents/OverviewWrapper'
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
+import * as modalActions from '../actions/modalActions';
+import * as questionsActions from '../actions/questionsActions';
 
 class Overview extends Component {
+  componentDidMount(){
+    console.log(this.props);
+  }
+
   render() {
+    const {questions, group, actions} = this.props;
     let vraag1 = require('../images/overview/cirkel-Vraag1.png');
     let vraag2 = require('../images/overview/cirkel-Vraag2.png');
     let vraag3 = require('../images/overview/cirkel-Vraag3.png');
@@ -20,8 +27,45 @@ class Overview extends Component {
     let coinBg = require('../images/overview/cointotaal-placeholder.png');
     let profile = require('../images/overview/profile.jpg');
     let munt = require('../images/overview/munt.png');
+    let stylesArray = [styles.toegangspoort, styles.bezoekerscentrum, 
+                       styles.ambachtendorp, styles.toren, 
+                       styles.kelders, styles.historischetuin, 
+                       styles.slotgracht, styles.plein
+                      ]
+    let vragen = [vraag1,
+                   vraag2,
+                   vraag3,
+                   vraag4,
+                   vraag5,
+                   vraag6,
+                   vraag7,
+                   vraag8
+    ]
+    let vraag_nrs = [questions[1].vraag_nr,
+                      questions[2].vraag_nr,
+                      questions[3].vraag_nr,
+                      questions[4].vraag_nr,
+                      questions[5].vraag_nr,
+                      questions[6].vraag_nr,
+                      questions[7].vraag_nr,
+                      questions[8].vraag_nr
+                    ]
     
-    const {group, actions} = this.props;
+    const openQuestionOverview = (index) => {
+        Actions.modalquestionoverview();
+        actions.toggleVisibility();
+        actions.getQuestion(index);
+    }
+
+    let vragenItems = []
+    for(let i=0; i < vraag_nrs.length; i++){
+      let currentIndex = i
+      vragenItems.push(
+            <TouchableHighlight key={i} onPress={() => openQuestionOverview(currentIndex+1)} style={[styles.punt, stylesArray[i]]}>
+                <Image source={vragen[vraag_nrs[i]-1]} />
+            </TouchableHighlight>
+      )
+    }
 
     return (
       <OverviewWrapper>
@@ -39,26 +83,22 @@ class Overview extends Component {
               </Text>
             </Image>
           </View>
-          <TouchableHighlight onPress={Actions.modalquestionoverview} style={[styles.punt, styles.punt1]}>
-            <Image source={vraag1} />
-          </TouchableHighlight>
-          <Image source={vraag2} style={[styles.punt, styles.punt2]} />
-          <Image source={vraag3} style={[styles.punt, styles.punt3]} />
-          <Image source={vraag4} style={[styles.punt, styles.punt4]} />
-          <Image source={vraag5} style={[styles.punt, styles.punt5]} />
-          <Image source={vraag6} style={[styles.punt, styles.punt6]} />
-          <Image source={vraag7} style={[styles.punt, styles.punt7]} />
-          <Image source={vraag8} style={[styles.punt, styles.punt8]} />
+
+          
+          {vragenItems}
+
       </OverviewWrapper>
     )
   }
 }
 
 export default connect(store => ({
-    group: store.group
+    group: store.group,
+    modal: store.modal,
+    questions: store.questions.questions,
   }),
   (dispatch) => ({
-    actions: bindActionCreators(groupActions, dispatch)
+    actions: bindActionCreators({...groupActions, ...modalActions, ...questionsActions}, dispatch)
   })
 )(Overview);
 
@@ -98,35 +138,35 @@ const styles = StyleSheet.create({
   punt:{
     position: 'absolute',
   },
-  punt1: {
+  toren: {
     marginTop: 95,
     marginLeft: 390,
   },
-  punt2: {
+  ambachtendorp: {
     marginTop: 80,
     marginLeft: 760,
   },
-  punt3: {
+  slotgracht: {
     marginTop: 360,
     marginLeft: 105,
   },
-  punt4: {
+  plein: {
     marginTop: 495,
     marginLeft: 470,
   },
-  punt5: {
+  historischetuin: {
     marginTop: 220,
     marginLeft: 890,
   },
-  punt6: {
+  bezoekerscentrum: {
     marginTop: 460,
     marginLeft: 840,
   },
-  punt7: {
+  toegangspoort: {
     marginTop: 650,
     marginLeft: 780,
   },
-  punt8: {
+  kelders: {
     marginTop: 290,
     marginLeft: 550,
   },
