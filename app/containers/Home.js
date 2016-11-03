@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
+import BarcodeScanner from 'react-native-barcodescanner';
 
 export default class Home extends Component {
   render() {
