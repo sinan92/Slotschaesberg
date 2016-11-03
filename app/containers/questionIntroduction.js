@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, ListView, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroWrapper'
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as questionsActions from '../actions/questionsActions';
 
-export default class Introduction extends Component {
+class questionIntroduction extends Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -15,6 +18,7 @@ export default class Introduction extends Component {
   }
 
   render() {
+    const {question} = this.props
     let ferdinand = require('../images/introductie/ferdinand.png');
     let elisabeth = require('../images/introductie/elisabeth.png');
     let tekstBallon = require('../images/introductie/tekstballon.png');
@@ -50,7 +54,7 @@ export default class Introduction extends Component {
     ];
 
     nextScene = () => {
-          if(this.state.tekstNummer >= teksten.length-1){
+          if(this.state.tekstNummer >= question.teksten.length-1){
             Actions.overview();
           }
           else{
@@ -61,12 +65,12 @@ export default class Introduction extends Component {
     return (
       <QuestionIntroWrapper>
           <View style={styles.container}>
-            <Image style={styles.karakter}source={teksten[this.state.tekstNummer].naam == 'Ferdinand' ? ferdinand : elisabeth} />
+            <Image style={styles.karakter}source={question.teksten[this.state.tekstNummer].karakter_id == "1" ? ferdinand : elisabeth} />
             <TouchableHighlight onPress={nextScene} underlayColor="transparent">
               <Image style={styles.tekstBallon} source={tekstBallon}>
-                <Text style={[styles.tekstBallonTekst, styles.tekstBallonTitel]}>{teksten[this.state.tekstNummer].naam}</Text>
+                <Text style={[styles.tekstBallonTekst, styles.tekstBallonTitel]}>{question.teksten[this.state.tekstNummer].karakter_id == "1" ? "Ferdinand" : "Elisabeth"}</Text>
                 <Text style={styles.tekstBallonTekst}>
-                    {teksten[this.state.tekstNummer].tekst}
+                    {question.teksten[this.state.tekstNummer].tekst}
                 </Text>
               </Image>
             </TouchableHighlight>
@@ -76,6 +80,14 @@ export default class Introduction extends Component {
   }
 
 }
+
+export default connect(store => ({
+    question: store.questions.currentQuestion
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(questionsActions, dispatch)
+  })
+)(questionIntroduction);
 
 const styles = StyleSheet.create({
   container:{

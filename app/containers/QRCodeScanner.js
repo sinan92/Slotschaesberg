@@ -32,10 +32,12 @@ class QRCodeScanner extends Component {
     var QRCode = QRCode.substr(QRCode.length-8)
 
     if(QRCode == question.qr_code){
-      console.log("Klopt")
+      console.log("Correct")
+      Actions.questionintroduction()
     }
     else{
-      console.log("Fout")
+      console.log("Wrong")
+      Actions.overview()
     }
   }
 

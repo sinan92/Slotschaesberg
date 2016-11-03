@@ -11,6 +11,7 @@ import Overview from './Overview';
 import Camera from './Camera';
 import QRCodeScanner from './QRCodeScanner';
 import modalQuestionOverview from './modalQuestionOverview';
+import questionIntroduction from './questionIntroduction';
 
 export default class Routing extends Component {
   render() {
@@ -27,6 +28,7 @@ export default class Routing extends Component {
           </Scene>
           <Scene key="camera" component={Camera} animation="false" duration='0' />
           <Scene key="qrcodescanner" component={QRCodeScanner} animation="false" duration='0' />
+          <Scene key="questionintroduction" component={questionIntroduction} animation="false" duration='0' />
         </Scene>
       </Router>
     )
