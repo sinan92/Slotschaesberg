@@ -22,40 +22,18 @@ class questionIntroduction extends Component {
     let ferdinand = require('../images/introductie/ferdinand.png');
     let elisabeth = require('../images/introductie/elisabeth.png');
     let tekstBallon = require('../images/introductie/tekstballon.png');
-    let teksten = [
-      {
-        "naam" : "Ferdinand",
-        "tekst" : "Hey, ik ben Ferdinand!\nLeuk dat jullie erbij zijn!",
-      },{
-        "naam" : "Elisabeth",
-        "tekst" : "En ik ben Elisabeth!\nWelkom in Slot Schaesberg.",
-      },{
-        "naam" : "Elisabeth",
-        "tekst" : "Wij zijn jullie gidsen van vandaag!\nFerdinand zal het spel even kort uitleggen.",
-      },{
-        "naam" : "Ferdinand",
-        "tekst" : "Het zit zo.. We hebben een speurtocht uitgezet\ndoor het hele slot. Onderweg krijgen jullie op\nverschillende plaatsen een aantal vragen.",
-      },{
-        "naam" : "Ferdinand",
-        "tekst" : "Als je deze vragen goed beantwoordt, verdien\nje gouden munten. Als jullie er genoeg\nverdienen krijgen jullie straks een beloning!",
-      },{
-        "naam" : "Elisabeth",
-        "tekst" : "Zoals je ziet is dit de kaart van slot\nSchaesberg. Hierop staan de plekken die\nwe jullie gaan laten zien!",
-      },{
-        "naam" : "Elisabeth",
-        "tekst" : "Tik op een van de nummers om te zien\nwaar je naar toe moet. Ga eerst met je\ngroepje naar START.",
-      },{
-        "naam" : "Elisabeth",
-        "tekst" : "Als je bij de plek bent tik je op het\nnummer en fotografeer je de Schaesplaat.\nDan stellen wij je een vraag!",
-      },{
-        "naam" : "Ferdinand",
-        "tekst" : "Veel succes met de speurtocht en tot zo!",
-      },
-    ];
 
     nextScene = () => {
           if(this.state.tekstNummer >= question.teksten.length-1){
-            Actions.overview();
+            if(question.vraag_soort === "Meerkeuze"){
+              Actions.question()
+            }
+            else if(question.vraag_soort === "Open vraag"){
+              Actions.multiplechoice()
+            }
+            else if(question.vraag_soort === "Timer"){
+              Actions.timer()
+            }
           }
           else{
             this.setState({tekstNummer: this.state.tekstNummer+1})
@@ -110,7 +88,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   tekstBallonTitel:{
-    marginTop: 20,
+    marginBottom: -15,
     fontSize: 30,
     color: '#89292a',
     fontFamily: 'Chalkboard_bold',

@@ -23,12 +23,12 @@ export default function reducer(state = initialState, action = {}) {
     case types.ADD_GROUP_COINS:
       return {
         ...state,
-        coins: state.count + action.coins
+        coins: state.coins + action.coins
       };
     case types.REMOVE_GROUP_COINS:
       return {
         ...state,
-        coins: state.count - action.coins
+        coins: state.coins - action.coins
       };
     case types.SET_GROUP_IMAGE:
       return {

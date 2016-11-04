@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   tekstBallonTitel:{
-    marginTop: 20,
+    marginBottom: -15,
     fontSize: 30,
     color: '#89292a',
     fontFamily: 'Chalkboard_bold',

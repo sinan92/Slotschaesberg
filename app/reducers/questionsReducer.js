@@ -4,6 +4,8 @@ const initialState = {
 	fetching: false,
 	questions: [],
 	currentQuestion: [],
+	chosenAnswers: [],
+	reward: 0,
 	error: null,
 }
 
@@ -22,7 +24,26 @@ export default function reducer(state = initialState, action = {}) {
     case types.GET_QUESTION:
       return {
         ...state,
-        currentQuestion: state.questions[action.location]
+        currentQuestion: state.questions[action.location],
+        reward: state.questions[action.location].beloning
+      };
+    case types.REDUCE_REWARD:
+      return {
+        ...state,
+        reward: state.reward-action.amount
+      };
+    case types.INIT_ANSWERS:
+      return {
+        ...state,
+        chosenAnswers: action.answers
+      };
+    case types.TOGGLE_ANSWER:
+   	  const newAnswers = [...state.chosenAnswers]
+      newAnswers[action.id].goed = newAnswers[action.id].goed == "0" ? "1" : "0"
+
+      return {
+        ...state,
+        chosenAnswers: newAnswers
       };
     default:
       return state;

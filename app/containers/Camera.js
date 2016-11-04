@@ -84,9 +84,10 @@ class CameraPage extends Component {
 
   takePicture() {
     const {group, actions} = this.props;
+    console.log("Test")
     if (this.camera) {
       this.camera.capture()
-        .then((data) => actions.setGroupImage(data.path))
+        .then((data) => console.log(data.path))
         .then(console.log(this.props))
         .then(Actions.startgame())
         .catch(err => console.error(err));

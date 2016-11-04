@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import OverviewWrapper from '../components/WrapperComponents/OverviewWrapper'
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -9,10 +9,6 @@ import * as modalActions from '../actions/modalActions';
 import * as questionsActions from '../actions/questionsActions';
 
 class Overview extends Component {
-  componentDidMount(){
-    console.log(this.props);
-  }
-
   render() {
     const {questions, group, actions} = this.props;
     let vraag1 = require('../images/overview/cirkel-Vraag1.png');
@@ -61,7 +57,7 @@ class Overview extends Component {
     for(let i=0; i < vraag_nrs.length; i++){
       let currentIndex = i
       vragenItems.push(
-            <TouchableHighlight key={i} onPress={() => openQuestionOverview(currentIndex+1)} style={[styles.punt, stylesArray[i]]}>
+            <TouchableHighlight underlayColor="transparent" key={i} onPress={() => openQuestionOverview(currentIndex+1)} style={[styles.punt, stylesArray[i]]}>
                 <Image source={vragen[vraag_nrs[i]-1]} />
             </TouchableHighlight>
       )

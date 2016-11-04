@@ -11,6 +11,7 @@ import Routing from './Routing';
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer, undefined, autoRehydrate());
+
 persistStore(store, {
 	storage: AsyncStorage,
 	whitelist: ['group', 'questions'],

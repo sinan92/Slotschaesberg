@@ -19,3 +19,24 @@ export function getQuestion(location) {
     location: location,
   };
 }
+
+export function initAnswers(answers) {
+  return {
+    type: types.INIT_ANSWERS,
+    answers: answers,
+  };
+}
+
+export function toggleAnswer(id) {
+  return {
+    type: types.TOGGLE_ANSWER,
+    id: id,
+  };
+}
+
+export function reduceReward(amount) {
+  return {
+    type: types.REDUCE_REWARD,
+    amount: amount,
+  };
+}

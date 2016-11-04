@@ -18,7 +18,7 @@ class modalQuestionOverview extends Component {
 
     let vraagTitel = require('../images/vraag-popup/banner-vraag.png');
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
-    let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
+    let schild = require('../images/vraag-popup/schild-vraag.png');
     let knop = require('../images/vraag-popup/knop-we-hebben-hem-gevonden.png');
     let munt = require('../images/overview/munt.png');
 
@@ -35,7 +35,7 @@ class modalQuestionOverview extends Component {
               >
                 <View style={styles.vraagTekst}>
                   <Text style={styles.vraagTitel}>Vraag {question.vraag_nr}</Text>
-                  <TouchableHighlight onPress={dismissModal}>
+                  <TouchableHighlight underlayColor="transparent" onPress={dismissModal}>
                     <Text style={styles.vraagKruis}>X</Text>
                   </TouchableHighlight>
                 </View>
@@ -63,13 +63,13 @@ class modalQuestionOverview extends Component {
                 </View>
 
                 <View style={styles.zoekDeSchaesPlaat}>
-                  <Text style={styles.zoekDeSchaesPlaatTekst}>Zoek de Schaesplaat:</Text>
+                  <Text style={styles.zoekDeSchaesPlaatTekst}>Zoek het schild:</Text>
                   <Image
-                    source={boom} />
+                    source={schild} />
                 </View>
 
                 <View style={styles.gevondenKnop}>
-                  <TouchableHighlight onPress={Actions.qrcodescanner}>
+                  <TouchableHighlight underlayColor="transparent" onPress={Actions.qrcodescanner}>
                     <Image source={knop}></Image>
                   </TouchableHighlight>
                 </View>
@@ -96,16 +96,14 @@ const styles = StyleSheet.create({
   vraag: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   vraagTekst: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 5,
   },
   vraagTitel: {
     flex: 0.90,
-    marginTop: 5,
     marginLeft: 100,
     textAlign: 'center',
     color: 'white',
@@ -123,12 +121,12 @@ const styles = StyleSheet.create({
   vraagBox: {
     flexDirection: 'column',
     backgroundColor: 'white',
-    marginTop: -10,
+    marginTop: -20,
     marginLeft: 2,
     paddingRight: 30,
     paddingLeft: 30,
     width: 530,
-    height: 550,
+    height: 600,
   },
   locatie:{
     flexDirection: 'row',
@@ -174,8 +172,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   zoekDeSchaesPlaatTekst:{
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: 5,
+    marginTop: 5,
     fontFamily: "Chalkboard",
     fontSize: 35,
     color: 'black',

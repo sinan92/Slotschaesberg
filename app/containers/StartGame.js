@@ -28,7 +28,7 @@ class StartGame extends Component {
 
     toIntroduction = () => {
       Actions.introduction();
-      console.log(this.props.questions)
+      console.log(this.props.group)
     }
 
     takePicture = () => {
