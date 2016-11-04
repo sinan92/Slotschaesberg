@@ -1,0 +1,2 @@
+include ':.gradle', ':myapplication'
+project(':.gradle').projectDir = new File('android/.gradle')
