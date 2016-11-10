@@ -5,9 +5,19 @@ class MenuWrapper extends Component {
 
   render() {
     let home_bg = require('../../images/homescreen/home-bg.jpg');
+    let ferdinand = require('../../images/homescreen/home-ferdinand.png');
+    let elisabeth = require('../../images/homescreen/home-elisabeth.png');
     return (
       <View>
       	<Image source={home_bg} style={styles.home_bg}>
+          <Image
+            style={styles.ferdinand}
+            source={ferdinand} />
+
+          <Image
+            style={styles.elisabeth}
+            source={elisabeth} />
+          
           <View style={styles.container}>
           	{this.props.children}
           </View>
@@ -26,6 +36,15 @@ const styles = StyleSheet.create({
   home_bg: {
     flex:1,
     resizeMode: 'cover',
+  },
+  ferdinand: {
+    position: 'absolute',
+    bottom: 72,
+  },
+  elisabeth: {
+    position: 'absolute',
+    bottom: 72,
+    right: 0,
   },
 });
 

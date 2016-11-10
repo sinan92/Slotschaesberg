@@ -11,7 +11,7 @@ import * as questionsActions from '../actions/questionsActions';
 class Overview extends Component {
   render() {
     const {questions, group, actions} = this.props;
-    let vraag1 = require('../images/overview/cirkel-Vraag1.png');
+    let vraag1 = require('../images/overview/start.png');
     let vraag2 = require('../images/overview/cirkel-Vraag2.png');
     let vraag3 = require('../images/overview/cirkel-Vraag3.png');
     let vraag4 = require('../images/overview/cirkel-Vraag4.png');

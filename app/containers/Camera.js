@@ -87,9 +87,8 @@ class CameraPage extends Component {
     console.log("Test")
     if (this.camera) {
       this.camera.capture()
-        .then((data) => console.log(data.path))
-        .then(console.log(this.props))
-        .then(Actions.startgame())
+        .then((data) => Actions.startgame({name: this.props.name, grade: this.props.grade, route: this.props.route, image: data.path}))
+        .then((data) => console.log(data))
         .catch(err => console.error(err));
     }
   }

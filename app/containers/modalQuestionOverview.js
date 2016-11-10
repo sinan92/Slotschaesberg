@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import OverviewWrapper from '../components/WrapperComponents/OverviewWrapper'
+import LocatieWrapper from '../components/WrapperComponents/LocatieWrapper'
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
@@ -22,6 +22,8 @@ class modalQuestionOverview extends Component {
     let knop = require('../images/vraag-popup/knop-we-hebben-hem-gevonden.png');
     let munt = require('../images/overview/munt.png');
 
+    console.log(question)
+
     if(modal.visibility){
       return (
           <View></View>
@@ -29,6 +31,7 @@ class modalQuestionOverview extends Component {
     }
     else{
       return (
+          <LocatieWrapper image={question.image}>
             <View style={styles.vraag}>
               <Image 
                 source={vraagTitel} 
@@ -77,6 +80,7 @@ class modalQuestionOverview extends Component {
               </View>
 
             </View>
+          </LocatieWrapper>
       )
     }
   }

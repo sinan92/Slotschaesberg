@@ -11,7 +11,26 @@ import Camera from 'react-native-camera';
 class StartGame extends Component {
   constructor(props) {
     super(props);
-      this.props.actions.fetchQuestions();
+    this.props.actions.fetchQuestions();
+
+    this.state = {
+      name: null,
+      grade: null,
+      route: null,
+      image: null,
+      gameStarted: false,
+    };
+  }
+
+  componentDidMount(){
+    const { group, actions } = this.props;
+    if(this.props.image){
+      this.setState({name: this.props.name, grade: this.props.grade, route: this.props.route, image: this.props.image})
+    }
+
+    if(group.name != null){
+      this.setState({gameStarted: true})
+    }
   }
 
   render() {
@@ -25,26 +44,11 @@ class StartGame extends Component {
     let placeholderGroepsfoto = require('../images/speel-het-spel/placeholder-groepsfoto.png');
     let verderSpelen = require('../images/speel-het-spel/verder-spelen.png');
     let besteSpelersKnop = require('../images/homescreen/button-beste-spelers.png');
+    let verderSpelenContent = null;
 
-    toIntroduction = () => {
-      Actions.introduction();
-      console.log(this.props.group)
-    }
-
-    takePicture = () => {
-      Actions.camera();
-    }
-
-    return (
-      <MenuWrapper>
-          <View style={styles.topView}>
-            <View style={styles.verderSpelen}>
-              <Image 
-                style={styles.verderSpelenTitel} 
-                source={verderSpelen} 
-                />
-
-              <View style={styles.verderSpelenBox} > 
+    if(this.props.group.name != null){
+      verderSpelenContent = (
+                <View>
                   <Text style={styles.hoofdTekst}>{group.name}</Text>
                   <Text style={styles.statusTekst}>Route {group.route} - Groep {group.grade}</Text>
                   <View style={styles.muntenZak}>
@@ -58,6 +62,41 @@ class StartGame extends Component {
                       source={buttonSpeelVerder}
                       />
                   </TouchableHighlight>
+                </View>
+                  )
+    }
+    else{
+      verderSpelenContent = (
+                <View>
+                  <Text style={styles.hoofdTekst}></Text>
+                  <Text style={[styles.statusTekst, {paddingTop: 40}]}>Er is geen spel opgeslagen.</Text>
+                </View>
+                )
+    }
+
+    toIntroduction = () => {
+      actions.setName(this.state.name)
+      actions.setGrade(this.state.grade)
+      actions.setRoute(this.state.route)
+      actions.setGroupImage(this.state.image)
+      Actions.introduction()
+    }
+
+    takePicture = () => {
+      Actions.camera({name: this.state.name, grade: this.state.grade, route: this.state.route})
+    }
+
+    return (
+      <MenuWrapper>
+          <View style={styles.topView}>
+            <View style={styles.verderSpelen}>
+              <Image 
+                style={styles.verderSpelenTitel} 
+                source={verderSpelen} 
+                />
+
+              <View style={styles.verderSpelenBox} > 
+                {verderSpelenContent}
               </View>
 
             </View>
@@ -72,13 +111,13 @@ class StartGame extends Component {
                   placeholder="Teamnaam" 
                   placeholderTextColor="#717171" 
                   underlineColorAndroid="#e5e5e5" 
-                  onChangeText={(text) => actions.setName(text)}
-                  value={group.name}
+                  onChangeText={(text) => this.setState({name: text})}
+                  value={this.state.name}
                   />
 
                 <Picker
                   style={[styles.inputFields, styles.pickerBox]}
-                  selectedValue={group.grade} 
+                  selectedValue={this.state.grade} 
                   onValueChange={this.onValueChange.bind(this, 'grade')}>
                   <Picker.Item label="Kies een groep" value="kies-groep" />
                   <Picker.Item label="Groep 1" value="1" />
@@ -93,7 +132,7 @@ class StartGame extends Component {
 
                 <Picker
                   style={[styles.inputFields, styles.pickerBox]}
-                  selectedValue={group.route}
+                  selectedValue={this.state.route}
                   onValueChange={this.onValueChange.bind(this, 'route')}>
                   <Picker.Item label="Kies een route" value="kies-route" />
                   <Picker.Item label="Route 1" value="1" />
@@ -104,7 +143,7 @@ class StartGame extends Component {
                 <View style={styles.fotoView} >
                   <Image 
                     style={styles.fotoImage}
-                    source={group.image != null ? {uri: group.image} : placeholderGroepsfoto}
+                    source={this.state.image != null ? {uri: this.state.image} : placeholderGroepsfoto}
                   />
                   <TouchableHighlight onPress={takePicture}>
                     <Image 
@@ -135,10 +174,9 @@ class StartGame extends Component {
 
 
   onValueChange = (key: string, value: string) => {
-    const { group, actions } = this.props;
     const newState = {};
     newState[key] = value;
-    actions.setPicker(key, value);
+    this.setState(newState);
   };
 }
 
