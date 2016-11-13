@@ -22,7 +22,6 @@ class modalQuestionOverview extends Component {
     let knop = require('../images/vraag-popup/knop-we-hebben-hem-gevonden.png');
     let munt = require('../images/overview/munt.png');
 
-    console.log(question)
 
     if(modal.visibility){
       return (

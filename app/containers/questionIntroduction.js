@@ -34,8 +34,10 @@ class questionIntroduction extends Component {
             else if(question.vraag_soort === "Timer"){
               Actions.timer()
             }
+            console.log(question.vraag_soort)
           }
           else{
+            console.log("Test")
             this.setState({tekstNummer: this.state.tekstNummer+1})
           }
         };
