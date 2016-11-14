@@ -2,14 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 
 class LocatieWrapper extends Component {
-
   render() {
-    let overview_bg = require(this.props.image);
-    '../../images/locaties/placeholder.png'
-    console.log(this.props)
+    let pictures = [require('../../images/locaties/placeholder.png')]
+
     return (
       <View>
-      	<Image source={overview_bg} style={styles.overview_bg}>
+      	<Image source={pictures[this.props.image]} style={styles.overview_bg}>
           <View style={styles.container}>
           	{this.props.children}
           </View>
