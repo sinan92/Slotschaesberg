@@ -5,6 +5,7 @@ class LocatieWrapper extends Component {
 
   render() {
     let overview_bg = require(this.props.image);
+    '../../images/locaties/placeholder.png'
     console.log(this.props)
     return (
       <View>
