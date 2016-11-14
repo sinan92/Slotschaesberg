@@ -16,8 +16,9 @@ import question from './question';
 import tip from './tip';
 import answeredQuestion from './answeredQuestion';
 import questionCompleted from './questionCompleted';
-import multipleChoice from './multipleChoice';
+import openQuestion from './openQuestion';
 import timer from './timer';
+import dragAndDrop from './dragAndDrop';
 
 export default class Routing extends Component {
   render() {
@@ -39,8 +40,9 @@ export default class Routing extends Component {
           <Scene type="reset" key="tip" component={tip} animation="false" duration='0' />
           <Scene type="reset" key="answeredquestion" component={answeredQuestion} animation="false" duration='0' />
           <Scene type="reset" key="questioncompleted" component={questionCompleted} animation="false" duration='0' />
-          <Scene type="reset" key="multiplechoice" component={multipleChoice} animation="false" duration='0' />
+          <Scene type="reset" key="openquestion" component={openQuestion} animation="false" duration='0' />
           <Scene type="reset" key="timer" component={timer} animation="false" duration='0' />
+          <Scene type="reset" key="draganddrop" component={dragAndDrop} animation="false" duration='0' />
         </Scene>
       </Router>
     )

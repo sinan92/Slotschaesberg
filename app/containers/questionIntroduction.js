@@ -29,15 +29,17 @@ class questionIntroduction extends Component {
               Actions.question()
             }
             else if(question.vraag_soort === "Open vraag"){
-              Actions.multiplechoice()
+              Actions.openquestion()
             }
             else if(question.vraag_soort === "Timer"){
               Actions.timer()
             }
+            else if(question.vraag_soort === "Drag and drop"){
+              Actions.draganddrop()
+            }
             console.log(question.vraag_soort)
           }
           else{
-            console.log("Test")
             this.setState({tekstNummer: this.state.tekstNummer+1})
           }
         };
