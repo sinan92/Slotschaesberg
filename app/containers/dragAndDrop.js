@@ -7,45 +7,68 @@ import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
 import * as questionsActions from '../actions/questionsActions';
 import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroWrapper'
-import Checkbox from '../components/checkbox'
+import FruitGroenten from '../components/fruitGroenten'
 
-class timer extends Component {
+class question extends Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
-      seconds: 900
+      tipTaken: false,
     };
 
+    const {question, actions} = this.props
+    let answers = []
+    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+      answers.push({'goed' : '0'})
+    }
+    actions.initAnswers(answers)
   }
 
   render() {
     const {group, question, actions} = this.props
 
-    
-    setTimeout(() => {
-      if(this.state.seconds > 0){
-        this.setState({seconds: this.state.seconds-1})
-      }
-    }, 1000);
-
     checkAnswer = () => {
+      let answer = true;
+      for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+        if(question.currentQuestion.antwoorden[i].goed != question.chosenAnswers[i].goed){
+          answer = false
+        }
+      }
+      if(answer){
+        //Goed beantwoord
         actions.addCoins(parseInt(question.reward))
         Actions.answeredquestion({status: true})
+      }
+      else{
+        //Fout beantwoord
+        actions.reduceReward(question.reward)
+        Actions.answeredquestion({status: false})
+      }
+    }
+
+    getTip = () => {
+      Actions.tip()
+      if(!this.state.tipTaken){
+        actions.reduceReward(5)
+        this.setState({tipTaken: true})
+      }
     }
 
     let vraagTitel = require('../images/vraag-popup/banner-vraag.png');
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
     let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
-    let knop = require('../images/timer/timer-button.png');
+    let knop = require('../images/Meerkeuze/knop.png');
     let munt = require('../images/overview/munt.png');
-    let timer = require('../images/timer/timer-icon.png');
+    let tip = require('../images/Meerkeuze/tip.png');
 
-    let totalMinutes = Math.floor(this.state.seconds / 60)
-    let minutes = totalMinutes%60
-    let seconds = this.state.seconds - totalMinutes * 60
-    let hours = Math.floor(this.state.seconds / 3600)
-
+    let checkboxes = []
+    console.log(question)
+    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+      checkboxes.push(
+            <FruitGroenten key={i} id={i} text={question.currentQuestion.antwoorden[i].antwoord} checked={false} />
+      )
+    }
 
     return (
         <QuestionIntroWrapper>
@@ -60,29 +83,17 @@ class timer extends Component {
 
             <View style={styles.vraagBox} > 
               <View style={styles.vraagStelling}>
-                <Text style={styles.vraagStellingTekst}>{question.currentQuestion.vraag}</Text>
+                <Text style={styles.vraagStellingTekst}>Sorteer de groenten en het fruit!</Text>
               </View>
 
-              <View style={styles.status}>
-                <View>
-                    <Text style={styles.beloningLabel}>Beloning</Text>
+              <View style={styles.dropBoxen}>
 
-                    <View style={styles.beloning}>
-                      <Image
-                        source={munt} />
-
-                      <Text style={styles.beloningTekst}>x {question.currentQuestion.beloning}</Text>
-                    </View>
-                </View>
               </View>
 
               <View style={styles.antwoordenBox}>
-                <Image source={timer} />
-
-                <Text style={styles.timer}>{hours}:{minutes}:{seconds}</Text>
-                <Text style={styles.antwoorden}>
-                Jullie mogen spelen tot de timer is afgelopen
-                </Text>
+                <View style={styles.antwoorden}>
+                  {checkboxes}
+                </View>
               </View>
 
               <View style={styles.gevondenKnop}>
@@ -106,7 +117,7 @@ export default connect(store => ({
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)
   })
-)(timer);
+)(question);
 
 const styles = StyleSheet.create({
   vraag: {
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
   },
   status:{
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'flex-end',
     paddingRight: 80,
     paddingLeft: 80,
@@ -185,8 +196,8 @@ const styles = StyleSheet.create({
   },
   vraagStellingTekst:{
     marginBottom: 10,
-    fontFamily: "Gerstner BQ",
-    fontSize: 20,
+    fontFamily: "Gerstner BQ_bold",
+    fontSize: 25,
     textAlign: 'center',
     color: 'black',
   },
@@ -204,13 +215,7 @@ const styles = StyleSheet.create({
   antwoorden:{
     flexWrap: 'wrap',
     flexDirection: 'row',
-    fontFamily: "Chalkboard",
-    color: 'black',
-  },
-  timer:{
-    fontFamily: "Chalkboard",
-    color: 'black',
-    fontSize: 25,
+    height: 100,
   },
   gevondenKnop:{
     marginBottom: 10,
