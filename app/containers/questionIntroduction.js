@@ -37,7 +37,6 @@ class questionIntroduction extends Component {
             else if(question.vraag_soort === "Drag and drop"){
               Actions.draganddrop()
             }
-            console.log(question.vraag_soort)
           }
           else{
             this.setState({tekstNummer: this.state.tekstNummer+1})
