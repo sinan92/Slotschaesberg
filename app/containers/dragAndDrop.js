@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import OverviewWrapper from '../components/WrapperComponents/OverviewWrapper'
 import { connect } from 'react-redux';
@@ -8,59 +8,6 @@ import * as groupActions from '../actions/groupActions';
 import * as questionsActions from '../actions/questionsActions';
 import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroWrapper'
 import FruitGroenten from '../components/fruitGroenten'
-import {
-  DragContainer,
-  Draggable,
-  DropZone
-} from '../lib/DragAndDrop'
-
-class MyDropZoneContent extends Component {
-  componentWillReceiveProps({dragOver}) {
-    if (dragOver !== this.props.dragOver) LayoutAnimation.easeInEaseOut();
-  }
-  render() {
-    return <View style={{width: this.props.dragOver ? 110 : 100, height:  this.props.dragOver ? 110 : 100, backgroundColor: '#ddd', alignItems: 'center', justifyContent: 'center'}}>
-      <View>
-        <Text>{"LET GO"}</Text>
-      </View>
-    </View>
-  }
-}
-
-
-class DeleteZone extends Component {
-  componentWillReceiveProps({dragOver}) {
-    if (dragOver !== this.props.dragOver) LayoutAnimation.easeInEaseOut();
-  }
-  render() {
-    return <View style={{top: this.props.dragOver ? 0: -100, height: 100, backgroundColor: 'red', alignItems: 'center', justifyContent: 'center'}}>
-      <View>
-        <Text>{'DELETE'}</Text>
-      </View>
-    </View>
-  }
-}
-
-class DraggyInner extends Component {
-  render() {
-    if (this.props.dragOver && !this.props.ghost && !this.props.dragging) {
-      return <View style={{height: 100, width: 100, backgroundColor: 'green'}} />
-    }
-    let shadows = {shadowColor: 'black', shadowOffset: {width: 0, height: 20}, shadowOpacity: .5, shadowRadius: 20, opacity: .5};
-    return <View style={[{height: 100, width: 100, backgroundColor: this.props.ghost ? '#777' : '#777'}, this.props.dragging ? shadows : null]} />
-  }
-}
-
-
-class Draggy extends Component {
-  render() {
-    return <Draggable data="Whatevs" style={{margin: 7.5}}>
-        <DropZone>
-          <DraggyInner />
-        </DropZone>
-    </Draggable>
-  }
-}
 
 class question extends Component {
   constructor(props) {
@@ -68,7 +15,31 @@ class question extends Component {
 
     this.state = {
       tipTaken: false,
+      showDraggable   : true,
+      dropZoneValues  : null,
+      pan             : new Animated.ValueXY(),
     };
+
+
+    this.panResponder = PanResponder.create({
+        onStartShouldSetPanResponder    : () => true,
+        onPanResponderMove              : Animated.event([null,{
+            dx  : this.state.pan.x,
+            dy  : this.state.pan.y
+        }]),
+        onPanResponderRelease           : (e, gesture) => {
+            if(this.isDropZone(gesture)){
+                this.setState({
+                    showDraggable : false
+                });
+            }else{
+                Animated.spring(
+                    this.state.pan,
+                    {toValue:{x:0,y:0}}
+                ).start();
+            }
+        }
+    });
 
     const {question, actions} = this.props
     let answers = []
@@ -78,6 +49,17 @@ class question extends Component {
     actions.initAnswers(answers)
   }
 
+  isDropZone(gesture){
+      var dz = this.state.dropZoneValues;
+      return gesture.moveY > dz.y && gesture.moveY < dz.y + dz.height;
+  }
+
+  setDropZoneValues(event){
+      this.setState({
+          dropZoneValues : event.nativeEvent.layout
+      });
+  }
+    
   render() {
     const {group, question, actions} = this.props
 
@@ -140,32 +122,7 @@ class question extends Component {
               </View>
 
               <View style={styles.dropBoxen}>
-<DragContainer>
-        <DropZone style={{position: 'absolute', top: 0, left: 0, right: 0, height: 100}} onDrop={() => Alert.alert('DELETE!!!')}>
-          <DeleteZone />
-        </DropZone>
-        <View style={{flex: 1, padding: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-             <DropZone onDrop={e => Alert.alert("Dropped it on area 1")}>
-              <MyDropZoneContent />
-            </DropZone>
-            <DropZone onDrop={e => Alert.alert("Dropped it on area 2")}>
-              <MyDropZoneContent />
-            </DropZone>
-          </View>
-            <View style={{height: 115}}>
-              <ScrollView horizontal={true}>
-              <View style={{justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
-                <Draggy />
-                <Draggy />
-                <Draggy />
-                <Draggy />
-                <Draggy />
-                <Draggy />
-                <Draggy />
-              </View>
-              </ScrollView>
-            </View>
-        </DragContainer>
+
               </View>
 
               <View style={styles.antwoordenBox}>
@@ -186,6 +143,20 @@ class question extends Component {
         </QuestionIntroWrapper>
     )
   }
+
+    renderDraggable(){
+        if(this.state.showDraggable){
+            return (
+                <View style={styles.draggableContainer}>
+                    <Animated.View 
+                        {...this.panResponder.panHandlers}
+                        style={[this.state.pan.getLayout(), styles.circle]}>
+                        <Text style={styles.text}>Drag me!</Text>
+                    </Animated.View>
+                </View>
+            );
+        }
+    }
 }
 
 export default connect(store => ({
