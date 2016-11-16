@@ -58,10 +58,12 @@ class question extends Component {
 
     let panResponders = []
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
-      panResponders.push(this.panResponder(i, this.state.showDraggable))
+      panResponders.push(this.panResponder(i), this.state.showDraggable)
     }
-
-    this.setState({panResponders: panResponders})
+    console.log(panResponders)
+    console.log(this.state.panResponders)
+    this.setState({panResponders: "panResponders"})
+    console.log(this.state.panResponders)
   }
 
   isDropZone(gesture){
@@ -85,7 +87,7 @@ class question extends Component {
         checkboxes.push(
             <View key={i} style={styles.draggableContainer}>
                 <Animated.View 
-                    {...this.state.panResponders[i].panHandlers}
+                    //{...this.state.panResponders[i].panHandlers}
                     style={this.state.pan[i].getLayout()}>
                     <FruitGroenten id={i} text={question.currentQuestion.antwoorden[i].antwoord} />
                 </Animated.View>
