@@ -25,10 +25,10 @@ export default class Routing extends Component {
     return (
       <Router>
         <Scene hideNavBar="true" key="root">
-          <Scene type="reset" key="home" initial={true} component={Home} passProps animation="false" duration='0' />
+          <Scene type="reset" key="home" component={Home} passProps animation="false" duration='0' />
           <Scene type="reset" key="startgame" component={StartGame} animation="false" duration='0' />
           <Scene type="reset" key="highscores" component={Highscores} animation="false" duration='0' />
-          <Scene type="reset" key="introduction" component={Introduction} animation="false" duration='0' />
+          <Scene type="reset" key="introduction" initial={true} component={Introduction} animation="false" duration='0' />
           <Scene type="reset" key="overview" component={Modal} animation="false" duration='0'>
             <Scene key="overviewPage" component={Overview} animation="false" duration='0' />
             <Scene key="modalquestionoverview" component={modalQuestionOverview} animation="false" duration='0' />

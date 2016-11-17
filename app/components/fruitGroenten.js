@@ -65,17 +65,12 @@ class fruitGroenten extends Component {
     }
 
     return (
-      <TouchableHighlight 
-        underlayColor="transparent" 
-        style={styles.TouchableHighlight} 
-        onPress={_onPress}>
 
         <View style={styles.wrapper}>
           <Image
             source={image}
            />
         </View>
-      </TouchableHighlight>
     );
   }
 }
