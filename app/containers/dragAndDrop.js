@@ -81,6 +81,7 @@ class question extends Component {
     let checkboxes = []
     console.log(this.state.panResponders)
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+      console.log(this.state.showDraggable[i])
       if(this.state.showDraggable[i]){
         checkboxes.push(
             <View key={i} style={styles.draggableContainer}>
@@ -93,8 +94,8 @@ class question extends Component {
         )
       }
 
-      return checkboxes
     }
+      return checkboxes
   }
 
   render() {
