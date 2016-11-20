@@ -47,11 +47,13 @@ class question extends Component {
                 this.setState({
                     showDraggable : draggables
                 });
+                console.log("In de dropzone nigguuhh")
             }else{
                 Animated.spring(
                     this.state.pan[number],
                     {toValue:{x:0,y:0}}
                 ).start();
+                console.log("Niet in dropzone :(")
             }
         }
     });
@@ -64,25 +66,42 @@ class question extends Component {
     this.setState({panResponders: panResponders})
   }
 
-  isDropZone(gesture){
-      var dz = this.state.dropZoneValues;
-      return gesture.moveY > dz.y && gesture.moveY < dz.y + dz.height;
+  componentDidMount(){
+    setTimeout(() => {
+        let dropZonesArray = []
+        console.log(this.dropZones.values())
+        Array.from(this.dropZones.values())
+          .forEach(dropZone => {
+            dropZone.measure((ox, oy, width, height, px, py) => {
+              dropZonesArray.push({x: px, y:py, height: height, width: width, zone: dropZone.props.zone})
+            })
+          })
+          console.log(dropZonesArray)
+          this.setState({dropZoneValues: dropZonesArray})
+    }, 0); 
   }
 
-  setDropZoneValues(event){
-      this.setState({
-          dropZoneValues : event.nativeEvent.layout
-      });
+  isDropZone(gesture){
+      var dropZone = this.state.dropZoneValues;
+      let isDropZone = false;
+      Array.from(dropZone)
+        .forEach(dz => {
+          if(!isDropZone){
+            isDropZone = gesture.moveY > dz.y && gesture.moveY < dz.y + dz.height && gesture.moveX > dz.x && gesture.moveX < dz.x + dz.width;
+            if(isDropZone){
+              console.log(dz.zone)
+            }
+          }
+        })
+
+      return isDropZone
   }
 
   renderDraggable(){
     const {question} = this.props
 
     let checkboxes = []
-    console.log(this.state.panResponders)
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
-      console.log(this.state.showDraggable[i])
-      if(this.state.showDraggable[i]){
         checkboxes.push(
             <View key={i} style={styles.draggableContainer}>
                 <Animated.View 
@@ -92,7 +111,6 @@ class question extends Component {
                 </Animated.View>
             </View>
         )
-      }
 
     }
       return checkboxes
@@ -132,8 +150,9 @@ class question extends Component {
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
     let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
     let knop = require('../images/Meerkeuze/knop.png');
-    let munt = require('../images/overview/munt.png');
-    let tip = require('../images/Meerkeuze/tip.png');
+    let fruitKrat = require('../images/sleep-vraag-fruit/krat-fruit.png');
+    let groenteKrat = require('../images/sleep-vraag-fruit/krat-groente.png');
+    this.dropZones = new Map()
 
     return (
         <QuestionIntroWrapper>
@@ -153,11 +172,18 @@ class question extends Component {
 
               <View style={styles.dropBoxen}>
                 <View style={styles.mainContainer}>
-                    <View 
-                        onLayout={this.setDropZoneValues.bind(this)}
-                        style={styles.dropZone}>
-                        <Text style={styles.text}>Drop me here!</Text>
-                    </View>
+                    <Image 
+                        ref={c => this.dropZones.set(0, c)}
+                        zone='fruit'
+                        style={styles.fruitKrat}
+                        source={fruitKrat}>
+                    </Image>
+                    <Image 
+                        ref={c => this.dropZones.set(1, c)}
+                        zone='groente'
+                        style={styles.groenteKrat}
+                        source={groenteKrat}>
+                    </Image>
 
                 </View>
               </View>
@@ -267,7 +293,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   vraagStellingTekst:{
-    marginBottom: 10,
     fontFamily: "Gerstner BQ_bold",
     fontSize: 25,
     textAlign: 'center',
@@ -294,17 +319,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainContainer: {
-      flex    : 1
+      flex    : 1,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
   },
-  dropZone    : {
-      height  : 100,
-      backgroundColor:'#2c3e50'
+  fruitKrat: {
   },
-  text        : {
-      marginTop   : 25,
-      marginLeft  : 5,
-      marginRight : 5,
-      textAlign   : 'center',
-      color       : '#fff'
+  groenteKrat: {
   },
 });
