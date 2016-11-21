@@ -37,6 +37,12 @@ class questionIntroduction extends Component {
             else if(question.vraag_soort === "Drag and drop"){
               Actions.draganddrop()
             }
+            else if(question.vraag_soort === "Spreekwoorden"){
+              Actions.spreekwoorden()
+            }
+            else if(question.vraag_soort === "Kompas"){
+              Actions.kompas()
+            }
           }
           else{
             this.setState({tekstNummer: this.state.tekstNummer+1})

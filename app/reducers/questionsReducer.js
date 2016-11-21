@@ -37,8 +37,16 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         chosenAnswers: action.answers
       };
+    case types.SET_ANSWER:
+      const setNewAnswers = [...state.chosenAnswers]
+      setNewAnswers[action.id].goed = action.value
+
+      return {
+        ...state,
+        chosenAnswers: setNewAnswers
+      };
     case types.TOGGLE_ANSWER:
-   	  const newAnswers = [...state.chosenAnswers]
+      const newAnswers = [...state.chosenAnswers]
       newAnswers[action.id].goed = newAnswers[action.id].goed == "0" ? "1" : "0"
 
       return {

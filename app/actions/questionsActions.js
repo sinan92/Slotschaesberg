@@ -34,6 +34,14 @@ export function toggleAnswer(id) {
   };
 }
 
+export function setAnswer(id, value) {
+  return {
+    type: types.SET_ANSWER,
+    id: id,
+    value: value,
+  };
+}
+
 export function reduceReward(amount) {
   return {
     type: types.REDUCE_REWARD,

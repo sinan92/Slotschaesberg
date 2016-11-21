@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight, Animated, PanResponder } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import OverviewWrapper from '../components/WrapperComponents/OverviewWrapper'
 import { connect } from 'react-redux';
@@ -7,22 +7,125 @@ import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
 import * as questionsActions from '../actions/questionsActions';
 import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroWrapper'
-import Checkbox from '../components/checkbox'
+import FruitGroenten from '../components/fruitGroenten'
 
-class question extends Component {
+class expressionsQuestion extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      tipTaken: false,
-    };
-
     const {question, actions} = this.props
     let answers = []
+    let pans = []
+    let showDraggables = []
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
-      answers.push({'goed' : '0'})
+      answers.push({'goed' : '2'})
+      pans.push(new Animated.ValueXY())
+      showDraggables.push(true)
     }
+    
     actions.initAnswers(answers)
+
+    this.state = {
+      tipTaken: false,
+      showDraggable   : showDraggables,
+      dropZoneValues  : null,
+      pan             : pans,
+      panResponders   : null,
+      currentDraggable: null,
+    };
+  }
+
+  componentWillMount(){
+    const {question, actions} = this.props
+    this.panResponder = (number, draggables) => PanResponder.create({
+        onStartShouldSetPanResponder    : () => true,
+        onPanResponderMove              : Animated.event([null,{
+            dx  : this.state.pan[number].x,
+            dy  : this.state.pan[number].y
+        }]),
+        onPanResponderRelease           : (e, gesture) => {
+            if(this.isDropZone(gesture)){
+                this.setState({
+                    showDraggable : draggables,
+                    currentDraggable: number,
+                });
+            }else{
+                Animated.spring(
+                    this.state.pan[number],
+                    {toValue:{x:0,y:0}}
+                ).start();
+            }
+        }
+    });
+
+    let panResponders = []
+    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+      panResponders.push(this.panResponder(i, this.state.showDraggable))
+    }
+
+    this.setState({panResponders: panResponders})
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+        let dropZonesArray = []
+        console.log(this.dropZones.values())
+        Array.from(this.dropZones.values())
+          .forEach(dropZone => {
+            dropZone.measure((ox, oy, width, height, px, py) => {
+              dropZonesArray.push({x: px, y:py, height: height, width: width, zone: dropZone.props.zone})
+            })
+          })
+          console.log(dropZonesArray)
+          this.setState({dropZoneValues: dropZonesArray})
+    }, 0); 
+  }
+
+  isDropZone(gesture){
+      const {actions} = this.props
+      var dropZone = this.state.dropZoneValues;
+      let isDropZone = false;
+      Array.from(dropZone)
+        .forEach(dz => {
+          if(!isDropZone){
+            isDropZone = gesture.moveY > dz.y && gesture.moveY < dz.y + dz.height && gesture.moveX > dz.x && gesture.moveX < dz.x + dz.width;
+            if(isDropZone){
+              if(dz.zone == "fruit"){
+                setTimeout(() => {
+                  actions.setAnswer(this.state.currentDraggable, 1)
+                  console.log(this.state.currentDraggable)
+                }, 0); 
+              }
+              else{
+                setTimeout(() => {
+                  actions.setAnswer(this.state.currentDraggable, 0)
+                  console.log(this.state.currentDraggable)
+                }, 0); 
+              }
+            }
+          }
+        })
+
+      return isDropZone
+  }
+
+  renderDraggable(){
+    const {question} = this.props
+
+    let checkboxes = []
+    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+        checkboxes.push(
+            <View key={i} style={styles.draggableContainer}>
+                <Animated.View 
+                    {...this.state.panResponders[i].panHandlers}
+                    style={this.state.pan[i].getLayout()}>
+                    <FruitGroenten id={i} text={question.currentQuestion.antwoorden[i].antwoord} />
+                </Animated.View>
+            </View>
+        )
+
+    }
+      return checkboxes
   }
 
   render() {
@@ -36,7 +139,7 @@ class question extends Component {
           answer = false
         }
       }
-
+      
       if(answer){
         //Goed beantwoord
         actions.addCoins(parseInt(question.reward))
@@ -61,16 +164,9 @@ class question extends Component {
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
     let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
     let knop = require('../images/Meerkeuze/knop.png');
-    let munt = require('../images/overview/munt.png');
-    let tip = require('../images/Meerkeuze/tip.png');
-
-    let checkboxes = []
-    console.log(question)
-    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
-      checkboxes.push(
-            <Checkbox key={i} id={i} text={question.currentQuestion.antwoorden[i].antwoord} checked={false} />
-      )
-    }
+    let fruitKrat = require('../images/sleep-vraag-fruit/krat-fruit.png');
+    let groenteKrat = require('../images/sleep-vraag-fruit/krat-groente.png');
+    this.dropZones = new Map()
 
     return (
         <QuestionIntroWrapper>
@@ -85,35 +181,30 @@ class question extends Component {
 
             <View style={styles.vraagBox} > 
               <View style={styles.vraagStelling}>
-                <Text style={styles.vraagStellingTekst}>{question.currentQuestion.vraag}</Text>
+                <Text style={styles.vraagStellingTekst}>Sorteer de groenten en het fruit!</Text>
               </View>
 
-              <View style={styles.status}>
-                <View>
-                    <Text style={styles.beloningLabel}>Beloning</Text>
-
-                    <View style={styles.beloning}>
-                      <Image
-                        source={munt} />
-
-                      <Text style={styles.beloningTekst}>x {question.currentQuestion.beloning}</Text>
-                    </View>
-                </View>
-
-                <View>
-                  <TouchableHighlight onPress={getTip} underlayColor="transparent">
-                    <Image
-                      source={tip}>
-                      <Text style={styles.tipAftrek}>-5</Text>
+              <View style={styles.dropBoxen}>
+                <View style={styles.mainContainer}>
+                    <Image 
+                        ref={c => this.dropZones.set(0, c)}
+                        zone='fruit'
+                        style={styles.fruitKrat}
+                        source={fruitKrat}>
                     </Image>
-                  </TouchableHighlight>
+                    <Image 
+                        ref={c => this.dropZones.set(1, c)}
+                        zone='groente'
+                        style={styles.groenteKrat}
+                        source={groenteKrat}>
+                    </Image>
+
                 </View>
               </View>
 
               <View style={styles.antwoordenBox}>
-                <Text style={styles.antwoordLabel}>Antwoord</Text>
                 <View style={styles.antwoorden}>
-                  {checkboxes}
+                    {this.renderDraggable()}
                 </View>
               </View>
 
@@ -138,7 +229,7 @@ export default connect(store => ({
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)
   })
-)(question);
+)(expressionsQuestion);
 
 const styles = StyleSheet.create({
   vraag: {
@@ -167,6 +258,7 @@ const styles = StyleSheet.create({
   },
   vraagBox: {
     flexDirection: 'column',
+    justifyContent: 'space-between',
     backgroundColor: 'white',
     marginLeft: 2,
     paddingRight: 30,
@@ -215,7 +307,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   vraagStellingTekst:{
-    marginBottom: 10,
     fontFamily: "Gerstner BQ_bold",
     fontSize: 25,
     textAlign: 'center',
@@ -238,7 +329,16 @@ const styles = StyleSheet.create({
     height: 100,
   },
   gevondenKnop:{
-    marginTop: 120,
+    marginBottom: 10,
     alignItems: 'center',
+  },
+  mainContainer: {
+      flex    : 1,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+  },
+  fruitKrat: {
+  },
+  groenteKrat: {
   },
 });

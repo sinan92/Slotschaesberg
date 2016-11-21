@@ -19,6 +19,8 @@ import questionCompleted from './questionCompleted';
 import openQuestion from './openQuestion';
 import timer from './timer';
 import dragAndDrop from './dragAndDrop';
+import expressionsQuestion from './expressionsQuestion';
+import kompas from './compassQuestion';
 
 export default class Routing extends Component {
   render() {
@@ -43,6 +45,8 @@ export default class Routing extends Component {
           <Scene type="reset" key="openquestion" component={openQuestion} animation="false" duration='0' />
           <Scene type="reset" key="timer" component={timer} animation="false" duration='0' />
           <Scene type="reset" key="draganddrop" component={dragAndDrop} animation="false" duration='0' />
+          <Scene type="reset" key="spreekwoorden" component={expressionsQuestion} animation="false" duration='0' />
+          <Scene type="reset" key="kompas" component={kompas} animation="false" duration='0' />
         </Scene>
       </Router>
     )
