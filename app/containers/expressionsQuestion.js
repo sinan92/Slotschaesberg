@@ -160,12 +160,12 @@ class expressionsQuestion extends Component {
       }
     }
 
-    let vraagTitel = require('../images/vraag-popup/banner-vraag.png');
+    let vraagTitel = require('../images/sleep-vraag-spreekwoorden/banner-vraag.png');
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
     let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
     let knop = require('../images/Meerkeuze/knop.png');
     let fruitKrat = require('../images/sleep-vraag-fruit/krat-fruit.png');
-    let groenteKrat = require('../images/sleep-vraag-fruit/krat-groente.png');
+    let sleepVeld = require('../images/sleep-vraag-spreekwoorden/sleep-veld.png');
     this.dropZones = new Map()
 
     return (
@@ -181,31 +181,51 @@ class expressionsQuestion extends Component {
 
             <View style={styles.vraagBox} > 
               <View style={styles.vraagStelling}>
-                <Text style={styles.vraagStellingTekst}>Sorteer de groenten en het fruit!</Text>
+                <Text style={styles.vraagStellingTekst}>Zet de antwoorden bij de juiste spreekwoorden</Text>
               </View>
 
-              <View style={styles.dropBoxen}>
-                <View style={styles.mainContainer}>
-                    <Image 
-                        ref={c => this.dropZones.set(0, c)}
-                        zone='fruit'
-                        style={styles.fruitKrat}
-                        source={fruitKrat}>
-                    </Image>
-                    <Image 
-                        ref={c => this.dropZones.set(1, c)}
-                        zone='groente'
-                        style={styles.groenteKrat}
-                        source={groenteKrat}>
-                    </Image>
+              <View style={styles.spreekwoorden}>
 
+                <View style={styles.antwoordenBox}>
+                  <View style={styles.antwoorden}>
+                      <Text style={styles.sleepVragen}>Zij zijn het tegenovergestelde</Text>
+                      <Text style={styles.sleepVragen}>De nood wordt groot</Text>
+                      <Text style={styles.sleepVragen}>Het is onzinnig werk</Text>
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.antwoordenBox}>
-                <View style={styles.antwoorden}>
-                    {this.renderDraggable()}
+                <View style={styles.dropBoxen}>
+                    <View style={styles.spreekwoordenContainer}>
+                      <Text style={styles.sleepVeldTekst}>Het is water en vuur</Text>
+                      <Image 
+                          ref={c => this.dropZones.set(0, c)}
+                          zone='0'
+                          style={styles.sleepVeld}
+                          source={sleepVeld}>
+                      </Image>
+                    </View>
+
+                    <View style={styles.spreekwoordenContainer}>
+                      <Text style={styles.sleepVeldTekst}>Het water komt aan de lippen</Text>
+                      <Image 
+                          ref={c => this.dropZones.set(1, c)}
+                          zone='1'
+                          style={styles.sleepVeld}
+                          source={sleepVeld}>
+                      </Image>
+                    </View>
+
+                    <View style={styles.spreekwoordenContainer}>
+                      <Text style={styles.sleepVeldTekst}>Het is water naar de zee dragen</Text>
+                      <Image 
+                          ref={c => this.dropZones.set(1, c)}
+                          zone='2'
+                          style={styles.sleepVeld}
+                          source={sleepVeld}>
+                      </Image>
+                    </View>
                 </View>
+
               </View>
 
               <View style={styles.gevondenKnop}>
@@ -242,18 +262,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   vraagTitel: {
-    flex: 0.90,
     textAlign: 'center',
     color: 'white',
     fontFamily: 'Chalkboard',
-    fontSize: 40,
-  },
-  vraagKruis: {
-    flex: 0.10,
-    marginRight: 100,
-    textAlign: 'left',
-    color: 'white',
-    fontFamily: 'Chalkboard_bold',
     fontSize: 40,
   },
   vraagBox: {
@@ -263,7 +274,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     paddingRight: 30,
     paddingLeft: 30,
-    width: 530,
+    width: 783,
     height: 590,
   },
   tipAftrek:{
@@ -273,44 +284,22 @@ const styles = StyleSheet.create({
     fontFamily: "Chalkboard",
     color: 'white',
   },
-  status:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    paddingRight: 80,
-    paddingLeft: 80,
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderBottomColor: '#e5e5e5',
-    borderBottomWidth: 1,
-    borderTopColor: '#e5e5e5',
-    borderTopWidth: 1,
-  },
-  beloningLabel:{
-    fontFamily: "Chalkboard",
-    fontSize: 24,
-    color: 'black',
-  },
-  beloning:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  beloningTekst:{
-    marginLeft: 5,
-    fontFamily: "Chalkboard",
-    fontSize: 24,
-    color: 'black',
-  },
   vraagStelling:{
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 20,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
   },
   vraagStellingTekst:{
     fontFamily: "Gerstner BQ_bold",
     fontSize: 25,
     textAlign: 'center',
     color: 'black',
+  },
+  spreekwoorden:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   antwoordLabel:{
     fontFamily: "Chalkboard",
@@ -319,26 +308,45 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   antwoordenBox:{
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'row',
   },
   antwoorden:{
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    height: 100,
+    marginTop: 42,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 200,
   },
   gevondenKnop:{
     marginBottom: 10,
     alignItems: 'center',
   },
-  mainContainer: {
-      flex    : 1,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
+  dropBoxen:{
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 300,
   },
-  fruitKrat: {
+  spreekwoordenContainer:{
+    alignItems: 'center',
   },
-  groenteKrat: {
+  sleepVeld:{
+
+  },
+  sleepVeldTekst:{
+    fontFamily: "Chalkboard_bold",
+    fontSize: 17,
+    color: 'black',
+  },
+  sleepVragen:{
+    backgroundColor: '#fee9bf',
+    height: 44,
+    fontFamily: "Chalkboard_bold",
+    fontSize: 17,
+    textAlign: 'center',
+    color: 'black',
+    borderColor: '#ba4123',
+    borderWidth: 3,
+    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 });
