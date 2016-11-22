@@ -7,9 +7,9 @@ import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
 import * as questionsActions from '../actions/questionsActions';
 import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroWrapper'
-import FruitGroenten from '../components/fruitGroenten'
+import shuffle from 'shuffle-array'
 
-class question extends Component {
+class expressionsQuestion extends Component {
   constructor(props) {
     super(props);
 
@@ -17,13 +17,18 @@ class question extends Component {
     let answers = []
     let pans = []
     let showDraggables = []
-    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
-      answers.push({'goed' : '2'})
+    let richtingen = ['Noord', 'Oost', 'Zuid', 'West']
+    console.log(question.currentQuestion.antwoorden)
+    for(let i=0; i < richtingen.length; i++){
+      answers.push({'goed' : richtingen.length+1})
       pans.push(new Animated.ValueXY())
       showDraggables.push(true)
     }
     
     actions.initAnswers(answers)
+
+    let j = Array(richtingen.length).fill().map((_, i) => i)
+    j = shuffle(j)
 
     this.state = {
       tipTaken: false,
@@ -32,6 +37,8 @@ class question extends Component {
       pan             : pans,
       panResponders   : null,
       currentDraggable: null,
+      richtingen      : richtingen,
+      randomize       : j,
     };
   }
 
@@ -59,7 +66,7 @@ class question extends Component {
     });
 
     let panResponders = []
-    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+    for(let i=0; i < this.state.richtingen.length; i++){
       panResponders.push(this.panResponder(i, this.state.showDraggable))
     }
 
@@ -76,7 +83,6 @@ class question extends Component {
               dropZonesArray.push({x: px, y:py, height: height, width: width, zone: dropZone.props.zone})
             })
           })
-          console.log(dropZonesArray)
           this.setState({dropZoneValues: dropZonesArray})
     }, 0); 
   }
@@ -90,17 +96,27 @@ class question extends Component {
           if(!isDropZone){
             isDropZone = gesture.moveY > dz.y && gesture.moveY < dz.y + dz.height && gesture.moveX > dz.x && gesture.moveX < dz.x + dz.width;
             if(isDropZone){
-              if(dz.zone == "fruit"){
-                setTimeout(() => {
-                  actions.setAnswer(this.state.currentDraggable, 1)
-                  console.log(this.state.currentDraggable)
-                }, 0); 
-              }
-              else{
-                setTimeout(() => {
-                  actions.setAnswer(this.state.currentDraggable, 0)
-                  console.log(this.state.currentDraggable)
-                }, 0); 
+              switch(dz.zone){
+                case 0:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 0)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
+                case 1:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 1)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
+                case 2:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 2)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
+                default:
+                  console.log("No dropzone")
               }
             }
           }
@@ -110,22 +126,42 @@ class question extends Component {
   }
 
   renderDraggable(){
-    const {question} = this.props
-
+    let j = this.state.randomize;
     let checkboxes = []
-    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+    for(let i=0; i < j.length; i++){
         checkboxes.push(
             <View key={i} style={styles.draggableContainer}>
                 <Animated.View 
-                    {...this.state.panResponders[i].panHandlers}
-                    style={this.state.pan[i].getLayout()}>
-                    <FruitGroenten id={i} text={question.currentQuestion.antwoorden[i].antwoord} />
+                    {...this.state.panResponders[j[i]].panHandlers}
+                    style={this.state.pan[j[i]].getLayout()}>
+                    <Text style={styles.sleepVragen} id={j[i]}>{this.state.richtingen[j[i]]}</Text>
                 </Animated.View>
             </View>
         )
 
     }
       return checkboxes
+
+  }
+
+
+  renderDropZones(){
+    let sleepVeld = require('../images/sleep-vraag-spreekwoorden/sleep-veld.png');
+    let dropZones = []
+    for(let i=0;i<this.state.richtingen.length;i++){
+            dropZones.push(
+              <View key={i} style={styles.spreekwoordenContainer}>
+                <Image 
+                    ref={c => this.dropZones.set(i, c)}
+                    zone={i}
+                    style={styles.sleepVeld}
+                    source={sleepVeld}>
+                </Image>
+              </View>
+              )
+      }
+
+      return dropZones
   }
 
   render() {
@@ -134,7 +170,7 @@ class question extends Component {
     checkAnswer = () => {
       //Vergelijk antwoorden
       let answer = true;
-      for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+      for(let i=0; i < this.state.richtingen.length; i++){
         if(question.currentQuestion.antwoorden[i].goed != question.chosenAnswers[i].goed){
           answer = false
         }
@@ -160,12 +196,11 @@ class question extends Component {
       }
     }
 
-    let vraagTitel = require('../images/vraag-popup/banner-vraag.png');
+    let vraagTitel = require('../images/sleep-vraag-spreekwoorden/banner-vraag.png');
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
-    let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
+    let sleepVeld = require('../images/sleep-vraag-kompas/veld-kompas.png');
     let knop = require('../images/Meerkeuze/knop.png');
-    let fruitKrat = require('../images/sleep-vraag-fruit/krat-fruit.png');
-    let groenteKrat = require('../images/sleep-vraag-fruit/krat-groente.png');
+    let kompas = require('../images/sleep-vraag-kompas/kompasvraag.png');
     this.dropZones = new Map()
 
     return (
@@ -181,31 +216,25 @@ class question extends Component {
 
             <View style={styles.vraagBox} > 
               <View style={styles.vraagStelling}>
-                <Text style={styles.vraagStellingTekst}>Sorteer de groenten en het fruit!</Text>
+                <Text style={styles.vraagStellingTekst}>Zet de antwoorden bij de juiste spreekwoorden</Text>
               </View>
 
-              <View style={styles.dropBoxen}>
-                <View style={styles.mainContainer}>
-                    <Image 
-                        ref={c => this.dropZones.set(0, c)}
-                        zone='fruit'
-                        style={styles.fruitKrat}
-                        source={fruitKrat}>
-                    </Image>
-                    <Image 
-                        ref={c => this.dropZones.set(1, c)}
-                        zone='groente'
-                        style={styles.groenteKrat}
-                        source={groenteKrat}>
-                    </Image>
+              <View style={styles.spreekwoorden}>
 
+                <View style={styles.antwoordenBox}>
+                  <View style={styles.antwoorden}>
+                      {this.renderDraggable()}
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.antwoordenBox}>
-                <View style={styles.antwoorden}>
-                    {this.renderDraggable()}
+                <View style={styles.dropBoxen}>
+                    <Image style={styles.noord} source={sleepVeld}></Image>
+                    <Image style={styles.oost} source={sleepVeld}></Image>
+                    <Image style={styles.zuid} source={sleepVeld}></Image>
+                    <Image style={styles.west} source={sleepVeld}></Image>
+                    <Image style={styles.kompas} source={kompas}></Image>
                 </View>
+
               </View>
 
               <View style={styles.gevondenKnop}>
@@ -229,7 +258,7 @@ export default connect(store => ({
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)
   })
-)(question);
+)(expressionsQuestion);
 
 const styles = StyleSheet.create({
   vraag: {
@@ -242,18 +271,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   vraagTitel: {
-    flex: 0.90,
     textAlign: 'center',
     color: 'white',
     fontFamily: 'Chalkboard',
-    fontSize: 40,
-  },
-  vraagKruis: {
-    flex: 0.10,
-    marginRight: 100,
-    textAlign: 'left',
-    color: 'white',
-    fontFamily: 'Chalkboard_bold',
     fontSize: 40,
   },
   vraagBox: {
@@ -263,7 +283,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     paddingRight: 30,
     paddingLeft: 30,
-    width: 530,
+    width: 783,
     height: 590,
   },
   tipAftrek:{
@@ -273,44 +293,22 @@ const styles = StyleSheet.create({
     fontFamily: "Chalkboard",
     color: 'white',
   },
-  status:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    paddingRight: 80,
-    paddingLeft: 80,
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderBottomColor: '#e5e5e5',
-    borderBottomWidth: 1,
-    borderTopColor: '#e5e5e5',
-    borderTopWidth: 1,
-  },
-  beloningLabel:{
-    fontFamily: "Chalkboard",
-    fontSize: 24,
-    color: 'black',
-  },
-  beloning:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  beloningTekst:{
-    marginLeft: 5,
-    fontFamily: "Chalkboard",
-    fontSize: 24,
-    color: 'black',
-  },
   vraagStelling:{
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 20,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
   },
   vraagStellingTekst:{
     fontFamily: "Gerstner BQ_bold",
     fontSize: 25,
     textAlign: 'center',
     color: 'black',
+  },
+  spreekwoorden:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   antwoordLabel:{
     fontFamily: "Chalkboard",
@@ -319,26 +317,63 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   antwoordenBox:{
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'row',
   },
   antwoorden:{
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    height: 100,
+    marginTop: 42,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 200,
+    marginLeft: 50,
   },
   gevondenKnop:{
     marginBottom: 10,
     alignItems: 'center',
   },
-  mainContainer: {
-      flex    : 1,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
+  spreekwoordenContainer:{
+    alignItems: 'center',
   },
-  fruitKrat: {
+  dropBoxen:{
+    flexDirection: 'column',
+    height: 300,
+    width: 400,
   },
-  groenteKrat: {
+  noord:{
+    position: 'absolute',
+    left: 87,
+    top: -40,
+  },
+  oost:{
+    position: 'absolute',
+    top: 125,
+    left: -120,
+  },
+  zuid:{
+    position: 'absolute',
+    left: 87,
+    top: 290,
+  },
+  west:{
+    position: 'absolute',
+    top: 125,
+    left: 290,
+  },
+  kompas:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sleepVragen:{
+    backgroundColor: '#fee9bf',
+    height: 44,
+    fontFamily: "Chalkboard_bold",
+    fontSize: 17,
+    textAlign: 'center',
+    color: 'black',
+    borderColor: '#ba4123',
+    borderWidth: 3,
+    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    zIndex: 100,
   },
 });

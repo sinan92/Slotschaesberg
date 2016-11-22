@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import * as groupActions from '../actions/groupActions';
 import * as questionsActions from '../actions/questionsActions';
 import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroWrapper'
-import FruitGroenten from '../components/fruitGroenten'
+import shuffle from 'shuffle-array'
 
 class expressionsQuestion extends Component {
   constructor(props) {
@@ -17,13 +17,23 @@ class expressionsQuestion extends Component {
     let answers = []
     let pans = []
     let showDraggables = []
+    let spreekWoorden = []
+    let betekenissen = []
+    console.log(question.currentQuestion.antwoorden)
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
       answers.push({'goed' : '2'})
       pans.push(new Animated.ValueXY())
       showDraggables.push(true)
+      let spreekWoordenBetekenissen = null
+      spreekWoordenBetekenissen = question.currentQuestion.antwoorden[i].antwoord.split(';')
+      betekenissen.push(spreekWoordenBetekenissen[0])
+      spreekWoorden.push(spreekWoordenBetekenissen[1])
     }
     
     actions.initAnswers(answers)
+
+    let j = Array(question.currentQuestion.antwoorden.length).fill().map((_, i) => i)
+    j = shuffle(j)
 
     this.state = {
       tipTaken: false,
@@ -32,6 +42,9 @@ class expressionsQuestion extends Component {
       pan             : pans,
       panResponders   : null,
       currentDraggable: null,
+      spreekWoorden   : spreekWoorden,
+      betekenissen    : betekenissen,
+      randomize       : j,
     };
   }
 
@@ -76,7 +89,6 @@ class expressionsQuestion extends Component {
               dropZonesArray.push({x: px, y:py, height: height, width: width, zone: dropZone.props.zone})
             })
           })
-          console.log(dropZonesArray)
           this.setState({dropZoneValues: dropZonesArray})
     }, 0); 
   }
@@ -90,17 +102,27 @@ class expressionsQuestion extends Component {
           if(!isDropZone){
             isDropZone = gesture.moveY > dz.y && gesture.moveY < dz.y + dz.height && gesture.moveX > dz.x && gesture.moveX < dz.x + dz.width;
             if(isDropZone){
-              if(dz.zone == "fruit"){
-                setTimeout(() => {
-                  actions.setAnswer(this.state.currentDraggable, 1)
-                  console.log(this.state.currentDraggable)
-                }, 0); 
-              }
-              else{
-                setTimeout(() => {
-                  actions.setAnswer(this.state.currentDraggable, 0)
-                  console.log(this.state.currentDraggable)
-                }, 0); 
+              switch(dz.zone){
+                case 0:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 0)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
+                case 1:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 1)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
+                case 2:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 2)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
+                default:
+                  console.log("No dropzone")
               }
             }
           }
@@ -111,21 +133,43 @@ class expressionsQuestion extends Component {
 
   renderDraggable(){
     const {question} = this.props
-
+    let j = this.state.randomize;
     let checkboxes = []
-    for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
+    for(let i=0; i < j.length; i++){
         checkboxes.push(
             <View key={i} style={styles.draggableContainer}>
                 <Animated.View 
-                    {...this.state.panResponders[i].panHandlers}
-                    style={this.state.pan[i].getLayout()}>
-                    <FruitGroenten id={i} text={question.currentQuestion.antwoorden[i].antwoord} />
+                    {...this.state.panResponders[j[i]].panHandlers}
+                    style={this.state.pan[j[i]].getLayout()}>
+                    <Text style={styles.sleepVragen} id={j[i]}>{this.state.betekenissen[j[i]]}</Text>
                 </Animated.View>
             </View>
         )
 
     }
       return checkboxes
+
+  }
+
+
+  renderDropZones(){
+    let sleepVeld = require('../images/sleep-vraag-spreekwoorden/sleep-veld.png');
+    let dropZones = []
+    for(let i=0;i<this.state.spreekWoorden.length;i++){
+            dropZones.push(
+              <View key={i} style={styles.spreekwoordenContainer}>
+                <Text style={styles.sleepVeldTekst}>{this.state.spreekWoorden[i]}</Text>
+                <Image 
+                    ref={c => this.dropZones.set(i, c)}
+                    zone={i}
+                    style={styles.sleepVeld}
+                    source={sleepVeld}>
+                </Image>
+              </View>
+              )
+      }
+
+      return dropZones
   }
 
   render() {
@@ -165,7 +209,6 @@ class expressionsQuestion extends Component {
     let boom = require('../images/vraag-popup/schaesplaatboom.jpg');
     let knop = require('../images/Meerkeuze/knop.png');
     let fruitKrat = require('../images/sleep-vraag-fruit/krat-fruit.png');
-    let sleepVeld = require('../images/sleep-vraag-spreekwoorden/sleep-veld.png');
     this.dropZones = new Map()
 
     return (
@@ -188,42 +231,12 @@ class expressionsQuestion extends Component {
 
                 <View style={styles.antwoordenBox}>
                   <View style={styles.antwoorden}>
-                      <Text style={styles.sleepVragen}>Zij zijn het tegenovergestelde</Text>
-                      <Text style={styles.sleepVragen}>De nood wordt groot</Text>
-                      <Text style={styles.sleepVragen}>Het is onzinnig werk</Text>
+                      {this.renderDraggable()}
                   </View>
                 </View>
 
                 <View style={styles.dropBoxen}>
-                    <View style={styles.spreekwoordenContainer}>
-                      <Text style={styles.sleepVeldTekst}>Het is water en vuur</Text>
-                      <Image 
-                          ref={c => this.dropZones.set(0, c)}
-                          zone='0'
-                          style={styles.sleepVeld}
-                          source={sleepVeld}>
-                      </Image>
-                    </View>
-
-                    <View style={styles.spreekwoordenContainer}>
-                      <Text style={styles.sleepVeldTekst}>Het water komt aan de lippen</Text>
-                      <Image 
-                          ref={c => this.dropZones.set(1, c)}
-                          zone='1'
-                          style={styles.sleepVeld}
-                          source={sleepVeld}>
-                      </Image>
-                    </View>
-
-                    <View style={styles.spreekwoordenContainer}>
-                      <Text style={styles.sleepVeldTekst}>Het is water naar de zee dragen</Text>
-                      <Image 
-                          ref={c => this.dropZones.set(1, c)}
-                          zone='2'
-                          style={styles.sleepVeld}
-                          source={sleepVeld}>
-                      </Image>
-                    </View>
+                    {this.renderDropZones()}
                 </View>
 
               </View>
@@ -329,7 +342,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sleepVeld:{
-
+    zIndex: 1,
   },
   sleepVeldTekst:{
     fontFamily: "Chalkboard_bold",
@@ -348,5 +361,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 15,
     paddingRight: 15,
+    zIndex: 100,
   },
 });
