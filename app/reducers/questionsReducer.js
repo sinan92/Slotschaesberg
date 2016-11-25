@@ -7,6 +7,7 @@ const initialState = {
 	chosenAnswers: [],
 	reward: 0,
 	error: null,
+  completedQuestions: null,
 }
 
 export default function reducer(state = initialState, action = {}) {

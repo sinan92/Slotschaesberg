@@ -17,10 +17,10 @@ class expressionsQuestion extends Component {
     let answers = []
     let pans = []
     let showDraggables = []
-    let richtingen = ['Noord', 'Oost', 'Zuid', 'West']
+    let richtingen = [{naam: 'Noord', goed: 0}, {naam: 'Oost', goed: 1}, {naam: 'Zuid', goed: 2}, {naam: 'West', goed: 3}]
     console.log(question.currentQuestion.antwoorden)
     for(let i=0; i < richtingen.length; i++){
-      answers.push({'goed' : richtingen.length+1})
+      answers.push({'goed' : richtingen.length+1}) //Niet bestaand default invoeren
       pans.push(new Animated.ValueXY())
       showDraggables.push(true)
     }
@@ -115,6 +115,12 @@ class expressionsQuestion extends Component {
                     console.log(this.state.currentDraggable)
                   }, 0); 
                   break;
+                case 3:
+                  setTimeout(() => {
+                    actions.setAnswer(this.state.currentDraggable, 3)
+                    console.log(this.state.currentDraggable)
+                  }, 0); 
+                  break;
                 default:
                   console.log("No dropzone")
               }
@@ -128,13 +134,14 @@ class expressionsQuestion extends Component {
   renderDraggable(){
     let j = this.state.randomize;
     let checkboxes = []
+    console.log(j)
     for(let i=0; i < j.length; i++){
         checkboxes.push(
             <View key={i} style={styles.draggableContainer}>
                 <Animated.View 
                     {...this.state.panResponders[j[i]].panHandlers}
                     style={this.state.pan[j[i]].getLayout()}>
-                    <Text style={styles.sleepVragen} id={j[i]}>{this.state.richtingen[j[i]]}</Text>
+                    <Text style={styles.sleepVragen} id={j[i]}>{this.state.richtingen[j[i]].naam}</Text>
                 </Animated.View>
             </View>
         )
@@ -146,18 +153,17 @@ class expressionsQuestion extends Component {
 
 
   renderDropZones(){
-    let sleepVeld = require('../images/sleep-vraag-spreekwoorden/sleep-veld.png');
+    let sleepVeld = require('../images/sleep-vraag-kompas/veld-kompas.png');
     let dropZones = []
+    let dropZoneStyles = [styles.noord, styles.oost, styles.zuid, styles.west]
     for(let i=0;i<this.state.richtingen.length;i++){
             dropZones.push(
-              <View key={i} style={styles.spreekwoordenContainer}>
-                <Image 
+                  <Image
+                    key={i}
                     ref={c => this.dropZones.set(i, c)}
-                    zone={i}
-                    style={styles.sleepVeld}
-                    source={sleepVeld}>
-                </Image>
-              </View>
+                    zone={i} 
+                    style={[dropZoneStyles[i], styles.richtingen]} 
+                    source={sleepVeld} />
               )
       }
 
@@ -170,8 +176,10 @@ class expressionsQuestion extends Component {
     checkAnswer = () => {
       //Vergelijk antwoorden
       let answer = true;
+      console.log(this.state.richtingen)
+      console.log(question.chosenAnswers)
       for(let i=0; i < this.state.richtingen.length; i++){
-        if(question.currentQuestion.antwoorden[i].goed != question.chosenAnswers[i].goed){
+        if(this.state.richtingen[i].goed != question.chosenAnswers[i].goed){
           answer = false
         }
       }
@@ -198,7 +206,6 @@ class expressionsQuestion extends Component {
 
     let vraagTitel = require('../images/sleep-vraag-spreekwoorden/banner-vraag.png');
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
-    let sleepVeld = require('../images/sleep-vraag-kompas/veld-kompas.png');
     let knop = require('../images/Meerkeuze/knop.png');
     let kompas = require('../images/sleep-vraag-kompas/kompasvraag.png');
     this.dropZones = new Map()
@@ -228,10 +235,7 @@ class expressionsQuestion extends Component {
                 </View>
 
                 <View style={styles.dropBoxen}>
-                    <Image style={styles.noord} source={sleepVeld}></Image>
-                    <Image style={styles.oost} source={sleepVeld}></Image>
-                    <Image style={styles.zuid} source={sleepVeld}></Image>
-                    <Image style={styles.west} source={sleepVeld}></Image>
+                    {this.renderDropZones()}
                     <Image style={styles.kompas} source={kompas}></Image>
                 </View>
 
@@ -338,25 +342,24 @@ const styles = StyleSheet.create({
     height: 300,
     width: 400,
   },
-  noord:{
+  richtingen:{
     position: 'absolute',
+  },
+  noord:{
     left: 87,
     top: -40,
   },
   oost:{
-    position: 'absolute',
     top: 125,
-    left: -120,
+    left: 290,
   },
   zuid:{
-    position: 'absolute',
     left: 87,
     top: 290,
   },
   west:{
-    position: 'absolute',
     top: 125,
-    left: 290,
+    left: -120,
   },
   kompas:{
     justifyContent: 'center',
