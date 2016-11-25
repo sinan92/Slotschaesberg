@@ -19,6 +19,7 @@ class Overview extends Component {
     let vraag6 = require('../images/overview/cirkel-Vraag6.png');
     let vraag7 = require('../images/overview/cirkel-Vraag7.png');
     let vraag8 = require('../images/overview/cirkel-Vraag8.png');
+    let afgerond = require('../images/overview/vraag-afgerond.png');
     let naamBg = require('../images/overview/naam-bg.png');
     let coinBg = require('../images/overview/cointotaal-placeholder.png');
     let profile = require('../images/overview/profile.jpg');
@@ -37,28 +38,35 @@ class Overview extends Component {
                    vraag7,
                    vraag8
     ]
-    let vraag_nrs = [questions[1].vraag_nr,
-                      questions[2].vraag_nr,
-                      questions[3].vraag_nr,
-                      questions[4].vraag_nr,
-                      questions[5].vraag_nr,
-                      questions[6].vraag_nr,
-                      questions[7].vraag_nr,
-                      questions[8].vraag_nr
+    let vraag_nrs = [questions.questions[1].vraag_nr,
+                      questions.questions[2].vraag_nr,
+                      questions.questions[3].vraag_nr,
+                      questions.questions[4].vraag_nr,
+                      questions.questions[5].vraag_nr,
+                      questions.questions[6].vraag_nr,
+                      questions.questions[7].vraag_nr,
+                      questions.questions[8].vraag_nr
                     ]
     
     const openQuestionOverview = (index) => {
+      if(questions.completedQuestions[index-1]){
         Actions.modalquestionoverview();
         actions.toggleVisibility();
         actions.getQuestion(index);
+      }
     }
 
     let vragenItems = []
     for(let i=0; i < vraag_nrs.length; i++){
       let currentIndex = i
+      let imageSource = vragen[vraag_nrs[i]-1]
+      if(questions.completedQuestions[i+1]){
+        imageSource = afgerond
+      }
+
       vragenItems.push(
             <TouchableHighlight underlayColor="transparent" key={i} onPress={() => openQuestionOverview(currentIndex+1)} style={[styles.punt, stylesArray[i]]}>
-                <Image source={vragen[vraag_nrs[i]-1]} />
+                <Image source={imageSource} />
             </TouchableHighlight>
       )
     }
@@ -91,7 +99,7 @@ class Overview extends Component {
 export default connect(store => ({
     group: store.group,
     modal: store.modal,
-    questions: store.questions.questions,
+    questions: store.questions,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...groupActions, ...modalActions, ...questionsActions}, dispatch)

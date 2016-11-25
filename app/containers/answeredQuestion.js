@@ -15,7 +15,7 @@ class answeredQuestion extends Component {
   }
 
   render() {
-    const {question} = this.props
+    const {actions, question} = this.props
     let ferdinand = require('../images/introductie/ferdinand.png');
     let elisabeth = require('../images/introductie/elisabeth.png');
     let tekstBallon = require('../images/introductie/tekstballon.png');
@@ -31,7 +31,13 @@ class answeredQuestion extends Component {
     let tekstNummer = this.props.status == true ? 0 : 1 
 
     _onPress = () => {
-          Actions.questioncompleted()
+          if(tekstNummer){
+            Actions.pop() //Fout beantwoord, terug naar vraag
+          }
+          else{
+            actions.completedQuestion(question.vraag_nr)
+            Actions.questioncompleted() //Vraag goed beantwoord, doorgaan
+          }
         };
 
     return (

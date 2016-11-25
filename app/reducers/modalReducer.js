@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-  visibility: true,
+  visibility: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -10,6 +10,16 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         visibility: !state.visibility
+      };
+    case types.ENABLE_VISIBILITY:
+      return {
+        ...state,
+        visibility: true
+      };
+    case types.DISABLE_VISIBILITY:
+      return {
+        ...state,
+        visibility: false
       };
     default:
       return state;

@@ -48,3 +48,10 @@ export function reduceReward(amount) {
     amount: amount,
   };
 }
+
+export function completedQuestion(id) {
+  return {
+    type: types.COMPLETED_QUESTION,
+    id: id,
+  };
+}

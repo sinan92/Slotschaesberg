@@ -191,7 +191,7 @@ class expressionsQuestion extends Component {
       }
       else{
         //Fout beantwoord
-        actions.reduceReward(question.reward)
+        actions.reduceReward(5)
         Actions.answeredquestion({status: false})
       }
     }

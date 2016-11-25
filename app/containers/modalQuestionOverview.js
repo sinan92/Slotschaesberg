@@ -13,8 +13,14 @@ class modalQuestionOverview extends Component {
     const {question, modal, actions} = this.props;
 
     dismissModal = () => {
-      actions.toggleVisibility();
+      actions.toggleVisibility()
     }
+
+    goToCamera = () => {
+      actions.disableVisibility()
+      Actions.qrcodescanner()
+    }
+
 
     let vraagTitel = require('../images/vraag-popup/banner-vraag.png');
     let locatieAfbeelding = require('../images/vraag-popup/locatie.jpg');
@@ -23,7 +29,7 @@ class modalQuestionOverview extends Component {
     let munt = require('../images/overview/munt.png');
 
 
-    if(modal.visibility){
+    if(!modal.visibility){
       return (
           <View></View>
         )
@@ -71,7 +77,7 @@ class modalQuestionOverview extends Component {
                 </View>
 
                 <View style={styles.gevondenKnop}>
-                  <TouchableHighlight underlayColor="transparent" onPress={Actions.qrcodescanner}>
+                  <TouchableHighlight underlayColor="transparent" onPress={goToCamera}>
                     <Image source={knop}></Image>
                   </TouchableHighlight>
                 </View>
