@@ -9,6 +9,12 @@ import * as modalActions from '../actions/modalActions';
 import * as questionsActions from '../actions/questionsActions';
 
 class Overview extends Component {
+  constructor(props) {
+    super(props);
+  
+    console.log(this.props.questions)
+  }
+
   render() {
     const {questions, group, actions} = this.props;
     let vraag1 = require('../images/overview/start.png');

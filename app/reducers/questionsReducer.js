@@ -1,13 +1,15 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-	fetching: false,
+  allQuestions: [],
 	questions: [],
 	currentQuestion: [],
 	chosenAnswers: [],
 	reward: 0,
 	error: null,
   completedQuestions: new Array(8),
+  route: 1,
+  grade: 2,
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -15,12 +17,27 @@ export default function reducer(state = initialState, action = {}) {
     case types.FETCH_QUESTIONS_SUCCESS:
       return {
         ...state,
-        questions: action.payload
+        allQuestions: action.payload
       };
     case types.FETCH_QUESTIONS_FAILURE:
       return {
         ...state,
         error: action.payload
+      };
+    case types.GET_QUESTIONS:
+      return {
+        ...state,
+        questions: state.allQuestions[state.route][state.grade]
+      };
+    case types.SET_GROUP_ROUTE:
+      return {
+        ...state,
+        route: action.route
+      };
+    case types.SET_GROUP_GRADE:
+      return {
+        ...state,
+        grade: action.grade
       };
     case types.GET_QUESTION:
       return {
@@ -37,14 +54,6 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         chosenAnswers: action.answers
-      };
-    case types.COMPLETED_QUESTION:
-      const addCompletedQuestion = [...state.completedQuestions]
-      addCompletedQuestion[action.id] = true
-
-      return {
-        ...state,
-        completedQuestions: addCompletedQuestion
       };
     case types.SET_ANSWER:
       const setNewAnswers = [...state.chosenAnswers]

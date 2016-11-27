@@ -2,8 +2,6 @@ import * as types from '../actions/actionTypes';
 
 const initialState = {
   name: null,
-  route: null,
-  grade: null,
   coins: 0,
   image: null,
 };
@@ -14,11 +12,6 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         name: action.name
-      };
-    case types.SET_GROUP_ROUTE:
-      return {
-        ...state,
-        route: action.route
       };
     case types.ADD_GROUP_COINS:
       return {
@@ -34,11 +27,6 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         image: action.image
-      };
-    case types.SET_GROUP_GRADE:
-      return {
-        ...state,
-        grade: action.grade
       };
     case types.SET_PICKER:
       const {key, value} = action;

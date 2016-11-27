@@ -75,10 +75,28 @@ class StartGame extends Component {
     }
 
     toIntroduction = () => {
+      let grade = 1;
+      let dealer = Number.parseInt(this.state.grade)
+      switch(dealer){
+        case 3:
+        case 4:
+          grade = 1 //Niveau 1
+          break
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+          grade = 2 //Niveau 2
+          break
+        default:
+          grade = 1 //Niveau 1
+      }
+
       actions.setName(this.state.name)
-      actions.setGrade(this.state.grade)
+      actions.setGrade(grade)
       actions.setRoute(this.state.route)
       actions.setGroupImage(this.state.image)
+      actions.getQuestions()
       Actions.introduction()
     }
 
@@ -120,8 +138,6 @@ class StartGame extends Component {
                   selectedValue={this.state.grade} 
                   onValueChange={this.onValueChange.bind(this, 'grade')}>
                   <Picker.Item label="Kies een groep" value="kies-groep" />
-                  <Picker.Item label="Groep 1" value="1" />
-                  <Picker.Item label="Groep 2" value="2" />
                   <Picker.Item label="Groep 3" value="3" />
                   <Picker.Item label="Groep 4" value="4" />
                   <Picker.Item label="Groep 5" value="5" />

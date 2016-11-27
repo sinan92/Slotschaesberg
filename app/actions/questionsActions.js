@@ -5,6 +5,7 @@ export function fetchQuestions(city) {
   return function (dispatch) { 
     axios.get('http://visia-ontwikkeling.nl/sinan/index.php?route=1&niveau=1')
       .then((response) => {
+        console.log(response.data)
         dispatch({type: "FETCH_QUESTIONS_SUCCESS", payload: response.data})
       })
       .catch((err) => {
@@ -12,6 +13,20 @@ export function fetchQuestions(city) {
       })
   }
 };
+
+export function setRoute(route) {
+  return {
+    type: types.SET_GROUP_ROUTE,
+    route: route
+  };
+}
+
+export function setGrade(grade) {
+  return {
+    type: types.SET_GROUP_GRADE,
+    grade: grade
+  };
+}
 
 export function getQuestion(location) {
   return {
@@ -53,5 +68,11 @@ export function completedQuestion(id) {
   return {
     type: types.COMPLETED_QUESTION,
     id: id,
+  };
+}
+
+export function getQuestions() {
+  return {
+    type: types.GET_QUESTIONS,
   };
 }
