@@ -12,7 +12,7 @@ class Overview extends Component {
   constructor(props) {
     super(props);
   
-    console.log(this.props.questions)
+    console.log(this.props.questions.completedQuestions)
   }
 
   render() {
@@ -55,15 +55,20 @@ class Overview extends Component {
                     ]
     
     const openQuestionOverview = (index) => {
-      if(questions.completedQuestions[index-1]){
         Actions.modalquestionoverview();
         actions.toggleVisibility();
         actions.getQuestion(index);
+    }
+
+    let completedQuestionsCount = 1;
+    for(let i = 1;i < questions.completedQuestions.length; i++){
+      if(questions.completedQuestions[i] == true){
+        completedQuestionsCount = completedQuestionsCount + 1
       }
     }
 
     let vragenItems = []
-    for(let i=0; i < vraag_nrs.length; i++){
+    for(let i=0; i < completedQuestionsCount; i++){
       let currentIndex = i
       let imageSource = vragen[vraag_nrs[i]-1]
       if(questions.completedQuestions[i+1]){

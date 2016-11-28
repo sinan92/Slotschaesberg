@@ -7,7 +7,7 @@ const initialState = {
 	chosenAnswers: [],
 	reward: 0,
 	error: null,
-  completedQuestions: new Array(8),
+  completedQuestions: new Array(),
   route: 1,
   grade: 2,
 }
@@ -62,6 +62,14 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         chosenAnswers: setNewAnswers
+      };
+    case types.COMPLETED_QUESTION:
+      const addCompletedQuestion = [...state.completedQuestions]
+      addCompletedQuestion[action.id] = true
+
+      return {
+        ...state,
+        completedQuestions: addCompletedQuestion
       };
     case types.TOGGLE_ANSWER:
       const newAnswers = [...state.chosenAnswers]

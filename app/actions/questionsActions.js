@@ -1,11 +1,10 @@
 import * as types from './actionTypes';
 import axios from 'axios';
 
-export function fetchQuestions(city) {
+export function fetchQuestions() {
   return function (dispatch) { 
-    axios.get('http://visia-ontwikkeling.nl/sinan/index.php?route=1&niveau=1')
+    axios.get('http://visia-ontwikkeling.nl/sinan/index.php')
       .then((response) => {
-        console.log(response.data)
         dispatch({type: "FETCH_QUESTIONS_SUCCESS", payload: response.data})
       })
       .catch((err) => {

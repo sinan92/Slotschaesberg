@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import { View, ListView, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as scoresActions from '../actions/scoresActions';
 
-export default class Highscores extends Component {
+class Highscores extends Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let highScoresData = [{empty: true}]
+    if(this.props.scores != null){
+      highScoresData = this.props.scores
+    }
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2', 'row 3', 'row 4']),
+      dataSource: ds.cloneWithRows(highScoresData),
     };
+    console.log(this.props.scores)
   }
 
   render() {
@@ -48,6 +56,7 @@ export default class Highscores extends Component {
     let derdePlaats = require('../images/highscores/cup-3e-plaats.png');
     let vierdePlaats = require('../images/highscores/4e-plaats.jpg');
     let puntenZak = require('../images/highscores/coinbag.png');
+    console.log(rowData)
 
     let ranks = [eerstePlaats, tweedePlaats, derdePlaats, vierdePlaats];
     let colors = ['#efefef', '#ffffff'];
@@ -55,25 +64,44 @@ export default class Highscores extends Component {
          styles.besteSpelersItem, 
          {'backgroundColor': colors[rowID % colors.length]}
        ];
-    return(
-        <View style={style}>
-          <View style={styles.rank}>
-            <Image
-              source={ranks[rowID]}
-            />
-            <Text style={styles.groepsNaam}>De Wuppies</Text>
+    if(rowData.empty){
+      return (
+          <View style={style}>
+            <View style={styles.rank}>
+              <Text style={styles.groepsNaam}>Er zijn nog geen scores.</Text>
+            </View>
           </View>
-          <View style={styles.punten}>
-            <Image
-              source={puntenZak}
-            />
-            <Text style={styles.puntenTekst} >x300</Text>
+        )
+    }
+    else{
+      return(
+          <View style={style}>
+            <View style={styles.rank}>
+              <Image
+                source={ranks[rowID]}
+              />
+              <Text style={styles.groepsNaam}>{rowData.naam}</Text>
+            </View>
+            <View style={styles.punten}>
+              <Image
+                source={puntenZak}
+              />
+              <Text style={styles.puntenTekst} >x{rowData.score}</Text>
+            </View>
           </View>
-        </View>
-      )
+        )
+    }
   }
 
 }
+
+export default connect(store => ({
+    scores: store.scorelist.scores
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({...scoresActions}, dispatch)
+  })
+)(Highscores);
 
 const styles = StyleSheet.create({
   topView: {
