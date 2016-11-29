@@ -57,7 +57,7 @@ class StartGame extends Component {
                     />
                     <Text style={styles.muntenZakTekst}>x {group.coins}</Text>
                   </View>
-                  <TouchableHighlight underlayColor="transparent">
+                  <TouchableHighlight onPress={Actions.overview} underlayColor="transparent">
                     <Image
                       source={buttonSpeelVerder}
                       />

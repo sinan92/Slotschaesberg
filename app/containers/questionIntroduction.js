@@ -9,9 +9,7 @@ import * as questionsActions from '../actions/questionsActions';
 class questionIntroduction extends Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2', 'row 3', 'row 4']),
       tekstNummer: 0,
       toggleCharacter: true,
     };

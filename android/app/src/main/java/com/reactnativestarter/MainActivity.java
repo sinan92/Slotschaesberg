@@ -2,6 +2,7 @@ package com.reactnativestarter;
 
 import com.facebook.react.ReactActivity;
 import com.eguma.barcodescanner.BarcodeScannerPackage;
+import com.brentvatne.react.ReactVideoPackage;
 
 public class MainActivity extends ReactActivity {
 

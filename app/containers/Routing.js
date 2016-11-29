@@ -21,6 +21,8 @@ import timer from './timer';
 import dragAndDrop from './dragAndDrop';
 import expressionsQuestion from './expressionsQuestion';
 import kompas from './compassQuestion';
+import gameFinishedPopUp from './gameFinishedPopUp';
+import gameFinishedTexts from './gameFinishedTexts';
 
 export default class Routing extends Component {
   render() {
@@ -38,8 +40,8 @@ export default class Routing extends Component {
           <Scene type="reset" key="camera" component={Camera} animation="false" duration='0' />
           <Scene type="reset" key="qrcodescanner" component={QRCodeScanner} animation="false" duration='0' />
           <Scene type="reset" key="questionintroduction" component={questionIntroduction} animation="false" duration='0' />
-          <Scene type="reset" key="question" component={question} animation="false" duration='0' />
-          <Scene type="reset" key="tip" component={tip} animation="false" duration='0' />
+          <Scene key="question" component={question} animation="false" duration='0' />
+          <Scene key="tip" component={tip} animation="false" duration='0' />
           <Scene key="answeredquestion" component={answeredQuestion} animation="false" duration='0' />
           <Scene type="reset" key="questioncompleted" component={questionCompleted} animation="false" duration='0' />
           <Scene type="reset" key="openquestion" component={openQuestion} animation="false" duration='0' />
@@ -47,6 +49,8 @@ export default class Routing extends Component {
           <Scene type="reset" key="draganddrop" component={dragAndDrop} animation="false" duration='0' />
           <Scene type="reset" key="spreekwoorden" component={expressionsQuestion} animation="false" duration='0' />
           <Scene type="reset" key="kompas" component={kompas} animation="false" duration='0' />
+          <Scene key="gamefinishedtexts" component={gameFinishedTexts} animation="false" duration='0' />
+          <Scene key="gamefinishedpopup" component={gameFinishedPopUp} animation="false" duration='0' />
         </Scene>
       </Router>
     )

@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
     marginBottom: 70,
   },
   vraagBox: {
+    flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white',
     marginLeft: 2,
     paddingRight: 30,
     paddingLeft: 30,
     width: 530,
-    height: 320,
   },
   tipView:{
     borderTopColor: '#e5e5e5',
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 20,
     alignItems: 'center',
+    flex: 1,
   },
   vraagStellingTekst:{
     marginBottom: 10,
@@ -98,24 +99,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
   },
-  antwoordLabel:{
-    fontFamily: "Chalkboard",
-    fontSize: 25,
-    textAlign: 'center',
-    color: 'black',
-  },
-  antwoordenBox:{
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  antwoorden:{
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    height: 100,
-  },
   gevondenKnop:{
-    marginTop: 50,
+    marginBottom: 10,
     alignItems: 'center',
   },
 });

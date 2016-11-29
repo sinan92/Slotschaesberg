@@ -28,7 +28,6 @@ class Overview extends Component {
     let afgerond = require('../images/overview/vraag-afgerond.png');
     let naamBg = require('../images/overview/naam-bg.png');
     let coinBg = require('../images/overview/cointotaal-placeholder.png');
-    let profile = require('../images/overview/profile.jpg');
     let munt = require('../images/overview/munt.png');
     let stylesArray = [styles.toegangspoort, styles.bezoekerscentrum, 
                        styles.ambachtendorp, styles.toren, 
@@ -65,6 +64,11 @@ class Overview extends Component {
       if(questions.completedQuestions[i] == true){
         completedQuestionsCount = completedQuestionsCount + 1
       }
+    }
+
+    //Alle vragen af
+    if(completedQuestionsCount === questions.completedQuestions.length){
+      //Actions.gamefinishedtexts();
     }
 
     let vragenItems = []
