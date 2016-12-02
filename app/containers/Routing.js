@@ -23,6 +23,7 @@ import expressionsQuestion from './expressionsQuestion';
 import kompas from './compassQuestion';
 import gameFinishedPopUp from './gameFinishedPopUp';
 import gameFinishedTexts from './gameFinishedTexts';
+import videoPlayer from './videoPlayer';
 
 export default class Routing extends Component {
   render() {
@@ -51,6 +52,7 @@ export default class Routing extends Component {
           <Scene type="reset" key="kompas" component={kompas} animation="false" duration='0' />
           <Scene key="gamefinishedtexts" component={gameFinishedTexts} animation="false" duration='0' />
           <Scene key="gamefinishedpopup" component={gameFinishedPopUp} animation="false" duration='0' />
+          <Scene key="videoplayer" component={videoPlayer} animation="false" duration='0' />
         </Scene>
       </Router>
     )

@@ -28,7 +28,17 @@ class modalQuestionOverview extends Component {
     let schild = require('../images/vraag-popup/schild-vraag.png');
     let knop = require('../images/vraag-popup/knop-we-hebben-hem-gevonden.png');
     let munt = require('../images/overview/munt.png');
-    let video = require('../videos/HISTORISCHETUIN.mp4');
+    let thumbnail = require('../images/vraag-popup/video-thumbnail.jpg');
+    let videos = [
+              require('../videos/HISTORISCHETUIN.mp4'), //0n
+              require('../videos/HISTORISCHETUIN.mp4'), //1n
+              require('../videos/HISTORISCHETUIN.mp4'), //2n
+              require('../videos/TOREN.mp4'), //3
+              require('../videos/KELDER.mp4'), //4
+              require('../videos/HISTORISCHETUIN.mp4'), //5
+              require('../videos/SLOTGRACHT.mp4'), //6
+              require('../videos/PLEIN.mp4') //7
+              ]
 
 
     if(!modal.visibility){
@@ -54,25 +64,12 @@ class modalQuestionOverview extends Component {
               <View style={styles.vraagBox} > 
                 <View style={styles.locatie}>
                   <View style={styles.locatieAfbeeldingView}>
-                      <Video source={video}   // Can be a URL or a local file.
-                         ref={(ref) => {
-                           this.player = ref
-                         }}                             // Store reference
-                         rate={1.0}                     // 0 is paused, 1 is normal.
-                         volume={1.0}                   // 0 is muted, 1 is normal.
-                         muted={false}                  // Mutes the audio entirely.
-                         paused={true}                 // Pauses playback entirely.
-                         resizeMode="cover"             // Fill the whole screen at aspect ratio.
-                         repeat={true}                  // Repeat forever.
-                         playInBackground={false}       // Audio continues to play when app entering background.
-                         playWhenInactive={false}       // [iOS] Video continues to play when control or notification center are shown.
-                         progressUpdateInterval={250.0} // [iOS] Interval to fire onProgress (default to ~250ms)
-                         onLoadStart={this.loadStart}   // Callback when video starts to load
-                         onLoad={this.setDuration}      // Callback when video loads
-                         onProgress={this.setTime}      // Callback every ~250ms with currentTime
-                         onEnd={this.onEnd}             // Callback when playback finishes
-                         onError={this.videoError}      // Callback when video cannot be loaded
-                         style={styles.locatieAfbeelding} />
+                    <TouchableHighlight style={styles.video} onPress={() => Actions.videoplayer({paused: false, restart: true, video: videos[question.image]})}>
+                      <View>
+                        <Image source={thumbnail}
+                               style={styles.locatieVideo} />
+                      </View>
+                    </TouchableHighlight>
                   </View>
                   <View style={styles.locatieTeksten}>
                       <Text style={styles.locatieTekstenLocatieLabel}>Locatie</Text>
@@ -157,6 +154,7 @@ const styles = StyleSheet.create({
   },
   locatie:{
     flexDirection: 'row',
+    alignItems: 'center',
   },
   locatieAfbeeldingView:{
     flex: 0.5,
@@ -182,6 +180,10 @@ const styles = StyleSheet.create({
     fontFamily: "Chalkboard",
     fontSize: 24,
     color: 'black',
+  },
+  locatieVideo:{
+    width: 227,
+    height: 152,
   },
   beloning:{
     flexDirection: 'row',

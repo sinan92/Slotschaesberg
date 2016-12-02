@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   overview_bg: {
     flex:1,
     resizeMode: 'cover',
+    zIndex: 1,
   },
 });
 

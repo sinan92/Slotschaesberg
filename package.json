@@ -15,7 +15,7 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-camera-android": "^1.0.7",
     "react-native-router-flux": "^3.36.0",
-    "react-native-video": "^0.9.0",
+    "react-native-video": "github:react-native-community/react-native-video#dbaea9c0ebf32d8e6f0066d9e02268fb8bdebdf5",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
