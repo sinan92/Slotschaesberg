@@ -14,6 +14,7 @@ class question extends Component {
     super(props);
 
     const {question, actions} = this.props
+    console.log("Test")
     let answers = []
     let pans = []
     let showDraggables = []

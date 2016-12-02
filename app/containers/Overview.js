@@ -68,7 +68,7 @@ class Overview extends Component {
 
     //Alle vragen af
     if(completedQuestionsCount === questions.completedQuestions.length){
-      //Actions.gamefinishedtexts();
+      Actions.gamefinishedtexts();
     }
 
     let vragenItems = []
