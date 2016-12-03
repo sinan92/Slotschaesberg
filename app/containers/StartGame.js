@@ -12,6 +12,7 @@ class StartGame extends Component {
   constructor(props) {
     super(props);
     this.props.actions.fetchQuestions();
+    console.log(this.props)
 
     this.state = {
       name: null,
@@ -75,6 +76,9 @@ class StartGame extends Component {
     }
 
     toIntroduction = () => {
+      actions.deleteQuestions()
+      actions.deleteGroup()
+
       let grade = 1;
       let dealer = Number.parseInt(this.state.grade)
       switch(dealer){
@@ -91,6 +95,7 @@ class StartGame extends Component {
         default:
           grade = 1 //Niveau 1
       }
+
 
       actions.setName(this.state.name)
       actions.setGrade(grade)

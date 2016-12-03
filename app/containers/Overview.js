@@ -67,7 +67,7 @@ class Overview extends Component {
     }
 
     //Alle vragen af
-    if(completedQuestionsCount === questions.completedQuestions.length){
+    if(completedQuestionsCount === 2){
       Actions.gamefinishedtexts();
     }
 

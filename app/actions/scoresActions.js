@@ -15,17 +15,14 @@ export function fetchScores() {
 
 export function saveScore(naam, score) {
   return function (dispatch) { 
-    axios.post('http://visia-ontwikkeling.nl/sinan/gebruikerOpslaan.php',
-    {
+    axios.get('http://visia-ontwikkeling.nl/sinan/gebruikerOpslaan.php',
+      {params: {
     	password: 'tidycode',
     	naam: naam,
     	score: score
-    })
+    }})
       .then((response) => {
         dispatch({type: "SAVE_SCORE_SUCCESS", payload: response.data})
-        console.log(naam)
-        console.log(score)
-        console.log(response.data)
       })
       .catch((err) => {
         dispatch({type: "SAVE_SCORE_FAILURE", payload: err})

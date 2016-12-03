@@ -35,3 +35,9 @@ export function setPicker(key, value) {
     value
   };
 }
+
+export function deleteGroup() {
+  return {
+    type: types.DELETE_GROUP
+  };
+}

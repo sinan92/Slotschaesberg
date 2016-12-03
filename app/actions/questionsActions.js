@@ -75,3 +75,9 @@ export function getQuestions() {
     type: types.GET_QUESTIONS,
   };
 }
+
+export function deleteQuestions() {
+  return {
+    type: types.DELETE_QUESTIONS
+  };
+}

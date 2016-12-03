@@ -51,7 +51,7 @@ export default class Routing extends Component {
           <Scene type="reset" key="spreekwoorden" component={expressionsQuestion} animation="false" duration='0' />
           <Scene type="reset" key="kompas" component={kompas} animation="false" duration='0' />
           <Scene key="gamefinishedtexts" component={gameFinishedTexts} animation="false" duration='0' />
-          <Scene key="gamefinishedpopup" component={gameFinishedPopUp} animation="false" duration='0' />
+          <Scene type="reset" key="gamefinishedpopup" component={gameFinishedPopUp} animation="false" duration='0' />
           <Scene key="videoplayer" component={videoPlayer} animation="false" duration='0' />
         </Scene>
       </Router>

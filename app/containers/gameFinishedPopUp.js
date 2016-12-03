@@ -34,9 +34,16 @@ class gameFinishedPopUp extends Component {
       NetInfo.isConnected.fetch().then(isConnected => {
         if(isConnected){
           this.setState({waarschuwing: false})
+          
+          //Scores opslaan
           actions.saveScore(group.name, group.coins)
-          //TODO: Wis user
-          //Actions.home()
+
+          //Wis groep, en reset vragen
+          actions.deleteGroup()
+          actions.deleteQuestions()
+
+          //Terug naar home
+          Actions.home()
         }
         else{
           this.setState({waarschuwing: true})
@@ -69,7 +76,7 @@ class gameFinishedPopUp extends Component {
 
     if(this.state.waarschuwing){
       return(
-        <OverviewWrapper image={question.image}>
+        <OverviewWrapper image={question != undefined ? question.image : null}>
           <View style={styles.waarschuwingsVraag}>
             <Image 
               source={vraagTitel} 
@@ -105,7 +112,7 @@ class gameFinishedPopUp extends Component {
     }
     else{
       return (
-          <GameFinishedWrapper image={question.image}>
+          <GameFinishedWrapper image={question != undefined ? question.image : null}>
             <View style={styles.vraag}>
               <Image 
                 source={vraagTitel} 

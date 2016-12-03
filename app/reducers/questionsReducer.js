@@ -79,6 +79,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         chosenAnswers: newAnswers
       };
+    case types.DELETE_QUESTIONS:
+      return {
+        ...state,
+        completedQuestions: new Array(),
+        currentQuestion: [],
+        chosenAnswers: [],
+        reward: 0,
+      }
     default:
       return state;
   }

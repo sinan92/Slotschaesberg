@@ -13,7 +13,6 @@ class LocatieWrapper extends Component {
               require('../../images/locaties/Slotgracht.jpg'), //6
               require('../../images/locaties/Plein.jpg') //7
               ]
-              console.log(this.props.image)
 
     return (
       <View>

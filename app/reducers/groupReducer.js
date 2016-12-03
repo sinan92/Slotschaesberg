@@ -8,6 +8,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case types.DELETE_GROUP:
+      return initialState;
     case types.SET_GROUP_NAME:
       return {
         ...state,
