@@ -8,6 +8,7 @@ const initialState = {
 	reward: 0,
 	error: null,
   completedQuestions: new Array(),
+  visibleQuestionsCount: 0,
   route: 1,
   grade: 2,
 }
@@ -71,6 +72,11 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         completedQuestions: addCompletedQuestion
       };
+    case types.INCREMENT_VISIBLE_QUESTIONS_COUNT:
+      return {
+        ...state,
+        visibleQuestionsCount: state.visibleQuestionsCount+1
+      };
     case types.TOGGLE_ANSWER:
       const newAnswers = [...state.chosenAnswers]
       newAnswers[action.id].goed = newAnswers[action.id].goed == "0" ? "1" : "0"
@@ -86,6 +92,7 @@ export default function reducer(state = initialState, action = {}) {
         currentQuestion: [],
         chosenAnswers: [],
         reward: 0,
+        visibleQuestionsCount: 0,
       }
     default:
       return state;

@@ -13,18 +13,36 @@ class Home extends Component {
     this.props.actions.fetchScores();
   }
 
+  componentWillReceiveProps(nextProps){
+    nextProps.music.backgroundMusic.play()
+    nextProps.music.backgroundMusic.setNumberOfLoops(-1)
+  }
+
   render() {
+    console.log(this.props)
+    let buttonClickSound = this.props.music.buttonClick;
+
+    speelHetSpelKnop = () => {
+      buttonClickSound.play()
+      Actions.startgame()
+    }
+
+    scoresKnop = () => {
+      buttonClickSound.play()
+      Actions.highscores()
+    }
+
     let speel_het_spel_knop = require('../images/homescreen/button-speel-het-spel.png');
     let beste_spelers_knop = require('../images/homescreen/button-beste-spelers.png');
     return (
       <MenuWrapper>
-            <TouchableHighlight onPress={Actions.startgame} underlayColor="transparent">
+            <TouchableHighlight onPress={speelHetSpelKnop} underlayColor="transparent">
               <Image 
                 style={styles.speel_het_spel_knop} 
                 source={speel_het_spel_knop} 
                 />
             </TouchableHighlight>
-            <TouchableHighlight onPress={Actions.highscores} underlayColor="transparent">
+            <TouchableHighlight onPress={scoresKnop} underlayColor="transparent">
               <Image 
                 style={styles.beste_spelers_knop} 
                 source={beste_spelers_knop} 
@@ -36,7 +54,8 @@ class Home extends Component {
 }
 
 export default connect(store => ({
-    scores: store.scorelist.scores
+    scores: store.scorelist.scores,
+    music: store.music
   }),
   (dispatch) => ({
     actions: bindActionCreators({...scoresActions}, dispatch)

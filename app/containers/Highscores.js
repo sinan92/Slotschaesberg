@@ -17,12 +17,18 @@ class Highscores extends Component {
     this.state = {
       dataSource: ds.cloneWithRows(highScoresData),
     };
-    console.log(this.props.scores)
   }
 
   render() {
     let terug = require('../images/highscores/terug-knop.png');
     let besteSpelersTitel = require('../images/highscores/banner-beste-spelers.png');
+    let buttonClickSound = this.props.music.buttonClick;
+
+    terugKnop = () => {
+      buttonClickSound.play()
+      Actions.home()
+    }
+
     return (
       <MenuWrapper>
           <View style={styles.topView}>
@@ -40,7 +46,7 @@ class Highscores extends Component {
             </View>
           </View>
           <View style={styles.bottomView}>
-            <TouchableHighlight onPress={Actions.home} underlayColor="transparent">
+            <TouchableHighlight onPress={terugKnop} underlayColor="transparent">
               <Image 
                 source={terug} 
                 />
@@ -96,7 +102,8 @@ class Highscores extends Component {
 }
 
 export default connect(store => ({
-    scores: store.scorelist.scores
+    scores: store.scorelist.scores,
+    music: store.music
   }),
   (dispatch) => ({
     actions: bindActionCreators({...scoresActions}, dispatch)

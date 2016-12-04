@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Video from 'react-native-video';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 
-export default class videoPlayer extends Component {
+class videoPlayer extends Component {
   constructor(props) {
-    super(props);
-    this.backToQuestion = this.backToQuestion.bind(this);
-    this.restartVideo = this.restartVideo.bind(this);
+    super(props)
+    this.backToQuestion = this.backToQuestion.bind(this)
+    this.restartVideo = this.restartVideo.bind(this)
+    this.props.music.backgroundMusic.pause()
   
     this.state = {
       paused: false,
@@ -16,6 +19,7 @@ export default class videoPlayer extends Component {
   }
 
   backToQuestion(){
+    this.props.music.backgroundMusic.play()
     Actions.pop({type:'refresh'})
     this.setState({paused: true, restart: false})
   }
@@ -56,6 +60,11 @@ export default class videoPlayer extends Component {
     )
   }
 }
+
+export default connect(store => ({
+    music: store.music,
+  })
+)(videoPlayer);
 
 const styles = StyleSheet.create({
   video:{

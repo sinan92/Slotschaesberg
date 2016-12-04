@@ -19,7 +19,6 @@ class expressionsQuestion extends Component {
     let showDraggables = []
     let spreekWoorden = []
     let betekenissen = []
-    console.log(question.currentQuestion.antwoorden)
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
       answers.push({'goed' : '2'})
       pans.push(new Animated.ValueXY())
@@ -82,7 +81,6 @@ class expressionsQuestion extends Component {
   componentDidMount(){
     setTimeout(() => {
         let dropZonesArray = []
-        console.log(this.dropZones.values())
         Array.from(this.dropZones.values())
           .forEach(dropZone => {
             dropZone.measure((ox, oy, width, height, px, py) => {
@@ -106,19 +104,16 @@ class expressionsQuestion extends Component {
                 case 0:
                   setTimeout(() => {
                     actions.setAnswer(this.state.currentDraggable, 0)
-                    console.log(this.state.currentDraggable)
                   }, 0); 
                   break;
                 case 1:
                   setTimeout(() => {
                     actions.setAnswer(this.state.currentDraggable, 1)
-                    console.log(this.state.currentDraggable)
                   }, 0); 
                   break;
                 case 2:
                   setTimeout(() => {
                     actions.setAnswer(this.state.currentDraggable, 2)
-                    console.log(this.state.currentDraggable)
                   }, 0); 
                   break;
                 default:
@@ -173,9 +168,15 @@ class expressionsQuestion extends Component {
   }
 
   render() {
-    const {group, question, actions} = this.props
+    const {group, question, actions, music} = this.props
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick
 
     checkAnswer = () => {
+      //Knop geluid afspelen
+      buttonClickSound.play()
+
       //Vergelijk antwoorden
       let answer = true;
       for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
@@ -258,6 +259,7 @@ class expressionsQuestion extends Component {
 export default connect(store => ({
     question: store.questions,
     group: store.group,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)

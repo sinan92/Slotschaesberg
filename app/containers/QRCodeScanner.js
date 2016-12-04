@@ -39,11 +39,6 @@ class QRCodeScanner extends Component {
     }
   }
 
-  //Tijdelijk
-  componentDidMount(){
-    Actions.questionintroduction()
-  }
-
   render() {
     return (
       <BarcodeScanner

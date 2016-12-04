@@ -130,9 +130,15 @@ class question extends Component {
   }
 
   render() {
-    const {group, question, actions} = this.props
+    const {group, question, actions, music} = this.props
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick
 
     checkAnswer = () => {
+      //Speel knop geluid af
+      buttonClickSound.play()
+
       //Vergelijk antwoorden
       let answer = true;
       for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
@@ -226,6 +232,7 @@ class question extends Component {
 export default connect(store => ({
     question: store.questions,
     group: store.group,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)

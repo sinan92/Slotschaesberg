@@ -81,3 +81,9 @@ export function deleteQuestions() {
     type: types.DELETE_QUESTIONS
   };
 }
+
+export function addVisibleQuestion() {
+  return {
+    type: types.INCREMENT_VISIBLE_QUESTIONS_COUNT
+  };
+}

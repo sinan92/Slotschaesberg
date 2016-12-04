@@ -12,7 +12,7 @@ import Checkbox from '../components/checkbox'
 
 class tip extends Component {
   render() {
-    const {question, actions} = this.props
+    const {question, actions, music} = this.props
     console.log(question)
 
     let vraagTitel = require('../images/tip/banner-tip.png');
@@ -20,6 +20,14 @@ class tip extends Component {
     let knop = require('../images/tip/button-tip.png');
     let munt = require('../images/overview/munt.png');
     let tip = require('../images/Meerkeuze/tip.png');
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick
+
+    closeTip = () => {
+      buttonClickSound.play()
+      Actions.pop()
+    }
 
     return (
         <QuestionIntroWrapper>
@@ -39,7 +47,7 @@ class tip extends Component {
               </View>
 
               <View style={styles.gevondenKnop}>
-                <TouchableHighlight onPress={Actions.pop} underlayColor="transparent">
+                <TouchableHighlight onPress={closeTip} underlayColor="transparent">
                   <Image source={knop}></Image>
                 </TouchableHighlight>
               </View>
@@ -54,6 +62,7 @@ class tip extends Component {
 
 export default connect(store => ({
     question: store.questions,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions}, dispatch)

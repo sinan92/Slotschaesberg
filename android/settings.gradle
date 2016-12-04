@@ -13,3 +13,6 @@ project(':RNAudioPlayer').projectDir = new File(rootProject.projectDir, '../node
 
 include ':react-native-video'
 project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')
+
+include ':RNSound', ':app'
+project(':RNSound').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound/android')

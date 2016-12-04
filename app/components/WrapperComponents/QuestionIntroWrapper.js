@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1000,
   },
   home_bg: {
     flex:1,

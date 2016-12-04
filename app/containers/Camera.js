@@ -68,7 +68,7 @@ class CameraPage extends Component {
       camera: {
         aspect: Camera.constants.Aspect.fill,
         captureTarget: Camera.constants.CaptureTarget.disk,
-        type: Camera.constants.Type.back,
+        type: Camera.constants.Type.front,
         orientation: Camera.constants.Orientation.auto,
         flashMode: Camera.constants.FlashMode.auto,
       },
@@ -232,27 +232,7 @@ class CameraPage extends Component {
             null
           }
           <View style={styles.buttonsSpace} />
-          {
-              !this.state.isRecording
-              &&
-              <TouchableOpacity
-                  style={styles.captureButton}
-                  onPress={this.startRecording}
-              >
-                <Image
-                    source={require('../assets/ic_videocam_36pt.png')}
-                />
-              </TouchableOpacity>
-              ||
-              <TouchableOpacity
-                  style={styles.captureButton}
-                  onPress={this.stopRecording}
-              >
-                <Image
-                    source={require('../assets/ic_stop_36pt.png')}
-                />
-              </TouchableOpacity>
-          }
+
         </View>
       </View>
     );

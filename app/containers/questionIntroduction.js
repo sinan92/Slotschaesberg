@@ -12,40 +12,69 @@ class questionIntroduction extends Component {
     this.state = {
       tekstNummer: 0,
       toggleCharacter: true,
+      ferdinandGroet: false,
+      elisabethGroet: false,
     };
   }
 
+  componentDidMount(){
+    this.karakterGeluidAfspelen()
+  }
+
+  karakterGeluidAfspelen(){
+    const {question, music} = this.props
+    setTimeout(() => {
+      if(this.state.ferdinandGroet == false || this.state.elisabethGroet == false){
+        let karakterGeluidFerdinand = question.teksten[this.state.tekstNummer].karakter_id == "1"
+
+        if(karakterGeluidFerdinand){
+          music.ferdinandGreet.play()
+          this.setState({ferdinandGroet: true})
+        }
+        else{
+          music.elisabethGreet.play()
+          this.setState({elisabethGroet: true})
+        }
+      }
+    }, 0); 
+  }
+
   render() {
-    const {question} = this.props
+    const {question, music} = this.props
     let ferdinand = require('../images/introductie/ferdinand.png');
     let elisabeth = require('../images/introductie/elisabeth.png');
     let tekstBallon = require('../images/introductie/tekstballon.png');
 
+    //Sound effects
+    let buttonClickSound = music.buttonClick
+
     nextScene = () => {
-          if(this.state.tekstNummer >= question.teksten.length-1){
-            if(question.vraag_soort === "Meerkeuze"){
-              Actions.question()
-            }
-            else if(question.vraag_soort === "Open vraag"){
-              Actions.openquestion()
-            }
-            else if(question.vraag_soort === "Timer"){
-              Actions.timer()
-            }
-            else if(question.vraag_soort === "Drag and drop"){
-              Actions.draganddrop()
-            }
-            else if(question.vraag_soort === "Spreekwoorden"){
-              Actions.spreekwoorden()
-            }
-            else if(question.vraag_soort === "Kompas"){
-              Actions.kompas()
-            }
+        buttonClickSound.play()
+        if(this.state.tekstNummer >= question.teksten.length-1){
+          if(question.vraag_soort === "Meerkeuze"){
+            Actions.question()
           }
-          else{
-            this.setState({tekstNummer: this.state.tekstNummer+1})
+          else if(question.vraag_soort === "Open vraag"){
+            Actions.openquestion()
           }
-        };
+          else if(question.vraag_soort === "Timer"){
+            Actions.timer()
+          }
+          else if(question.vraag_soort === "Drag and drop"){
+            Actions.draganddrop()
+          }
+          else if(question.vraag_soort === "Spreekwoorden"){
+            Actions.spreekwoorden()
+          }
+          else if(question.vraag_soort === "Kompas"){
+            Actions.kompas()
+          }
+        }
+        else{
+          this.setState({tekstNummer: this.state.tekstNummer+1})
+          this.karakterGeluidAfspelen()
+        }
+    };
 
     return (
       <QuestionIntroWrapper>
@@ -67,7 +96,8 @@ class questionIntroduction extends Component {
 }
 
 export default connect(store => ({
-    question: store.questions.currentQuestion
+    question: store.questions.currentQuestion,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators(questionsActions, dispatch)

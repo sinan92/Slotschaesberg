@@ -9,14 +9,25 @@ import * as modalActions from '../actions/modalActions';
 import * as questionsActions from '../actions/questionsActions';
 
 class Overview extends Component {
-  constructor(props) {
-    super(props);
-  
-    console.log(this.props.questions.completedQuestions)
+  componentDidMount(){
+    const {questions, actions, music} = this.props;
+
+    let completedQuestionsCount = 1;
+    for(let i = 1;i < questions.completedQuestions.length; i++){
+      if(questions.completedQuestions[i] == true){
+        completedQuestionsCount = completedQuestionsCount + 1
+      }
+    }
+
+    //Alle vragen af
+    if(completedQuestionsCount > questions.visibleQuestionsCount){
+      music.newQuestion.play()
+      actions.addVisibleQuestion()
+    }
   }
 
   render() {
-    const {questions, group, actions} = this.props;
+    const {questions, group, actions, music} = this.props;
     let vraag1 = require('../images/overview/start.png');
     let vraag2 = require('../images/overview/cirkel-Vraag2.png');
     let vraag3 = require('../images/overview/cirkel-Vraag3.png');
@@ -52,11 +63,15 @@ class Overview extends Component {
                       questions.questions[7].vraag_nr,
                       questions.questions[8].vraag_nr
                     ]
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick.play()
     
     const openQuestionOverview = (index) => {
-        Actions.modalquestionoverview();
-        actions.toggleVisibility();
-        actions.getQuestion(index);
+        buttonClickSound.play()
+        Actions.modalquestionoverview()
+        actions.toggleVisibility()
+        actions.getQuestion(index)
     }
 
     let completedQuestionsCount = 1;
@@ -67,7 +82,7 @@ class Overview extends Component {
     }
 
     //Alle vragen af
-    if(completedQuestionsCount === 2){
+    if(completedQuestionsCount === 9){
       Actions.gamefinishedtexts();
     }
 
@@ -115,6 +130,7 @@ export default connect(store => ({
     group: store.group,
     modal: store.modal,
     questions: store.questions,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...groupActions, ...modalActions, ...questionsActions}, dispatch)

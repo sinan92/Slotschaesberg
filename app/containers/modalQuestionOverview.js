@@ -11,15 +11,25 @@ import Video from 'react-native-video';
 
 class modalQuestionOverview extends Component {
   render() {
-    const {question, modal, actions} = this.props;
+    const {question, modal, actions, music} = this.props;
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick
 
     dismissModal = () => {
+      buttonClickSound.play()
       actions.toggleVisibility()
     }
 
     goToCamera = () => {
+      buttonClickSound.play()
       actions.disableVisibility()
       Actions.qrcodescanner()
+    }
+
+    goToVideo = () => {
+      this.props.music.backgroundMusic.pause()
+      Actions.videoplayer({paused: false, restart: true, video: videos[question.image]})
     }
 
 
@@ -64,7 +74,7 @@ class modalQuestionOverview extends Component {
               <View style={styles.vraagBox} > 
                 <View style={styles.locatie}>
                   <View style={styles.locatieAfbeeldingView}>
-                    <TouchableHighlight style={styles.video} onPress={() => Actions.videoplayer({paused: false, restart: true, video: videos[question.image]})}>
+                    <TouchableHighlight style={styles.video} onPress={goToVideo}>
                       <View>
                         <Image source={thumbnail}
                                style={styles.locatieVideo} />
@@ -110,6 +120,7 @@ export default connect(store => ({
     group: store.group,
     modal: store.modal,
     question: store.questions.currentQuestion,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...groupActions, ...modalActions, ...questionsActions}, dispatch)

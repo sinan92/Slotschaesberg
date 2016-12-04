@@ -26,9 +26,15 @@ class question extends Component {
   }
 
   render() {
-    const {group, question, actions} = this.props
+    const {group, question, actions, music} = this.props
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick
 
     checkAnswer = () => {
+      //Knop geluid afspelen
+      buttonClickSound.play()
+
       //Vergelijk antwoorden
       let answer = true;
       for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
@@ -50,6 +56,7 @@ class question extends Component {
     }
 
     getTip = () => {
+      buttonClickSound.play()
       Actions.tip()
       if(!this.state.tipTaken){
         actions.reduceReward(5)
@@ -65,7 +72,6 @@ class question extends Component {
     let tip = require('../images/Meerkeuze/tip.png');
 
     let checkboxes = []
-    console.log(question)
     for(let i=0; i < question.currentQuestion.antwoorden.length; i++){
       checkboxes.push(
             <Checkbox key={i} id={i} text={question.currentQuestion.antwoorden[i].antwoord} checked={false} />
@@ -134,6 +140,7 @@ class question extends Component {
 export default connect(store => ({
     question: store.questions,
     group: store.group,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)

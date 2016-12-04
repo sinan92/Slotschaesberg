@@ -35,7 +35,7 @@ class StartGame extends Component {
   }
 
   render() {
-    const { group, actions } = this.props;
+    const { group, actions, music } = this.props;
     let buttonBeginHetAvontuur = require('../images/speel-het-spel/button-begin-het-avontuur.png');
     let buttonMaakFoto = require('../images/speel-het-spel/button-maak-foto.png');
     let buttonSpeelVerder = require('../images/speel-het-spel/button-speel-verder.png');
@@ -46,6 +46,14 @@ class StartGame extends Component {
     let verderSpelen = require('../images/speel-het-spel/verder-spelen.png');
     let besteSpelersKnop = require('../images/homescreen/button-beste-spelers.png');
     let verderSpelenContent = null;
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick;
+
+    speelVerderKnop = () => {
+      buttonClickSound.play()
+      Actions.overview()
+    }
 
     if(this.props.group.name != null){
       verderSpelenContent = (
@@ -58,7 +66,7 @@ class StartGame extends Component {
                     />
                     <Text style={styles.muntenZakTekst}>x {group.coins}</Text>
                   </View>
-                  <TouchableHighlight onPress={Actions.overview} underlayColor="transparent">
+                  <TouchableHighlight onPress={speelVerderKnop} underlayColor="transparent">
                     <Image
                       source={buttonSpeelVerder}
                       />
@@ -76,6 +84,7 @@ class StartGame extends Component {
     }
 
     toIntroduction = () => {
+      buttonClickSound.play()
       actions.deleteQuestions()
       actions.deleteGroup()
 
@@ -93,20 +102,40 @@ class StartGame extends Component {
           grade = 2 //Niveau 2
           break
         default:
-          grade = 1 //Niveau 1
+          grade = null //Niveau 1
       }
 
-
-      actions.setName(this.state.name)
-      actions.setGrade(grade)
-      actions.setRoute(this.state.route)
-      actions.setGroupImage(this.state.image)
-      actions.getQuestions()
-      Actions.introduction()
+      const {name, route, image} = this.state
+      let validation = true
+      //Check name field
+      if(name != null && (name.length < 3 || name.length > 12)){
+        validation = false
+      } //Check grade and route
+      else if(grade == null || route == null){
+        validation = false
+      }
+      else if(image == null){
+        validation = false
+      }
+      
+      if(validation){
+        actions.setName(this.state.name)
+        actions.setGrade(grade)
+        actions.setRoute(this.state.route)
+        actions.setGroupImage(this.state.image)
+        actions.getQuestions()
+        Actions.introduction()
+      }
     }
 
     takePicture = () => {
+      buttonClickSound.play()
       Actions.camera({name: this.state.name, grade: this.state.grade, route: this.state.route})
+    }
+
+    toHighscores = () => {
+      buttonClickSound.play()
+      Actions.highscores()
     }
 
     return (
@@ -166,7 +195,7 @@ class StartGame extends Component {
                     style={styles.fotoImage}
                     source={this.state.image != null ? {uri: this.state.image} : placeholderGroepsfoto}
                   />
-                  <TouchableHighlight onPress={takePicture}>
+                  <TouchableHighlight onPress={takePicture} underlayColor="transparent">
                     <Image 
                       style={styles.fotoButton}
                       source={buttonMaakFoto}
@@ -183,7 +212,7 @@ class StartGame extends Component {
             </View>
           </View>
           <View style={styles.bottomView}>
-            <TouchableHighlight onPress={Actions.highscores} underlayColor="transparent">
+            <TouchableHighlight onPress={toHighscores} underlayColor="transparent">
               <Image 
                 source={besteSpelersKnop} 
                 />
@@ -203,7 +232,8 @@ class StartGame extends Component {
 
 export default connect(store => ({
     group: store.group,
-    questions: store.questions.questions
+    questions: store.questions.questions,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...groupActions, ...questionsActions}, dispatch)

@@ -40,7 +40,7 @@ export default class Routing extends Component {
           </Scene>
           <Scene type="reset" key="camera" component={Camera} animation="false" duration='0' />
           <Scene type="reset" key="qrcodescanner" component={QRCodeScanner} animation="false" duration='0' />
-          <Scene type="reset" key="questionintroduction" component={questionIntroduction} animation="false" duration='0' />
+          <Scene key="questionintroduction" component={questionIntroduction} animation="false" duration='0' />
           <Scene key="question" component={question} animation="false" duration='0' />
           <Scene key="tip" component={tip} animation="false" duration='0' />
           <Scene key="answeredquestion" component={answeredQuestion} animation="false" duration='0' />

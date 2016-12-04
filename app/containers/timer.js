@@ -14,22 +14,36 @@ class timer extends Component {
     super(props);
   
     this.state = {
-      seconds: 900
+      seconds: 900,
+      counter: true,
     };
 
   }
 
-  render() {
-    const {group, question, actions} = this.props
-
-    
-    setTimeout(() => {
-      if(this.state.seconds > 0){
-        this.setState({seconds: this.state.seconds-1})
-      }
+  componentDidMount(){
+    this.timerInterval = setInterval( () => { 
+        if(this.state.seconds > 0){
+          this.setState({seconds: this.state.seconds-1})
+        }
+        else{
+          this.props.music.timerFinished.play()
+        }
     }, 1000);
+  }
+
+  componentWillUnmount(){
+    this.timerInterval && clearInterval(this.timerInterval);
+    this.timerInterval = false;
+  }
+
+  render() {
+    const {group, question, actions, music} = this.props
+
+    //Sound effects
+    let buttonClickSound = music.buttonClick
 
     checkAnswer = () => {
+        buttonClickSound.play()
         actions.addCoins(parseInt(question.reward))
         Actions.answeredquestion({status: true})
     }
@@ -102,6 +116,7 @@ class timer extends Component {
 export default connect(store => ({
     question: store.questions,
     group: store.group,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...questionsActions, ...groupActions}, dispatch)

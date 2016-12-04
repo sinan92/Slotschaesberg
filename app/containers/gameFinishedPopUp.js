@@ -19,13 +19,15 @@ class gameFinishedPopUp extends Component {
   }
 
   render() {
-    const {question, actions, group} = this.props;
+    const {question, actions, group, music} = this.props;
 
     dismissModal = () => {
+      music.buttonClick.play()
       actions.toggleVisibility()
     }
 
     backToMainMenu = () => {
+      music.buttonClick.play()
       NetInfo.isConnected.addEventListener(
         'change',
         handleFirstConnectivityChange
@@ -52,8 +54,11 @@ class gameFinishedPopUp extends Component {
     }
 
     _tochAfsluiten = () => {
+      music.buttonClick.play()
+
+      actions.deleteQuestions()
+      actions.deleteGroup()
       Actions.home()
-      //TODO: Wis user
     }
 
     handleFirstConnectivityChange = (isConnected) => {
@@ -161,6 +166,7 @@ export default connect(store => ({
     group: store.group,
     question: store.questions.currentQuestion,
     scores: store.scorelist,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators({...groupActions, ...scoresActions, ...questionsActions}, dispatch)

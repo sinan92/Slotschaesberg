@@ -7,13 +7,6 @@ import {bindActionCreators} from 'redux';
 import * as questionsActions from '../actions/questionsActions';
 
 class answeredQuestion extends Component {
-  constructor(props) {
-    super(props);
-
-
-    console.log(this.props.status)
-  }
-
   render() {
     const {actions, question} = this.props
     let ferdinand = require('../images/introductie/ferdinand.png');
@@ -30,7 +23,11 @@ class answeredQuestion extends Component {
     ];   
     let tekstNummer = this.props.status == true ? 0 : 1 
 
+    //Sound effects
+    let buttonClickSound = this.props.music.buttonClick;
+
     _onPress = () => {
+          buttonClickSound.play()
           if(tekstNummer){
             Actions.pop() //Fout beantwoord, terug naar vraag
           }
@@ -60,7 +57,8 @@ class answeredQuestion extends Component {
 }
 
 export default connect(store => ({
-    question: store.questions.currentQuestion
+    question: store.questions.currentQuestion,
+    music: store.music,
   }),
   (dispatch) => ({
     actions: bindActionCreators(questionsActions, dispatch)

@@ -3,6 +3,7 @@ package com.reactnativestarter;
 import com.facebook.react.ReactActivity;
 import com.eguma.barcodescanner.BarcodeScannerPackage;
 import com.brentvatne.react.ReactVideoPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 
 public class MainActivity extends ReactActivity {
 
