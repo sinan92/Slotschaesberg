@@ -40,14 +40,14 @@ class modalQuestionOverview extends Component {
     let munt = require('../images/overview/munt.png');
     let thumbnail = require('../images/vraag-popup/video-thumbnail.jpg');
     let videos = [
-              require('../videos/HISTORISCHETUIN.mp4'), //0n
-              require('../videos/HISTORISCHETUIN.mp4'), //1n
-              require('../videos/HISTORISCHETUIN.mp4'), //2n
-              require('../videos/TOREN.mp4'), //3
-              require('../videos/KELDER.mp4'), //4
-              require('../videos/HISTORISCHETUIN.mp4'), //5
-              require('../videos/SLOTGRACHT.mp4'), //6
-              require('../videos/PLEIN.mp4') //7
+              {uri: 'historischetuin'}, //0n
+              {uri: 'historischetuin'}, //1n
+              {uri: 'historischetuin'}, //2n
+              {uri: 'toren'}, //3
+              {uri: 'kelder'}, //4
+              {uri: 'historischetuin'}, //5
+              {uri: 'slotgracht'}, //6
+              {uri: 'plein'} //7
               ]
 
 
