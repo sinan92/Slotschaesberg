@@ -10,6 +10,14 @@ import QuestionIntroWrapper from '../components/WrapperComponents/QuestionIntroW
 import Checkbox from '../components/checkbox'
 
 class multipleChoice extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tipTaken: false,
+    }
+  }
+
   render() {
     const {group, question, actions, music} = this.props
 
@@ -28,6 +36,28 @@ class multipleChoice extends Component {
     let knop = require('../images/Meerkeuze/knop.png');
     let munt = require('../images/overview/munt.png');
     let tip = require('../images/Meerkeuze/tip.png');
+
+    getTip = () => {
+      buttonClickSound.play()
+      Actions.tip()
+      if(!this.state.tipTaken){
+        actions.reduceReward(5)
+        this.setState({tipTaken: true})
+      }
+    }
+
+    let tips = null
+    console.log(question.currentQuestion)
+    if(question.currentQuestion.tip != '' || question.currentQuestion.tip_afbeeldingen != undefined){
+      tips = <View style={styles.tip}>
+                  <TouchableHighlight onPress={getTip} underlayColor="transparent">
+                    <Image
+                      source={tip}>
+                      <Text style={styles.tipAftrek}>-5</Text>
+                    </Image>
+                  </TouchableHighlight>
+                </View>
+    }
 
 
     return (
@@ -57,6 +87,7 @@ class multipleChoice extends Component {
                       <Text style={styles.beloningTekst}>x {question.currentQuestion.beloning}</Text>
                     </View>
                 </View>
+                {tips}
               </View>
 
               <View style={styles.antwoordenBox}>
@@ -137,7 +168,7 @@ const styles = StyleSheet.create({
   },
   status:{
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'flex-end',
     paddingRight: 80,
     paddingLeft: 80,

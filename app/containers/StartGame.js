@@ -52,6 +52,7 @@ class StartGame extends Component {
 
     speelVerderKnop = () => {
       buttonClickSound.play()
+      actions.getQuestions()
       Actions.overview()
     }
 

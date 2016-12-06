@@ -6,11 +6,13 @@ import BarcodeScanner from 'react-native-barcodescanner';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scoresActions from '../actions/scoresActions';
+import * as questionsActions from '../actions/questionsActions';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.props.actions.fetchScores();
+    this.props.actions.fetchQuestions();
   }
 
   componentWillReceiveProps(nextProps){
@@ -58,7 +60,7 @@ export default connect(store => ({
     music: store.music
   }),
   (dispatch) => ({
-    actions: bindActionCreators({...scoresActions}, dispatch)
+    actions: bindActionCreators({...scoresActions, ...questionsActions}, dispatch)
   })
 )(Home);
 

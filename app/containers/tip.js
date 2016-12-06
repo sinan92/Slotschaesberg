@@ -20,6 +20,27 @@ class tip extends Component {
     let knop = require('../images/tip/button-tip.png');
     let munt = require('../images/overview/munt.png');
     let tip = require('../images/Meerkeuze/tip.png');
+    let afbeeldingen = 
+                  {
+                    blaadje: [
+                          require('../images/tips/route1-niveau2-vraag1/blaadje1.jpg'),
+                          require('../images/tips/route1-niveau2-vraag1/blaadje2.jpg'),
+                          require('../images/tips/route1-niveau2-vraag1/blaadje3.jpg')
+                          ],
+                    planten: [
+                          require('../images/tips/route2-niveau2-vraag7/basilicum.jpg'),
+                          require('../images/tips/route2-niveau2-vraag7/jeneverbes.jpg'),
+                          require('../images/tips/route2-niveau2-vraag7/lavendel.jpg'),
+                          require('../images/tips/route2-niveau2-vraag7/tijm.jpg')
+                          ],
+                    bokkenrijders: [
+                      require('../images/tips/route1-niveau1-vraag4.png')
+                    ],
+                    meten: [
+                      require('../images/tips/route2-niveau2-vraag5.png')
+                    ]
+                  }
+                
 
     //Sound effects
     let buttonClickSound = music.buttonClick
@@ -27,6 +48,21 @@ class tip extends Component {
     closeTip = () => {
       buttonClickSound.play()
       Actions.pop()
+    }
+    let tips = <Text style={styles.tipText}>{question.currentQuestion.tip}</Text>
+          console.log(afbeeldingen[question.currentQuestion.tip_afbeeldingen])
+
+    let images = null;
+    if(question.currentQuestion.tip == '' && question.currentQuestion.tip_afbeeldingen != undefined){
+          for(let i=0; i < afbeeldingen[question.currentQuestion.tip_afbeeldingen].length; i++){
+            if(i == 0){
+              images = <Image source={afbeeldingen[question.currentQuestion.tip_afbeeldingen][i]} style={{height: 200, width: 200}} />
+            }
+            else{
+              images += <Image source={afbeeldingen[question.currentQuestion.tip_afbeeldingen][i]} style={{height: 200, width: 200}} />
+            }
+          }
+          tips = images
     }
 
     return (
@@ -43,7 +79,7 @@ class tip extends Component {
               </View>
 
               <View style={styles.tipView}>
-                <Text style={styles.tipText}>{question.currentQuestion.tip}</Text>
+                {tips}
               </View>
 
               <View style={styles.gevondenKnop}>
@@ -85,6 +121,8 @@ const styles = StyleSheet.create({
     width: 530,
   },
   tipView:{
+    justifyContent: 'center',
+    alignItems: 'center',
     borderTopColor: '#e5e5e5',
     borderTopWidth: 1,
     paddingTop: 20,
