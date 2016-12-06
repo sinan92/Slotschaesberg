@@ -66,18 +66,22 @@ class Overview extends Component {
 
     //Sound effects
     let buttonClickSound = music.buttonClick.play()
-    
-    const openQuestionOverview = (index) => {
-        buttonClickSound.play()
-        Actions.modalquestionoverview()
-        actions.toggleVisibility()
-        actions.getQuestion(index)
-    }
 
     let completedQuestionsCount = 1;
     for(let i = 1;i < questions.completedQuestions.length; i++){
       if(questions.completedQuestions[i] == true){
         completedQuestionsCount = completedQuestionsCount + 1
+      }
+    }
+    
+    const openQuestionOverview = (index) => {
+      console.log(index)
+      console.log(completedQuestionsCount)
+      if(index >= completedQuestionsCount){
+        buttonClickSound.play()
+        Actions.modalquestionoverview()
+        actions.toggleVisibility()
+        actions.getQuestion(index)
       }
     }
 
