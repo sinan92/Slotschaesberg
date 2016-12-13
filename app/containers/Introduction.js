@@ -39,7 +39,7 @@ class Introduction extends Component {
         "tekst" : "Tik op een van de nummers om te zien\nwaar je naar toe moet. Ga eerst met je\ngroepje naar START.",
       },{
         "naam" : "Elisabeth",
-        "tekst" : "Als je bij de plek bent tik je op het\nnummer en fotografeer je de Schaesplaat.\nDan stellen wij je een vraag!",
+        "tekst" : "Als je bij de plek bent tik je op het\nnummer en fotografeer je het schild.\nDan stellen wij je een vraag!",
       },{
         "naam" : "Ferdinand",
         "tekst" : "Veel succes met de speurtocht en tot zo!",

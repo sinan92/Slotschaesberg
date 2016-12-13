@@ -94,8 +94,7 @@ class multipleChoice extends Component {
                 <Text style={styles.antwoordLabel}>Open vraag!</Text>
                 <View>
                   <Text style={styles.antwoorden}>
-                  Probeer zo veel mogelijk
-                  antwoorden te verzinnen!
+                    Probeer zo goed mogelijk te beantwoorden!
                   </Text>
                 </View>
               </View>

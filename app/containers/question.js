@@ -50,7 +50,7 @@ class question extends Component {
       }
       else{
         //Fout beantwoord
-        actions.reduceReward(question.reward)
+        actions.reduceReward(5)
         Actions.answeredquestion({status: false})
       }
     }
@@ -115,7 +115,7 @@ class question extends Component {
                       <Image
                         source={munt} />
 
-                      <Text style={styles.beloningTekst}>x {question.currentQuestion.beloning}</Text>
+                      <Text style={styles.beloningTekst}>x {question.reward}</Text>
                     </View>
                 </View>
 

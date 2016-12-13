@@ -24,6 +24,9 @@ class QRCodeScanner extends Component {
     };
 
     this.barcodeReceived = this.barcodeReceived.bind(this);
+
+    
+      Actions.questionintroduction()
   }
 
   barcodeReceived(e) {

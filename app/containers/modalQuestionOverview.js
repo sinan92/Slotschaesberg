@@ -47,7 +47,8 @@ class modalQuestionOverview extends Component {
               {uri: 'kelder'}, //4
               {uri: 'historischetuin'}, //5
               {uri: 'slotgracht'}, //6
-              {uri: 'plein'} //7
+              {uri: 'plein'}, //7
+              {uri: 'plein'} //8
               ]
 
 
