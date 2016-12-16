@@ -28,6 +28,7 @@ class Overview extends Component {
 
   render() {
     const {questions, group, actions, music} = this.props;
+    console.log(questions)
     let vraag1 = require('../images/overview/start.png');
     let vraag2 = require('../images/overview/cirkel-Vraag2.png');
     let vraag3 = require('../images/overview/cirkel-Vraag3.png');
@@ -66,6 +67,7 @@ class Overview extends Component {
                       questions.questions[8].vraag_nr,
                       questions.questions[9].vraag_nr
                     ]
+
 
     //Sound effects
     let buttonClickSound = music.buttonClick.play()

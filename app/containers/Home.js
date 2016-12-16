@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
+import GordijnOmlaag from '../components/WrapperComponents/gordijnOmlaag'
 import BarcodeScanner from 'react-native-barcodescanner';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';

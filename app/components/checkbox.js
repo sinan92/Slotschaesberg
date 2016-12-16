@@ -51,7 +51,7 @@ export default connect(store => ({
 
 const styles = StyleSheet.create({
   TouchableHighlight:{
-    height: 60,
+    height: 65,
   },
   wrapper: {
     flexDirection: 'row',
