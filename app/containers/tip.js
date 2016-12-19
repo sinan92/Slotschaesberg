@@ -23,16 +23,11 @@ class tip extends Component {
     let afbeeldingen = 
                   {
                     blaadje: [
-                          require('../images/tips/route1-niveau2-vraag1/blaadje1.jpg'),
-                          require('../images/tips/route1-niveau2-vraag1/blaadje2.jpg'),
-                          require('../images/tips/route1-niveau2-vraag1/blaadje3.jpg')
-                          ],
+                      require('../images/tips/blaadjes-tip.jpg')
+                    ],
                     planten: [
-                          require('../images/tips/route2-niveau2-vraag7/basilicum.jpg'),
-                          require('../images/tips/route2-niveau2-vraag7/jeneverbes.jpg'),
-                          require('../images/tips/route2-niveau2-vraag7/lavendel.jpg'),
-                          require('../images/tips/route2-niveau2-vraag7/tijm.jpg')
-                          ],
+                      require('../images/tips/theekruidentip.jpg')
+                    ],
                     bokkenrijders: [
                       require('../images/tips/route1-niveau1-vraag4.png')
                     ],
@@ -52,17 +47,8 @@ class tip extends Component {
     let tips = <Text style={styles.tipText}>{question.currentQuestion.tip}</Text>
           console.log(afbeeldingen[question.currentQuestion.tip_afbeeldingen])
 
-    let images = null;
     if(question.currentQuestion.tip == '' && question.currentQuestion.tip_afbeeldingen != undefined){
-          for(let i=0; i < afbeeldingen[question.currentQuestion.tip_afbeeldingen].length; i++){
-            if(i == 0){
-              images = <Image source={afbeeldingen[question.currentQuestion.tip_afbeeldingen][i]} style={{height: 200, width: 200}} />
-            }
-            else{
-              images += <Image source={afbeeldingen[question.currentQuestion.tip_afbeeldingen][i]} style={{height: 200, width: 200}} />
-            }
-          }
-          tips = images
+          tips = <Image source={afbeeldingen[question.currentQuestion.tip_afbeeldingen][0]} />
     }
 
     return (

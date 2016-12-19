@@ -82,12 +82,12 @@ class Overview extends Component {
     const openQuestionOverview = (index) => {
       console.log(index)
       console.log(completedQuestionsCount)
-      //if(index >= completedQuestionsCount){
+      if(index >= completedQuestionsCount){
         buttonClickSound.play()
         Actions.modalquestionoverview()
         actions.toggleVisibility()
         actions.getQuestion(index)
-      //}
+      }
     }
 
     //Alle vragen af
@@ -97,9 +97,9 @@ class Overview extends Component {
 
     let vragenItems = []
     for(let i=0; i < 10; i++){
-      let currentIndex = i
+      let currentIndex = vraag_nrs[i]-1
       let imageSource = vragen[vraag_nrs[i]-1]
-      if(questions.completedQuestions[i+1]){
+      if(questions.completedQuestions[vraag_nrs[i]]){
         imageSource = afgerond
       }
 

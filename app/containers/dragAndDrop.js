@@ -345,7 +345,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around',
   },
-  fruitKrat: {
+  dropBoxen: {
+    marginTop: -50,
+    marginBottom: -50,
   },
   groenteKrat: {
   },
