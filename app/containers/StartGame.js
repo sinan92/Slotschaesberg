@@ -115,9 +115,9 @@ class StartGame extends Component {
       else if(grade == null || route == null){
         validation = false
       }
-      /*else if(image == null){
+      else if(image == null){
         validation = false
-      }*/
+      }
       
       if(validation){
         actions.setName(this.state.name)
@@ -189,6 +189,19 @@ class StartGame extends Component {
                   <Picker.Item label="Route 1" value="1" />
                   <Picker.Item label="Route 2" value="2" />
                 </Picker>
+
+                <View style={styles.fotoView} >
+                  <Image 
+                    style={styles.fotoImage}
+                    source={this.state.image != null ? {uri: this.state.image} : placeholderGroepsfoto}
+                  />
+                  <TouchableHighlight onPress={takePicture} underlayColor="transparent">
+                    <Image 
+                      style={styles.fotoButton}
+                      source={buttonMaakFoto}
+                    />
+                  </TouchableHighlight>
+                </View>
 
                 <TouchableHighlight onPress={toIntroduction} underlayColor="transparent">
                   <Image source={buttonBeginHetAvontuur}
