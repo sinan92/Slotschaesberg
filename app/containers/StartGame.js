@@ -115,9 +115,6 @@ class StartGame extends Component {
       else if(grade == null || route == null){
         validation = false
       }
-      else if(image == null){
-        validation = false
-      }
       
       if(validation){
         actions.setName(this.state.name)

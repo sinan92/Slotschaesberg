@@ -75,7 +75,7 @@ class modalQuestionOverview extends Component {
               <View style={styles.vraagBox} > 
                 <View style={styles.locatie}>
                   <View style={styles.locatieAfbeeldingView}>
-                    <TouchableHighlight style={styles.video} onPress={goToVideo}>
+                    <TouchableHighlight style={styles.video}>
                       <View>
                         <Image source={thumbnail}
                                style={styles.locatieVideo} />
