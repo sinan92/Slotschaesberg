@@ -18,7 +18,7 @@ class gameFinishedTexts extends Component {
       teksten: [
         {
           "naam" : "Ferdinand",
-          "tekst" : "We zijn klaar!\nGa nu maar lekker naar de picknickweide om je\ngezonde en lekkere lunch op te eten!",
+          "tekst" : "We zijn klaar!\nHopelijk vonden jullie de rondleiding\nleuk en leerzaam!",
         },{
           "naam" : "Elisabeth",
           "tekst" : "Maar eerst gaan we naar jullie score\nkijken!",

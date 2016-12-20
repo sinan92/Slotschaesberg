@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MenuWrapper from '../components/WrapperComponents/MenuWrapper'
+import GordijnOmlaag from '../components/WrapperComponents/gordijnOmlaag'
 import BarcodeScanner from 'react-native-barcodescanner';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scoresActions from '../actions/scoresActions';
+import * as questionsActions from '../actions/questionsActions';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.props.actions.fetchScores();
+    this.props.actions.fetchQuestions();
   }
 
   componentWillReceiveProps(nextProps){
@@ -58,7 +61,7 @@ export default connect(store => ({
     music: store.music
   }),
   (dispatch) => ({
-    actions: bindActionCreators({...scoresActions}, dispatch)
+    actions: bindActionCreators({...scoresActions, ...questionsActions}, dispatch)
   })
 )(Home);
 

@@ -11,7 +11,8 @@ class LocatieWrapper extends Component {
               require('../../images/locaties/Kelders.jpg'), //4
               require('../../images/locaties/historischetuin.jpg'), //5
               require('../../images/locaties/Slotgracht.jpg'), //6
-              require('../../images/locaties/Plein.jpg') //7
+              require('../../images/locaties/Plein.jpg'), //7
+              require('../../images/locaties/Picknickweide.jpg') //8
               ]
 
     return (

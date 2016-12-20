@@ -192,7 +192,7 @@ class expressionsQuestion extends Component {
       }
       else{
         //Fout beantwoord
-        actions.reduceReward(question.reward)
+        actions.reduceReward(5)
         Actions.answeredquestion({status: false})
       }
     }
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   },
   sleepVeldTekst:{
     fontFamily: "Chalkboard_bold",
-    fontSize: 17,
+    fontSize: 16,
     color: 'black',
   },
   sleepVragen:{

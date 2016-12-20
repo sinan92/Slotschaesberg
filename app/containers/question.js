@@ -50,7 +50,7 @@ class question extends Component {
       }
       else{
         //Fout beantwoord
-        actions.reduceReward(question.reward)
+        actions.reduceReward(5)
         Actions.answeredquestion({status: false})
       }
     }
@@ -78,6 +78,19 @@ class question extends Component {
       )
     }
 
+    let tips = null
+    console.log(question.currentQuestion)
+    if(question.currentQuestion.tip != '' || question.currentQuestion.tip_afbeeldingen != undefined){
+      tips = <View style={styles.tip}>
+                  <TouchableHighlight onPress={getTip} underlayColor="transparent">
+                    <Image
+                      source={tip}>
+                      <Text style={styles.tipAftrek}>-5</Text>
+                    </Image>
+                  </TouchableHighlight>
+                </View>
+    }
+
     return (
         <QuestionIntroWrapper>
           <View style={styles.vraag}>
@@ -102,18 +115,11 @@ class question extends Component {
                       <Image
                         source={munt} />
 
-                      <Text style={styles.beloningTekst}>x {question.currentQuestion.beloning}</Text>
+                      <Text style={styles.beloningTekst}>x {question.reward}</Text>
                     </View>
                 </View>
 
-                <View>
-                  <TouchableHighlight onPress={getTip} underlayColor="transparent">
-                    <Image
-                      source={tip}>
-                      <Text style={styles.tipAftrek}>-5</Text>
-                    </Image>
-                  </TouchableHighlight>
-                </View>
+                {tips}
               </View>
 
               <View style={styles.antwoordenBox}>
@@ -181,6 +187,9 @@ const styles = StyleSheet.create({
     width: 530,
     height: 590,
   },
+  tip:{
+    marginLeft: 100,
+  },
   tipAftrek:{
     marginTop: 40,
     marginLeft: 50,
@@ -190,7 +199,7 @@ const styles = StyleSheet.create({
   },
   status:{
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'flex-end',
     paddingRight: 80,
     paddingLeft: 80,

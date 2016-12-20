@@ -154,7 +154,7 @@ class question extends Component {
       }
       else{
         //Fout beantwoord
-        actions.reduceReward(question.reward)
+        actions.reduceReward(5)
         Actions.answeredquestion({status: false})
       }
     }
@@ -345,7 +345,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around',
   },
-  fruitKrat: {
+  dropBoxen: {
+    marginTop: -50,
+    marginBottom: -50,
   },
   groenteKrat: {
   },

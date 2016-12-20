@@ -28,6 +28,7 @@ class Overview extends Component {
 
   render() {
     const {questions, group, actions, music} = this.props;
+    console.log(questions)
     let vraag1 = require('../images/overview/start.png');
     let vraag2 = require('../images/overview/cirkel-Vraag2.png');
     let vraag3 = require('../images/overview/cirkel-Vraag3.png');
@@ -36,6 +37,7 @@ class Overview extends Component {
     let vraag6 = require('../images/overview/cirkel-Vraag6.png');
     let vraag7 = require('../images/overview/cirkel-Vraag7.png');
     let vraag8 = require('../images/overview/cirkel-Vraag8.png');
+    let vraag9 = require('../images/overview/cirkel-Vraag9.png');
     let afgerond = require('../images/overview/vraag-afgerond.png');
     let naamBg = require('../images/overview/naam-bg.png');
     let coinBg = require('../images/overview/cointotaal-placeholder.png');
@@ -43,7 +45,7 @@ class Overview extends Component {
     let stylesArray = [styles.toegangspoort, styles.bezoekerscentrum, 
                        styles.ambachtendorp, styles.toren, 
                        styles.kelders, styles.historischetuin, 
-                       styles.slotgracht, styles.plein
+                       styles.slotgracht, styles.plein, styles.picknickerweide
                       ]
     let vragen = [vraag1,
                    vraag2,
@@ -52,7 +54,8 @@ class Overview extends Component {
                    vraag5,
                    vraag6,
                    vraag7,
-                   vraag8
+                   vraag8,
+                   vraag9
     ]
     let vraag_nrs = [questions.questions[1].vraag_nr,
                       questions.questions[2].vraag_nr,
@@ -61,18 +64,13 @@ class Overview extends Component {
                       questions.questions[5].vraag_nr,
                       questions.questions[6].vraag_nr,
                       questions.questions[7].vraag_nr,
-                      questions.questions[8].vraag_nr
+                      questions.questions[8].vraag_nr,
+                      questions.questions[9].vraag_nr
                     ]
+
 
     //Sound effects
     let buttonClickSound = music.buttonClick.play()
-    
-    const openQuestionOverview = (index) => {
-        buttonClickSound.play()
-        Actions.modalquestionoverview()
-        actions.toggleVisibility()
-        actions.getQuestion(index)
-    }
 
     let completedQuestionsCount = 1;
     for(let i = 1;i < questions.completedQuestions.length; i++){
@@ -80,17 +78,28 @@ class Overview extends Component {
         completedQuestionsCount = completedQuestionsCount + 1
       }
     }
+    
+    const openQuestionOverview = (index) => {
+      console.log(index)
+      console.log(completedQuestionsCount)
+      if(index >= completedQuestionsCount){
+        buttonClickSound.play()
+        Actions.modalquestionoverview()
+        actions.toggleVisibility()
+        actions.getQuestion(index)
+      }
+    }
 
     //Alle vragen af
-    if(completedQuestionsCount === 9){
+    if(completedQuestionsCount === 10){
       Actions.gamefinishedtexts();
     }
 
     let vragenItems = []
-    for(let i=0; i < completedQuestionsCount; i++){
-      let currentIndex = i
+    for(let i=0; i < 10; i++){
+      let currentIndex = vraag_nrs[i]-1
       let imageSource = vragen[vraag_nrs[i]-1]
-      if(questions.completedQuestions[i+1]){
+      if(questions.completedQuestions[vraag_nrs[i]]){
         imageSource = afgerond
       }
 
@@ -174,16 +183,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   toren: {
-    marginTop: 95,
-    marginLeft: 390,
+    marginTop: 150,
+    marginLeft: 460,
   },
   ambachtendorp: {
-    marginTop: 80,
-    marginLeft: 760,
+    marginTop: 170,
+    marginLeft: 310,
   },
   slotgracht: {
-    marginTop: 360,
-    marginLeft: 105,
+    marginTop: 320,
+    marginLeft: 705,
   },
   plein: {
     marginTop: 495,
@@ -204,5 +213,9 @@ const styles = StyleSheet.create({
   kelders: {
     marginTop: 290,
     marginLeft: 550,
+  },
+  picknickerweide: {
+    marginTop: 70,
+    marginLeft: 700,
   },
 });

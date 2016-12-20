@@ -52,6 +52,7 @@ class StartGame extends Component {
 
     speelVerderKnop = () => {
       buttonClickSound.play()
+      actions.getQuestions()
       Actions.overview()
     }
 
@@ -187,7 +188,6 @@ class StartGame extends Component {
                   <Picker.Item label="Kies een route" value="kies-route" />
                   <Picker.Item label="Route 1" value="1" />
                   <Picker.Item label="Route 2" value="2" />
-                  <Picker.Item label="Route 3" value="3" />
                 </Picker>
 
                 <View style={styles.fotoView} >
