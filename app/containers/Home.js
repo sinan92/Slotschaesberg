@@ -14,11 +14,14 @@ class Home extends Component {
     super(props);
     this.props.actions.fetchScores();
     this.props.actions.fetchQuestions();
+    console.log("Test")
   }
 
-  componentWillReceiveProps(nextProps){
-    nextProps.music.backgroundMusic.play()
-    nextProps.music.backgroundMusic.setNumberOfLoops(-1)
+  componentDidMount(){
+    setTimeout(() => {
+      this.props.music.backgroundMusic.play()
+    }, 0)
+    this.props.music.backgroundMusic.setNumberOfLoops(-1)
   }
 
   render() {

@@ -42,10 +42,14 @@ class tip extends Component {
 
     closeTip = () => {
       buttonClickSound.play()
-      Actions.pop()
+      if(question.currentQuestion.vraag_soort == "Open vraag"){
+        Actions.openquestion({type: 'replace'})
+      }
+      else if(question.currentQuestion.vraag_soort == "Meerkeuze"){
+        Actions.question({type: 'replace'})
+      }
     }
     let tips = <Text style={styles.tipText}>{question.currentQuestion.tip}</Text>
-          console.log(afbeeldingen[question.currentQuestion.tip_afbeeldingen])
 
     if(question.currentQuestion.tip == '' && question.currentQuestion.tip_afbeeldingen != undefined){
           tips = <Image source={afbeeldingen[question.currentQuestion.tip_afbeeldingen][0]} />

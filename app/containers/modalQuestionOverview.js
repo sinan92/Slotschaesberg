@@ -42,7 +42,7 @@ class modalQuestionOverview extends Component {
     let videos = [
               {uri: 'historischetuin'}, //0n
               {uri: 'historischetuin'}, //1n
-              {uri: 'historischetuin'}, //2n
+              {}, //2n
               {uri: 'toren'}, //3
               {uri: 'kelder'}, //4
               {uri: 'historischetuin'}, //5
@@ -50,6 +50,20 @@ class modalQuestionOverview extends Component {
               {uri: 'plein'}, //7
               {uri: 'plein'} //8
               ]
+
+    //Video layout alleen zichtbaar als er een video is
+    let videoView = <View />
+    console.log(videos[question.image].uri)
+    if(videos[question.image].uri != undefined){
+      videoView = <View style={styles.locatieAfbeeldingView}>
+                    <TouchableHighlight style={styles.video} onPress={goToVideo}>
+                      <View>
+                        <Image source={thumbnail}
+                               style={styles.locatieVideo} />
+                      </View>
+                    </TouchableHighlight>
+                  </View>
+    }
 
 
     if(!modal.visibility){
@@ -74,14 +88,7 @@ class modalQuestionOverview extends Component {
 
               <View style={styles.vraagBox} > 
                 <View style={styles.locatie}>
-                  <View style={styles.locatieAfbeeldingView}>
-                    <TouchableHighlight style={styles.video} onPress={goToVideo}>
-                      <View>
-                        <Image source={thumbnail}
-                               style={styles.locatieVideo} />
-                      </View>
-                    </TouchableHighlight>
-                  </View>
+                  {videoView}
                   <View style={styles.locatieTeksten}>
                       <Text style={styles.locatieTekstenLocatieLabel}>Locatie</Text>
                       <Text style={styles.locatieTekstenLocatieNaam}>{question.locatie_naam}</Text>

@@ -80,8 +80,6 @@ class Overview extends Component {
     }
     
     const openQuestionOverview = (index) => {
-      console.log(index)
-      console.log(completedQuestionsCount)
       if(index >= completedQuestionsCount){
         buttonClickSound.play()
         Actions.modalquestionoverview()
@@ -96,15 +94,16 @@ class Overview extends Component {
     }
 
     let vragenItems = []
-    for(let i=0; i < 10; i++){
-      let currentIndex = vraag_nrs[i]-1
-      let imageSource = vragen[vraag_nrs[i]-1]
-      if(questions.completedQuestions[vraag_nrs[i]]){
+    for(let i=0; i < completedQuestionsCount; i++){
+      let vragenVolgorde = vraag_nrs.indexOf((i+1).toString())
+      let currentIndex = vraag_nrs[vragenVolgorde]-1
+      let imageSource = vragen[vraag_nrs[vragenVolgorde]-1]
+      if(questions.completedQuestions[vraag_nrs[vragenVolgorde]]){
         imageSource = afgerond
       }
 
       vragenItems.push(
-            <TouchableHighlight underlayColor="transparent" key={i} onPress={() => openQuestionOverview(currentIndex+1)} style={[styles.punt, stylesArray[i]]}>
+            <TouchableHighlight underlayColor="transparent" key={i} onPress={() => openQuestionOverview(vragenVolgorde+1)} style={[styles.punt, stylesArray[vragenVolgorde]]}>
                 <Image source={imageSource} />
             </TouchableHighlight>
       )

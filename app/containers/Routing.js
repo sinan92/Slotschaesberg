@@ -35,14 +35,14 @@ export default class Routing extends Component {
           <Scene type="reset" key="highscores" component={Highscores} animation="false" duration='0' />
           <Scene type="reset" key="introduction" component={Introduction} animation="false" duration='0' />
           <Scene type="reset" key="overview" component={Modal} animation="false" duration='0'>
-            <Scene key="overviewPage" component={Overview} animation="false" duration='0' />
+            <Scene type="reset" key="overviewPage" component={Overview} animation="false" duration='0' />
             <Scene key="modalquestionoverview" component={modalQuestionOverview} animation="false" duration='0' />
           </Scene>
           <Scene type="reset" key="camera" component={Camera} animation="false" duration='0' />
           <Scene type="reset" key="qrcodescanner" component={QRCodeScanner} animation="false" duration='0' />
           <Scene key="questionintroduction" component={questionIntroduction} animation="false" duration='0' />
           <Scene key="question" component={question} animation="false" duration='0' />
-          <Scene key="tip" component={tip} animation="false" duration='0' />
+          <Scene type="reset" key="tip" component={tip} animation="false" duration='0' />
           <Scene key="answeredquestion" component={answeredQuestion} animation="false" duration='0' />
           <Scene type="reset" key="questioncompleted" component={questionCompleted} animation="false" duration='0' />
           <Scene type="reset" key="openquestion" component={openQuestion} animation="false" duration='0' />
