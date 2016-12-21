@@ -40,15 +40,15 @@ class modalQuestionOverview extends Component {
     let munt = require('../images/overview/munt.png');
     let thumbnail = require('../images/vraag-popup/video-thumbnail.jpg');
     let videos = [
-              {uri: 'historischetuin'}, //0n
-              {uri: 'historischetuin'}, //1n
+              {uri: 'toegangspoort'}, //0n
+              {}, //1n
               {}, //2n
               {uri: 'toren'}, //3
               {uri: 'kelder'}, //4
               {uri: 'historischetuin'}, //5
               {uri: 'slotgracht'}, //6
               {uri: 'plein'}, //7
-              {uri: 'plein'} //8
+              {} //8
               ]
 
     //Video layout alleen zichtbaar als er een video is
