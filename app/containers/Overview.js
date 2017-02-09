@@ -79,12 +79,15 @@ class Overview extends Component {
       }
     }
     
-    const openQuestionOverview = (index) => {
-      if(index >= completedQuestionsCount){
+    const openQuestionOverview = (volgorde, index) => {
+        console.log(index);
+        console.log(completedQuestionsCount);
+        console.log(vraag_nrs[0]);
+      if(index >= completedQuestionsCount){ 
         buttonClickSound.play()
         Actions.modalquestionoverview()
         actions.toggleVisibility()
-        actions.getQuestion(index)
+        actions.getQuestion(volgorde)
       }
     }
 
@@ -103,7 +106,7 @@ class Overview extends Component {
       }
 
       vragenItems.push(
-            <TouchableHighlight underlayColor="transparent" key={i} onPress={() => openQuestionOverview(vragenVolgorde+1)} style={[styles.punt, stylesArray[vragenVolgorde]]}>
+            <TouchableHighlight underlayColor="transparent" key={i} onPress={() => openQuestionOverview(vragenVolgorde+1, i+1)} style={[styles.punt, stylesArray[vragenVolgorde]]}>
                 <Image source={imageSource} />
             </TouchableHighlight>
       )
